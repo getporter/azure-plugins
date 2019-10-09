@@ -62,7 +62,20 @@ func (s Store) Read(name string) ([]byte, error) {
 }
 
 func (s Store) Delete(name string) error {
-	return nil
+	container, err := s.buildContainerURL(s.Container)
+	if err != nil {
+		return err
+	}
+
+	container, err = s.buildContainerURL(s.Container)
+	if err != nil {
+		return err
+	}
+
+	blob := container.NewBlockBlobURL(name)
+
+	_, err = blob.Delete(context.Background(), azblob.DeleteSnapshotsOptionInclude, azblob.BlobAccessConditions{})
+	return err
 }
 
 func (s Store) getBlob(containerName string, blobName string) ([]byte, error) {
