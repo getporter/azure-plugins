@@ -15,6 +15,8 @@ type CredentialSet struct {
 }
 
 func GetCredentials() (CredentialSet, error) {
+	// TODO: make this configurable for now read out of the standard env vars
+
 	accountName := os.Getenv("AZURE_STORAGE_ACCOUNT")
 	accountKey := os.Getenv("AZURE_STORAGE_ACCESS_KEY")
 

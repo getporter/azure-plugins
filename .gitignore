@@ -1,9 +1,6 @@
 /docs/public/
 /bin
-/porter
+/azure
 *-packr.go
 .DS_Store
 
-.cnab
-examples/**/Dockerfile
-workshop/**/Dockerfile

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/hashicorp/go-hclog"
+
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/deislabs/cnab-go/utils/crud"
 	"github.com/deislabs/porter-azure-plugins/pkg/azure/credentials"
@@ -14,12 +16,31 @@ import (
 
 var _ crud.Store = &Store{}
 
+// Store implements the backing store for claims in azure blob storage
 type Store struct {
+	logger    hclog.Logger
 	Container string
 	credentials.CredentialSet
 }
 
-func (s Store) List() ([]string, error) {
+func (s *Store) init() error {
+	s.Container = "porter"
+
+	creds, err := credentials.GetCredentials()
+	if err != nil {
+		return err
+	}
+	s.CredentialSet = creds
+
+	return nil
+}
+
+func (s *Store) List() ([]string, error) {
+	err := s.init()
+	if err != nil {
+		return nil, err
+	}
+
 	container, err := s.buildContainerURL(s.Container)
 	if err != nil {
 		return nil, err
@@ -42,7 +63,12 @@ func (s Store) List() ([]string, error) {
 	return claims, nil
 }
 
-func (s Store) Store(name string, data []byte) error {
+func (s *Store) Store(name string, data []byte) error {
+	err := s.init()
+	if err != nil {
+		return err
+	}
+
 	container, err := s.buildContainerURL(s.Container)
 	if err != nil {
 		return err
@@ -57,11 +83,21 @@ func (s Store) Store(name string, data []byte) error {
 	return err
 }
 
-func (s Store) Read(name string) ([]byte, error) {
+func (s *Store) Read(name string) ([]byte, error) {
+	err := s.init()
+	if err != nil {
+		return nil, err
+	}
+
 	return s.getBlob(s.Container, name)
 }
 
-func (s Store) Delete(name string) error {
+func (s *Store) Delete(name string) error {
+	err := s.init()
+	if err != nil {
+		return err
+	}
+
 	container, err := s.buildContainerURL(s.Container)
 	if err != nil {
 		return err
@@ -78,7 +114,7 @@ func (s Store) Delete(name string) error {
 	return err
 }
 
-func (s Store) getBlob(containerName string, blobName string) ([]byte, error) {
+func (s *Store) getBlob(containerName string, blobName string) ([]byte, error) {
 	containerURL, err := s.buildContainerURL(containerName)
 	if err != nil {
 		return nil, err
@@ -98,7 +134,7 @@ func (s Store) getBlob(containerName string, blobName string) ([]byte, error) {
 	return buff.Bytes(), err
 }
 
-func (s Store) buildContainerURL(containerName string) (azblob.ContainerURL, error) {
+func (s *Store) buildContainerURL(containerName string) (azblob.ContainerURL, error) {
 	rawURL := fmt.Sprintf("https://%s.blob.core.windows.net/%s", s.Credential.AccountName(), containerName)
 	URL, err := url.Parse(rawURL)
 	if err != nil {

@@ -3,10 +3,11 @@
   source = "github.com/carolynvs/porter"
   branch = "remote-claims"
 
-[prune]
-  go-tests = true
-  non-go = true
-
 [[constraint]]
   name = "github.com/Azure/azure-storage-blob-go"
   version = "0.8.0"
+
+[prune]
+  unused-packages = true
+  go-tests = true
+  non-go = true

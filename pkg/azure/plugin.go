@@ -8,6 +8,8 @@ import (
 )
 
 func Run() {
+	// TODO: decide which implementation to use based on the argument passed to the plugin binary
+
 	p := map[string]plugin.Plugin{
 		claimstore.PluginKey: blob.NewPlugin(),
 	}
