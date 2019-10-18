@@ -1,6 +1,6 @@
 # Azure Plugins for Porter
 
-This is a set of Azure plugins for Porter that allow Porter to build and store bundles on Azure.
+This is a set of Azure plugins for [Porter](https://github.com/deislabs/porter).
  
 [![Build Status](https://dev.azure.com/deislabs/porter/_apis/build/status/porter-azure-plugins?branchName=master)](https://dev.azure.com/deislabs/porter/_build/latest?definitionId=26&branchName=master)
 
