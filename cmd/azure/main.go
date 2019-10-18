@@ -15,12 +15,15 @@ func main() {
 }
 
 func buildRootCommand() *cobra.Command {
+	p := azure.New()
+
 	cmd := &cobra.Command{
-		Use: "azure",
+		Use:   "azure",
 		Short: "Azure plugins for Porter",
-		Run: func(cmd *cobra.Command, args []string) {
-			azure.Run()
-		},
 	}
+
+	cmd.AddCommand(buildVersionCommand(p))
+	cmd.AddCommand(buildRunCommand(p))
+
 	return cmd
 }

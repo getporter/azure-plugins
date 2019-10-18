@@ -2,16 +2,23 @@ package azure
 
 import (
 	"github.com/deislabs/porter-azure-plugins/pkg/azure/blob"
-	"github.com/deislabs/porter/pkg/instance-storage/claimstore"
-	"github.com/deislabs/porter/pkg/plugins"
+	"github.com/deislabs/porter/pkg/context"
 	"github.com/hashicorp/go-plugin"
 )
 
-func Run() {
-	// TODO: decide which implementation to use based on the argument passed to the plugin binary
+type Plugin struct {
+	*context.Context
+}
 
-	p := map[string]plugin.Plugin{
-		claimstore.PluginKey: blob.NewPlugin(),
+// New azure plugin client, initialized with useful defaults.
+func New() *Plugin {
+	return &Plugin{
+		Context: context.New(),
 	}
-	plugins.ServeMany(p)
+}
+
+func GetAvailableImplementations() map[string]func() plugin.Plugin {
+	return map[string]func() plugin.Plugin{
+		blob.PluginKey: blob.NewPlugin,
+	}
 }

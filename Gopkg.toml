@@ -1,7 +1,6 @@
 [[constraint]]
   name = "github.com/deislabs/porter"
-  source = "github.com/carolynvs/porter"
-  branch = "remote-claims"
+  version = "v0.18.1-beta.1"
 
 [[constraint]]
   name = "github.com/Azure/azure-storage-blob-go"

@@ -18,24 +18,36 @@
   version = "v0.8.0"
 
 [[projects]]
+  digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
+  name = "github.com/davecgh/go-spew"
+  packages = ["spew"]
+  pruneopts = "NUT"
+  revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
+  version = "v1.1.1"
+
+[[projects]]
   digest = "1:5da5ca24fff16fd628d51d8c5af1a3927bd64d20cd7eeb538a0b82867cc44f76"
   name = "github.com/deislabs/cnab-go"
   packages = ["utils/crud"]
   pruneopts = "NUT"
-  revision = "525007ac513a763cb8fb96ec88f2aa101b791535"
-  version = "v0.5.0-beta1"
+  revision = "a1f17dcdaaff3e06c95ed85c3a34c21c35833831"
+  version = "v0.7.1-beta1"
 
 [[projects]]
-  branch = "remote-claims"
-  digest = "1:37eee77307038eb5c2c339442cb6a6af1a8597405650f6fbc66bb3be67b76457"
+  digest = "1:778b890b5308681454b3b9f44c467086c943f1f19131f322ab762365031e0cb4"
   name = "github.com/deislabs/porter"
   packages = [
+    "pkg/context",
     "pkg/instance-storage/claimstore",
+    "pkg/mixin",
     "pkg/plugins",
+    "pkg/porter/version",
+    "pkg/printer",
+    "pkg/test",
   ]
   pruneopts = "NUT"
-  revision = "39d3887e48744d7df3ed17f9850269f57f6cfa89"
-  source = "github.com/carolynvs/porter"
+  revision = "f439bc5179e425a685dd17bf1e500cc9f0813b95"
+  version = "v0.18.1-beta.3"
 
 [[projects]]
   branch = "master"
@@ -133,6 +145,25 @@
   version = "v0.8.1"
 
 [[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
+  name = "github.com/pmezard/go-difflib"
+  packages = ["difflib"]
+  pruneopts = "NUT"
+  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
+  version = "v1.0.0"
+
+[[projects]]
+  digest = "1:6792bb72ea0e7112157d02e4e175cd421b43d004a853f56316a19beca6e0c074"
+  name = "github.com/spf13/afero"
+  packages = [
+    ".",
+    "mem",
+  ]
+  pruneopts = "NUT"
+  revision = "588a75ec4f32903aa5e39a2619ba6a4631e28424"
+  version = "v1.2.2"
+
+[[projects]]
   digest = "1:d3533ee568fc00a971617ec09dc0f0b3eddfb4adbc1275f8f6332553d67506b4"
   name = "github.com/spf13/cobra"
   packages = ["."]
@@ -147,6 +178,17 @@
   pruneopts = "NUT"
   revision = "2e9d26c8c37aae03e3f9d4e90b7116f5accb7cab"
   version = "v1.0.5"
+
+[[projects]]
+  digest = "1:7096df4a9258067bb9ff5da62864a645d38dd94cd3f273ff4ab54d0de548a348"
+  name = "github.com/stretchr/testify"
+  packages = [
+    "assert",
+    "require",
+  ]
+  pruneopts = "NUT"
+  revision = "221dbe5ed46703ee255b1da0dec05086f5035f62"
+  version = "v1.4.0"
 
 [[projects]]
   branch = "master"
@@ -254,6 +296,14 @@
   revision = "f6d0f9ee430895e87ef1ceb5ac8f39725bafceef"
   version = "v1.24.0"
 
+[[projects]]
+  digest = "1:accc3bfe4e404aa53ac3621470e7cf9fce1efe48f0fabcfe6d12a72579d9d91f"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  pruneopts = "NUT"
+  revision = "f221b8435cfb71e54062f6c6e99e9ade30b124d5"
+  version = "v2.2.4"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -261,12 +311,17 @@
     "github.com/Azure/azure-pipeline-go/pipeline",
     "github.com/Azure/azure-storage-blob-go/azblob",
     "github.com/deislabs/cnab-go/utils/crud",
+    "github.com/deislabs/porter/pkg/context",
     "github.com/deislabs/porter/pkg/instance-storage/claimstore",
+    "github.com/deislabs/porter/pkg/mixin",
     "github.com/deislabs/porter/pkg/plugins",
+    "github.com/deislabs/porter/pkg/porter/version",
+    "github.com/deislabs/porter/pkg/printer",
     "github.com/hashicorp/go-hclog",
     "github.com/hashicorp/go-plugin",
     "github.com/pkg/errors",
     "github.com/spf13/cobra",
+    "github.com/stretchr/testify/require",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
