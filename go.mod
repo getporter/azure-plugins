@@ -3,7 +3,7 @@ module get.porter.sh/plugin/azure
 go 1.13
 
 require (
-	get.porter.sh/porter v0.22.1-beta.1
+	get.porter.sh/porter v0.22.2-beta.1
 	github.com/Azure/azure-pipeline-go v0.2.2
 	github.com/Azure/azure-storage-blob-go v0.8.0
 	github.com/cnabio/cnab-go v0.8.2-beta1

@@ -10,8 +10,8 @@ The plugins are distributed as a single binary, `azure`. The following snippet w
 and install it to **~/.porter/plugins/**.
 
 ```
-go get github.com/deislabs/porter-azure-plugins
-cd $(go env GOPATH)/src/github.com/deislabs/porter-azure-plugins
+go get get.porter.sh/plugin/azure
+cd $(go env GOPATH)/src/get.porter.sh/plugin/azure
 make build install
 ```
 

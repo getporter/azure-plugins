@@ -3,6 +3,7 @@ package blob
 import (
 	"os"
 
+	"get.porter.sh/plugin/azure/pkg/azure/config"
 	"get.porter.sh/porter/pkg/instance-storage/claimstore"
 	"github.com/cnabio/cnab-go/utils/crud"
 	"github.com/hashicorp/go-hclog"
@@ -22,20 +23,16 @@ type Plugin struct {
 	CrudStore
 }
 
-func NewPlugin() plugin.Plugin {
-	// Create an hclog.Logger
+func NewPlugin(cfg config.Config) plugin.Plugin {
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   PluginKey,
 		Output: os.Stderr,
-		Level:  hclog.Debug,
+		Level:  hclog.Error,
 	})
 
-	crud := &Store{
-		logger: logger,
-	}
 	return &claimstore.Plugin{
 		Impl: &Plugin{
-			CrudStore: crud,
+			CrudStore: NewStore(cfg, logger),
 		},
 	}
 }

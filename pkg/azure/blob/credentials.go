@@ -1,11 +1,13 @@
-package credentials
+package blob
 
 import (
 	"os"
 	"regexp"
 
+	"get.porter.sh/plugin/azure/pkg/azure/config"
 	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/azure-storage-blob-go/azblob"
+	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 )
 
@@ -14,23 +16,22 @@ type CredentialSet struct {
 	Pipeline   pipeline.Pipeline
 }
 
-func GetCredentials() (CredentialSet, error) {
-	// TODO: make this configurable for now read out of the standard env vars
+const CredentialsEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
 
-	accountName := os.Getenv("AZURE_STORAGE_ACCOUNT")
-	accountKey := os.Getenv("AZURE_STORAGE_ACCESS_KEY")
+func GetCredentials(cfg config.Config, l hclog.Logger) (CredentialSet, error) {
+	var credsEnv = cfg.Env
+	if credsEnv == "" {
+		credsEnv = CredentialsEnvironmentVariable
+	}
 
-	if accountName == "" || accountKey == "" {
-		connString := os.Getenv("AZURE_STORAGE_CONNECTION_STRING")
-		if connString == "" {
-			errors.New("AZURE_STORAGE_ACCOUNT and AZURE_STORAGE_ACCESS_KEY or AZURE_STORAGE_CONNECTION_STRING must be set")
-		}
+	connString := os.Getenv(credsEnv)
+	if connString == "" {
+		return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set", credsEnv)
+	}
 
-		var err error
-		accountName, accountKey, err = parseConnectionString(connString)
-		if err != nil {
-			return CredentialSet{}, err
-		}
+	accountName, accountKey, err := parseConnectionString(connString)
+	if err != nil {
+		return CredentialSet{}, err
 	}
 
 	cred, err := azblob.NewSharedKeyCredential(accountName, accountKey)

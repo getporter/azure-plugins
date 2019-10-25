@@ -3,8 +3,10 @@ package azure
 import (
 	"strings"
 
-	"github.com/hashicorp/go-hclog"
+	"get.porter.sh/plugin/azure/pkg/azure/blob"
+	"get.porter.sh/plugin/azure/pkg/azure/config"
 	"get.porter.sh/porter/pkg/plugins"
+	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 	"github.com/pkg/errors"
 )
@@ -15,7 +17,7 @@ type RunOptions struct {
 	selectedInterface string
 }
 
-func (o *RunOptions) Validate(args []string) error {
+func (o *RunOptions) Validate(args []string, cfg config.Config) error {
 	if len(args) == 0 {
 		return errors.New("The positional argument KEY was not specified")
 	}
@@ -25,7 +27,7 @@ func (o *RunOptions) Validate(args []string) error {
 
 	o.Key = args[0]
 
-	availableImplementations := GetAvailableImplementations()
+	availableImplementations := getPlugins(cfg)
 	selectedPlugin, ok := availableImplementations[o.Key]
 	if !ok {
 		return errors.Errorf("invalid plugin key specified: %q", o.Key)
@@ -39,19 +41,32 @@ func (o *RunOptions) Validate(args []string) error {
 }
 
 func (p *Plugin) Run(args []string) {
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   "azure",
+		Output: p.Err,
+		Level:  hclog.Error,
+	})
+
+	err := p.LoadConfig()
+	if err != nil {
+		logger.Error(err.Error())
+		return
+	}
+
 	// We are not following the normal CLI pattern here because
 	// if we write to stdout without the hclog, it will cause the plugin framework to blow up
 	var opts RunOptions
-	err := opts.Validate(args)
+	err = opts.Validate(args, p.Config)
 	if err != nil {
-		logger := hclog.New(&hclog.LoggerOptions{
-			Name:   "azure",
-			Output: p.Err,
-			Level:  hclog.Error,
-		})
 		logger.Error(err.Error())
 		return
 	}
 
 	plugins.Serve(opts.selectedInterface, opts.selectedPlugin)
+}
+
+func getPlugins(cfg config.Config) map[string]func() plugin.Plugin {
+	return map[string]func() plugin.Plugin{
+		blob.PluginKey: func() plugin.Plugin { return blob.NewPlugin(cfg) },
+	}
 }
