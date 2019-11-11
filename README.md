@@ -23,13 +23,13 @@ Instance Storage plugins allow Porter to store a record of installed bundles in 
 
 ### Blob
 
-The `instance-storage.azure.blob` plugin stores records of your bundle instances in Azure Blob Storage. 
+The `azure.blob` plugin stores records of your bundle instances in Azure Blob Storage. 
 
 1. Open, or create, `~/.porter/config.toml`.
 1. Add the following line to instruct Porter to use the azure blob storage plugin
 
     ```toml
-    instance-storage-plugin = "azure.blob"
+    storage-plugin = "azure.blob"
     ```
 
 1. [Create a storage account][account]

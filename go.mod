@@ -21,3 +21,7 @@ require (
 )
 
 replace github.com/hashicorp/go-plugin => github.com/carolynvs/go-plugin v1.0.1-acceptstdin
+
+replace get.porter.sh/porter => github.com/carolynvs/porter v0.8.0-ralpha.1.0.20200130141230-9eec42da929d
+
+replace github.com/cnabio/cnab-go => github.com/carolynvs/cnab-go v0.0.0-20200129213214-320e82d9048c
