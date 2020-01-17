@@ -12,7 +12,7 @@ func (p *Plugin) PrintVersion(opts version.Options) error {
 		VersionInfo: mixin.VersionInfo{
 			Version: pkg.Version,
 			Commit:  pkg.Commit,
-			Author:  "DeisLabs",
+			Author:  "Porter Authors",
 		},
 	}
 	return version.PrintVersion(p.Context, opts, metadata)
