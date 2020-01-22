@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"get.porter.sh/plugin/azure/pkg/azure/config"
+	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/cnabio/cnab-go/utils/crud"
 	"github.com/hashicorp/go-hclog"
@@ -18,13 +18,13 @@ var _ crud.Store = &Store{}
 // Store implements the backing store for claims in azure blob storage
 type Store struct {
 	logger hclog.Logger
-	config config.Config
+	config azureconfig.Config
 
 	Container string
 	CredentialSet
 }
 
-func NewStore(cfg config.Config, l hclog.Logger) *Store {
+func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
 	return &Store{
 		config: cfg,
 		logger: l,

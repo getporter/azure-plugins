@@ -3,8 +3,8 @@ package azure
 import (
 	"strings"
 
+	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"get.porter.sh/plugin/azure/pkg/azure/blob"
-	"get.porter.sh/plugin/azure/pkg/azure/config"
 	"get.porter.sh/porter/pkg/plugins"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
@@ -17,7 +17,7 @@ type RunOptions struct {
 	selectedInterface string
 }
 
-func (o *RunOptions) Validate(args []string, cfg config.Config) error {
+func (o *RunOptions) Validate(args []string, cfg azureconfig.Config) error {
 	if len(args) == 0 {
 		return errors.New("The positional argument KEY was not specified")
 	}
@@ -65,7 +65,7 @@ func (p *Plugin) Run(args []string) {
 	plugins.Serve(opts.selectedInterface, opts.selectedPlugin)
 }
 
-func getPlugins(cfg config.Config) map[string]func() plugin.Plugin {
+func getPlugins(cfg azureconfig.Config) map[string]func() plugin.Plugin {
 	return map[string]func() plugin.Plugin{
 		blob.PluginKey: func() plugin.Plugin { return blob.NewPlugin(cfg) },
 	}

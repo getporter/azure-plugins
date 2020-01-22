@@ -5,14 +5,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 
-	"get.porter.sh/plugin/azure/pkg/azure/config"
+	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"get.porter.sh/porter/pkg/context"
 	"github.com/pkg/errors"
 )
 
 type Plugin struct {
 	*context.Context
-	config.Config
+	azureconfig.Config
 }
 
 // New azure plugin client, initialized with useful defaults.

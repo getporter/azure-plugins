@@ -4,7 +4,7 @@ import (
 	"os"
 	"regexp"
 
-	"get.porter.sh/plugin/azure/pkg/azure/config"
+	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/hashicorp/go-hclog"
@@ -18,7 +18,7 @@ type CredentialSet struct {
 
 const CredentialsEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
 
-func GetCredentials(cfg config.Config, l hclog.Logger) (CredentialSet, error) {
+func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
 	var credsEnv = cfg.Env
 	if credsEnv == "" {
 		credsEnv = CredentialsEnvironmentVariable
