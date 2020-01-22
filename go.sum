@@ -7,6 +7,8 @@ cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSR
 cloud.google.com/go v0.39.0/go.mod h1:rVLT6fkc8chs9sfPtFc1SBH6em7n+ZoXaG+87tDISts=
 get.porter.sh/porter v0.22.1-beta.1 h1:0s2k+RIYj+r3DC4dhKQSgFKlGh4UIUTt2xJSPxVFizM=
 get.porter.sh/porter v0.22.1-beta.1/go.mod h1:JwT78lFVY8PUo+H0GBF3XcR5NMeXDK0bZTz17Gzyr9g=
+get.porter.sh/porter v0.22.2-beta.1 h1:9stq3FEONhbg9a/togNZnlIo56giu+h/lySkNTMkB30=
+get.porter.sh/porter v0.22.2-beta.1/go.mod h1:JwT78lFVY8PUo+H0GBF3XcR5NMeXDK0bZTz17Gzyr9g=
 github.com/Azure/azure-pipeline-go v0.2.1/go.mod h1:UGSo8XybXnIGZ3epmeBw7Jdz+HiUVpqIlpz/HKHylF4=
 github.com/Azure/azure-pipeline-go v0.2.2 h1:6oiIS9yaG6XCCzhgAgKFfIWyo4LLCiDhZot6ltoThhY=
 github.com/Azure/azure-pipeline-go v0.2.2/go.mod h1:4rQ/NZncSvGqNkkOsNpOU1tgoNuIlp9AfUH5G1tvCHc=

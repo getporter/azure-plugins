@@ -4,12 +4,12 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/hashicorp/go-hclog"
 	"net/url"
 
-	"get.porter.sh/plugin/azure/pkg/azure/credentials"
+	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-storage-blob-go/azblob"
 	"github.com/cnabio/cnab-go/utils/crud"
+	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 )
 
@@ -17,15 +17,24 @@ var _ crud.Store = &Store{}
 
 // Store implements the backing store for claims in azure blob storage
 type Store struct {
-	logger    hclog.Logger
+	logger hclog.Logger
+	config azureconfig.Config
+
 	Container string
-	credentials.CredentialSet
+	CredentialSet
+}
+
+func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
+	return &Store{
+		config: cfg,
+		logger: l,
+	}
 }
 
 func (s *Store) init() error {
 	s.Container = "porter"
 
-	creds, err := credentials.GetCredentials()
+	creds, err := GetCredentials(s.config, s.logger)
 	if err != nil {
 		return err
 	}
