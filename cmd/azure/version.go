@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/deislabs/porter-azure-plugins/pkg/azure"
-	"github.com/deislabs/porter/pkg/porter/version"
+	"get.porter.sh/plugin/azure/pkg/azure"
+	"get.porter.sh/porter/pkg/porter/version"
 	"github.com/spf13/cobra"
 )
 

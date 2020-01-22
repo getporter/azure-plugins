@@ -1,8 +1,8 @@
 package azure
 
 import (
-	"github.com/deislabs/porter-azure-plugins/pkg/azure/blob"
-	"github.com/deislabs/porter/pkg/context"
+	"get.porter.sh/plugin/azure/pkg/azure/blob"
+	"get.porter.sh/porter/pkg/context"
 	"github.com/hashicorp/go-plugin"
 )
 

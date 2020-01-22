@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/deislabs/porter-azure-plugins/pkg/azure"
+	"get.porter.sh/plugin/azure/pkg/azure"
 	"github.com/spf13/cobra"
 )
 

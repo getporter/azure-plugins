@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/go-hclog"
-	"github.com/deislabs/porter/pkg/plugins"
+	"get.porter.sh/porter/pkg/plugins"
 	"github.com/hashicorp/go-plugin"
 	"github.com/pkg/errors"
 )

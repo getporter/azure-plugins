@@ -4,13 +4,12 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/hashicorp/go-hclog"
 	"net/url"
 
-	"github.com/hashicorp/go-hclog"
-
+	"get.porter.sh/plugin/azure/pkg/azure/credentials"
 	"github.com/Azure/azure-storage-blob-go/azblob"
-	"github.com/deislabs/cnab-go/utils/crud"
-	"github.com/deislabs/porter-azure-plugins/pkg/azure/credentials"
+	"github.com/cnabio/cnab-go/utils/crud"
 	"github.com/pkg/errors"
 )
 

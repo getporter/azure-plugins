@@ -3,13 +3,13 @@ package blob
 import (
 	"os"
 
-	"github.com/deislabs/cnab-go/utils/crud"
-	"github.com/deislabs/porter/pkg/instance-storage/claimstore"
+	"get.porter.sh/porter/pkg/instance-storage/claimstore"
+	"github.com/cnabio/cnab-go/utils/crud"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 )
 
-const PluginKey = claimstore.PluginKey + ".azure.blob"
+const PluginKey = claimstore.PluginInterface + ".azure.blob"
 
 // A sad hack because crud.Store has a method called Store which prevents us from embedding it as a field
 type CrudStore = crud.Store

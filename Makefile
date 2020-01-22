@@ -1,5 +1,5 @@
 PLUGIN = azure
-PKG = github.com/deislabs/porter-$(PLUGIN)-plugins
+PKG = get.porter.sh/plugin/$(PLUGIN)
 SHELL = bash
 
 PORTER_HOME ?= $(HOME)/.porter
@@ -8,8 +8,9 @@ COMMIT ?= $(shell git rev-parse --short HEAD)
 VERSION ?= $(shell git describe --tags 2> /dev/null || echo v0)
 PERMALINK ?= $(shell git describe --tags --exact-match &> /dev/null && echo latest || echo canary)
 
+GO = GO111MODULE=on go
 LDFLAGS = -w -X $(PKG)/pkg.Version=$(VERSION) -X $(PKG)/pkg.Commit=$(COMMIT)
-XBUILD = CGO_ENABLED=0 go build -a -tags netgo -ldflags '$(LDFLAGS)'
+XBUILD = CGO_ENABLED=0 $(GO) build -a -tags netgo -ldflags '$(LDFLAGS)'
 BINDIR = bin/plugins
 
 CLIENT_PLATFORM ?= $(shell go env GOOS)
@@ -26,7 +27,7 @@ endif
 .PHONY: build
 build:
 	mkdir -p $(BINDIR)
-	go build -ldflags '$(LDFLAGS)' -o $(BINDIR)/$(PLUGIN)$(FILE_EXT) ./cmd/$(PLUGIN)
+	$(GO) build -ldflags '$(LDFLAGS)' -o $(BINDIR)/$(PLUGIN)$(FILE_EXT) ./cmd/$(PLUGIN)
 
 xbuild-all:
 	$(foreach OS, $(SUPPORTED_PLATFORMS), \
@@ -39,23 +40,11 @@ $(BINDIR)/$(VERSION)/$(PLUGIN)-$(CLIENT_PLATFORM)-$(CLIENT_ARCH)$(FILE_EXT):
 	mkdir -p $(dir $@)
 	GOOS=$(CLIENT_PLATFORM) GOARCH=$(CLIENT_ARCH) $(XBUILD) -o $@ ./cmd/$(PLUGIN)
 
-verify: verify-vendor
-
-verify-vendor: dep
-	dep check
-
-HAS_DEP := $(shell command -v dep)
-dep:
-ifndef HAS_DEP
-	curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-endif
-	dep version
-
 test: test-unit
 	$(BINDIR)/$(PLUGIN)$(FILE_EXT) version
 
 test-unit: build
-	go test ./...
+	$(GO) test ./...
 
 publish: bin/porter$(FILE_EXT)
 	# AZURE_STORAGE_CONNECTION_STRING will be used for auth in the following commands
