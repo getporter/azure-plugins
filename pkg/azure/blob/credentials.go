@@ -19,14 +19,14 @@ type CredentialSet struct {
 const ConnectionEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
 
 func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
-	var credsEnv = cfg.Env
+	var credsEnv = cfg.EnvConnectionString
 	if credsEnv == "" {
 		credsEnv = ConnectionEnvironmentVariable
 	}
 
 	connString := os.Getenv(credsEnv)
 	if connString == "" {
-		return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set", credsEnv)
+		return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set\n%#v", credsEnv, cfg)
 	}
 
 	accountName, accountKey, err := parseConnectionString(connString)
