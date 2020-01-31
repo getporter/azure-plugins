@@ -5,6 +5,8 @@ import (
 	"context"
 	"fmt"
 	"net/url"
+	"path"
+	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-storage-blob-go/azblob"
@@ -32,6 +34,7 @@ func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
 }
 
 func (s *Store) init() error {
+	// TODO: should we allow the container to be configurable?
 	s.Container = "porter"
 
 	creds, err := GetCredentials(s.config, s.logger)
@@ -43,20 +46,21 @@ func (s *Store) init() error {
 	return nil
 }
 
-func (s *Store) List() ([]string, error) {
+func (s *Store) List(itemType string) ([]string, error) {
 	err := s.init()
 	if err != nil {
 		return nil, err
 	}
 
-	container, err := s.buildContainerURL(s.Container)
+	container, err := s.buildContainerURL()
 	if err != nil {
 		return nil, err
 	}
 
 	var claims []string
 	for marker := (azblob.Marker{}); marker.NotDone(); {
-		listBlob, err := container.ListBlobsFlatSegment(context.Background(), marker, azblob.ListBlobsSegmentOptions{})
+		listBlob, err := container.ListBlobsFlatSegment(context.Background(), marker,
+			azblob.ListBlobsSegmentOptions{Prefix: itemType}) // Filter by item type
 		if err != nil {
 			return nil, err
 		}
@@ -64,25 +68,24 @@ func (s *Store) List() ([]string, error) {
 		marker = listBlob.NextMarker
 
 		for _, blobInfo := range listBlob.Segment.BlobItems {
-			claims = append(claims, blobInfo.Name)
+			claimName := strings.TrimPrefix(blobInfo.Name, itemType+"/")
+			claims = append(claims, claimName)
 		}
 	}
 
 	return claims, nil
 }
 
-func (s *Store) Store(name string, data []byte) error {
+func (s *Store) Save(itemType string, name string, data []byte) error {
 	err := s.init()
 	if err != nil {
 		return err
 	}
 
-	container, err := s.buildContainerURL(s.Container)
+	blob, err := s.buildBlockBlobURL(itemType, name)
 	if err != nil {
 		return err
 	}
-
-	blob := container.NewBlockBlobURL(name)
 	opts := azblob.UploadToBlockBlobOptions{
 		BlockSize:   4 * 1024 * 1024,
 		Parallelism: 16}
@@ -91,44 +94,35 @@ func (s *Store) Store(name string, data []byte) error {
 	return err
 }
 
-func (s *Store) Read(name string) ([]byte, error) {
+func (s *Store) Read(itemType string, name string) ([]byte, error) {
 	err := s.init()
 	if err != nil {
 		return nil, err
 	}
 
-	return s.getBlob(s.Container, name)
+	return s.getBlob(itemType, name)
 }
 
-func (s *Store) Delete(name string) error {
+func (s *Store) Delete(itemType string, name string) error {
 	err := s.init()
 	if err != nil {
 		return err
 	}
 
-	container, err := s.buildContainerURL(s.Container)
+	blob, err := s.buildBlockBlobURL(itemType, name)
 	if err != nil {
 		return err
 	}
-
-	container, err = s.buildContainerURL(s.Container)
-	if err != nil {
-		return err
-	}
-
-	blob := container.NewBlockBlobURL(name)
 
 	_, err = blob.Delete(context.Background(), azblob.DeleteSnapshotsOptionInclude, azblob.BlobAccessConditions{})
 	return err
 }
 
-func (s *Store) getBlob(containerName string, blobName string) ([]byte, error) {
-	containerURL, err := s.buildContainerURL(containerName)
+func (s *Store) getBlob(itemType string, blobName string) ([]byte, error) {
+	blobURL, err := s.buildBlobURL(itemType, blobName)
 	if err != nil {
 		return nil, err
 	}
-
-	blobURL := containerURL.NewBlobURL(blobName)
 
 	resp, err := blobURL.Download(context.Background(), 0, azblob.CountToEnd, azblob.BlobAccessConditions{}, false)
 	if err != nil {
@@ -142,12 +136,32 @@ func (s *Store) getBlob(containerName string, blobName string) ([]byte, error) {
 	return buff.Bytes(), err
 }
 
-func (s *Store) buildContainerURL(containerName string) (azblob.ContainerURL, error) {
-	rawURL := fmt.Sprintf("https://%s.blob.core.windows.net/%s", s.Credential.AccountName(), containerName)
+func (s *Store) buildContainerURL() (azblob.ContainerURL, error) {
+	rawURL := fmt.Sprintf("https://%s.blob.core.windows.net/%s", s.Credential.AccountName(), s.Container)
 	URL, err := url.Parse(rawURL)
 	if err != nil {
 		return azblob.ContainerURL{}, errors.Wrapf(err, "could not parse container URL %s", rawURL)
 	}
 
 	return azblob.NewContainerURL(*URL, s.Pipeline), nil
+}
+
+func (s *Store) buildBlobURL(itemType string, blobName string) (azblob.BlobURL, error) {
+	containerURL, err := s.buildContainerURL()
+	if err != nil {
+		return azblob.BlobURL{}, err
+	}
+
+	url := containerURL.NewBlobURL(path.Join(itemType, blobName))
+	return url, nil
+}
+
+func (s *Store) buildBlockBlobURL(itemType string, blobName string) (azblob.BlockBlobURL, error) {
+	containerURL, err := s.buildContainerURL()
+	if err != nil {
+		return azblob.BlockBlobURL{}, err
+	}
+
+	url := containerURL.NewBlockBlobURL(path.Join(itemType, blobName))
+	return url, nil
 }

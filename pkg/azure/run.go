@@ -67,6 +67,6 @@ func (p *Plugin) Run(args []string) {
 
 func getPlugins(cfg azureconfig.Config) map[string]func() plugin.Plugin {
 	return map[string]func() plugin.Plugin{
-		blob.PluginKey: func() plugin.Plugin { return blob.NewPlugin(cfg) },
+		blob.PluginInterface: func() plugin.Plugin { return blob.NewPlugin(cfg) },
 	}
 }

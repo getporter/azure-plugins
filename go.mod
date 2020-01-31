@@ -21,3 +21,8 @@ require (
 )
 
 replace github.com/hashicorp/go-plugin => github.com/carolynvs/go-plugin v1.0.1-acceptstdin
+
+// Use porter master until we cut a new release with storage plugins in it
+replace get.porter.sh/porter => github.com/carolynvs/porter v0.22.2-beta.1.0.20200131165022-f92186310727
+
+replace github.com/cnabio/cnab-go => github.com/carolynvs/cnab-go v0.0.0-20200129213214-320e82d9048c

@@ -16,12 +16,12 @@ type CredentialSet struct {
 	Pipeline   pipeline.Pipeline
 }
 
-const CredentialsEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
+const ConnectionEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
 
 func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
 	var credsEnv = cfg.Env
 	if credsEnv == "" {
-		credsEnv = CredentialsEnvironmentVariable
+		credsEnv = ConnectionEnvironmentVariable
 	}
 
 	connString := os.Getenv(credsEnv)
