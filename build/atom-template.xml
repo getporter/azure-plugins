@@ -7,18 +7,18 @@
         <name>Porter Authors</name>
         <uri>https://porter.sh</uri>
     </author>
-    {{#Plugins}}
+    {{#Mixins}}
     <category term="{{.}}"/>
-    {{/Plugins}}
+    {{/Mixins}}
     {{#Entries}}
     <entry>
-        <id>https://cdn.porter.sh/plugins/{{Plugin}}/{{Version}}</id>
-        <title>{{Plugin}} @ {{Version}}</title>
+        <id>https://cdn.porter.sh/plugins/{{Mixin}}/{{Version}}</id>
+        <title>{{Mixin}} @ {{Version}}</title>
         <updated>{{Updated}}</updated>
-        <category term="{{Plugin}}"/>
+        <category term="{{Mixin}}"/>
         <content>{{Version}}</content>
         {{#Files}}
-        <link rel="download" href="https://cdn.porter.sh/plugins/{{Plugin}}/{{Version}}/{{File}}" />
+        <link rel="download" href="https://cdn.porter.sh/plugins/{{Mixin}}/{{Version}}/{{File}}" />
         {{/Files}}
     </entry>
     {{/Entries}}
