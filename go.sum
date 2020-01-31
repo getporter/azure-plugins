@@ -70,9 +70,12 @@ github.com/carolynvs/cnab-go v0.0.0-20200129213214-320e82d9048c/go.mod h1:5c4uOP
 github.com/carolynvs/datetime-printer v0.2.0/go.mod h1:p9W8ZUhmQUOVD5kiDuGXwRG65/nTkZWlLylY7s+Qw2k=
 github.com/carolynvs/go-plugin v1.0.1-acceptstdin h1:8JccOWqcZoqCILz191C0D6RTnz/DKfNcY8+T6F3/G9g=
 github.com/carolynvs/go-plugin v1.0.1-acceptstdin/go.mod h1:++UyYGoz3o5w9ZzAdZxtQKrWWP+iqPBn3cQptSMzBuY=
+github.com/carolynvs/porter v0.8.0-ralpha.1.0.20190801193057-98503b8e621d/go.mod h1:pNdnXP6GsI0U/rvJTsXSEYHvxq6qa23zsMYug52dY6E=
 github.com/carolynvs/porter v0.8.0-ralpha.1.0.20200117220934-8ac67669d657 h1:htaDLPAWD3pbdCpP31NghJPS1kCy9+jCAA+VIbkieN0=
 github.com/carolynvs/porter v0.8.0-ralpha.1.0.20200117220934-8ac67669d657/go.mod h1:aMiP2hhB6T4e6H0jnRuGbKeB5AIKQB9KfxWYCKiCXFE=
 github.com/carolynvs/porter v0.8.0-ralpha.1.0.20200130141230-9eec42da929d/go.mod h1:DOHz66swOAGFvV1tl+EFPRuQd/RVhD7nYm6IfHymG28=
+github.com/carolynvs/porter v0.22.2-beta.1.0.20200131165022-f92186310727 h1:yV7yP1ze4XUiYCMO/0V4VfvN25soUgWvTrS/UbYJAZE=
+github.com/carolynvs/porter v0.22.2-beta.1.0.20200131165022-f92186310727/go.mod h1:DOHz66swOAGFvV1tl+EFPRuQd/RVhD7nYm6IfHymG28=
 github.com/cbroglie/mustache v1.0.1/go.mod h1:R/RUa+SobQ14qkP4jtx5Vke5sDytONDQXNLPY/PO69g=
 github.com/cenkalti/backoff v2.2.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QHaoyV4aDUVVkXQJJJ3NXXM=
 github.com/certifi/gocertifi v0.0.0-20180118203423-deb3ae2ef261/go.mod h1:GJKEexRPVJrBSOjoqN5VNOIKJ5Q3RViH6eu3puDRwx4=
