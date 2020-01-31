@@ -10,26 +10,26 @@ The plugins are distributed as a single binary, `azure`. The following snippet w
 and install it to **~/.porter/plugins/**.
 
 ```
-go get get.porter.sh/plugin/azure
+go get get.porter.sh/plugin/azure/cmd/azure
 cd $(go env GOPATH)/src/get.porter.sh/plugin/azure
 make build install
 ```
 
 After installing the plugin, you must modify your porter configuration file and select which plugin you want to use.
 
-## Instance Storage
+## Storage
 
-Instance Storage plugins allow Porter to store a record of installed bundles in a remote location.
+Storage plugins allow Porter to store data, such as claims and credentials, in the Azure's cloud.
 
 ### Blob
 
-The `azure.blob` plugin stores records of your bundle instances in Azure Blob Storage. 
+The `azure.blob` plugin stores data in Azure Blob Storage. 
 
 1. Open, or create, `~/.porter/config.toml`.
 1. Add the following line to instruct Porter to use the azure blob storage plugin
 
     ```toml
-    storage-plugin = "azure.blob"
+    default-storage-plugin = "azure.blob"
     ```
 
 1. [Create a storage account][account]
