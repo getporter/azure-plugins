@@ -57,9 +57,9 @@ publish: bin/porter$(FILE_EXT)
 	fi
 
 	# Generate the plugin feed
-	#az storage blob download -c porter -n plugins/atom.xml -f bin/plugins/atom.xml
-	bin/porter plugins feed generate -d bin/plugins -f bin/plugins/atom.xml -t build/atom-template.xml
-	#az storage blob upload -c porter -n plugins/atom.xml -f bin/atom.xml
+	az storage blob download -c porter -n plugins/atom.xml -f bin/plugins/atom.xml
+	bin/porter mixins feed generate -d bin/plugins -f bin/plugins/atom.xml -t build/atom-template.xml
+	az storage blob upload -c porter -n plugins/atom.xml -f bin/plugins/atom.xml
 
 bin/porter$(FILE_EXT):
 	curl -fsSLo bin/porter$(FILE_EXT) https://cdn.porter.sh/canary/porter-$(CLIENT_PLATFORM)-$(CLIENT_ARCH)$(FILE_EXT)
