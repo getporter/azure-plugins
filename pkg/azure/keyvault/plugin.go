@@ -14,7 +14,7 @@ const PluginInterface = secrets.PluginInterface + ".azure.keyvault"
 
 var _ cnabsecrets.Store = &Plugin{}
 
-// Plugin is the plugin wrapper for storing claims in azure blob storage.
+// Plugin is the plugin wrapper for accessing secrets from Azure Key Vault.
 type Plugin struct {
 	logger hclog.Logger
 	cnabsecrets.Store

@@ -26,7 +26,7 @@ Storage plugins allow Porter to store data, such as claims and credentials, in t
 The `azure.blob` plugin stores data in Azure Blob Storage. 
 
 1. Open, or create, `~/.porter/config.toml`.
-1. Add the following line activate the Azure blob storage plugin
+1. Add the following line to activate the Azure blob storage plugin:
 
     ```toml
     default-storage-plugin = "azure.blob"
@@ -41,8 +41,8 @@ The `azure.blob` plugin stores data in Azure Blob Storage.
 
 Secrets plugins allow Porter to inject secrets into credential sets.
 
-For example, your team may have a shared key vault with a database password, you can use the keyvault plugin
-to use it as a credential when you install a bundle.
+For example, if your team has a shared key vault with a database password, you
+can use the keyvault plugin to inject it as a credential when you install a bundle.
 
 ### Key Vault
 
