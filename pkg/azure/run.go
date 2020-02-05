@@ -5,6 +5,7 @@ import (
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"get.porter.sh/plugin/azure/pkg/azure/blob"
+	"get.porter.sh/plugin/azure/pkg/azure/keyvault"
 	"get.porter.sh/porter/pkg/plugins"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
@@ -67,6 +68,7 @@ func (p *Plugin) Run(args []string) {
 
 func getPlugins(cfg azureconfig.Config) map[string]func() plugin.Plugin {
 	return map[string]func() plugin.Plugin{
-		blob.PluginInterface: func() plugin.Plugin { return blob.NewPlugin(cfg) },
+		blob.PluginInterface:     func() plugin.Plugin { return blob.NewPlugin(cfg) },
+		keyvault.PluginInterface: func() plugin.Plugin { return keyvault.NewPlugin(cfg) },
 	}
 }
