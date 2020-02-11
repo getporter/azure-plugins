@@ -45,9 +45,18 @@ func TestPrintJsonVersion(t *testing.T) {
   "name": "azure",
   "version": "v1.2.3",
   "commit": "abc123",
-  "author": "Porter Authors"
-}
-`
+  "author": "Porter Authors",
+  "implementations": [
+    {
+      "type": "storage",
+      "implementation": "blob"
+    },
+    {
+      "type": "secrets",
+      "implementation": "keyvault"
+    }
+  ]
+}`
 	if !strings.Contains(gotOutput, wantOutput) {
 		t.Fatalf("invalid output:\nWANT:\t%q\nGOT:\t%q\n", wantOutput, gotOutput)
 	}
