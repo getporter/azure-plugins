@@ -11,7 +11,7 @@ PERMALINK ?= $(shell git describe --tags --exact-match &> /dev/null && echo late
 GO = GO111MODULE=on go
 LDFLAGS = -w -X $(PKG)/pkg.Version=$(VERSION) -X $(PKG)/pkg.Commit=$(COMMIT)
 XBUILD = CGO_ENABLED=0 $(GO) build -a -tags netgo -ldflags '$(LDFLAGS)'
-BINDIR = bin/plugins
+BINDIR = bin/plugins/$(PLUGIN)
 
 CLIENT_PLATFORM ?= $(shell go env GOOS)
 CLIENT_ARCH ?= $(shell go env GOARCH)
@@ -67,7 +67,7 @@ bin/porter$(FILE_EXT):
 
 install:
 	mkdir -p $(PORTER_HOME)/plugins
-	install $(BINDIR)/$(PLUGIN)$(FILE_EXT) $(PORTER_HOME)/plugins/$(PLUGIN)$(FILE_EXT)
+	install $(BINDIR)/$(PLUGIN)$(FILE_EXT) $(PORTER_HOME)/plugins/$(PLUGIN)/$(PLUGIN)$(FILE_EXT)
 
 clean:
 	-rm -fr bin/
