@@ -19,7 +19,7 @@ After installing the plugin, you must modify your porter configuration file and 
 
 ## Storage
 
-Storage plugins allow Porter to store data, such as claims and credentials, in the Azure's cloud.
+Storage plugins allow Porter to store data, such as claims, parameters and credentials, in Azure's cloud.
 
 ### Blob
 
@@ -39,14 +39,14 @@ The `azure.blob` plugin stores data in Azure Blob Storage.
 
 ## Secrets
 
-Secrets plugins allow Porter to inject secrets into credential sets.
+Secrets plugins allow Porter to inject secrets into credential or parameter sets.
 
 For example, if your team has a shared key vault with a database password, you
-can use the keyvault plugin to inject it as a credential when you install a bundle.
+can use the keyvault plugin to inject it as a credential or parameter when you install a bundle.
 
 ### Key Vault
 
-The `azure.keyvault` plugin resolves credentials against secrets in Azure Key Vault.
+The `azure.keyvault` plugin resolves credentials or parameters against secrets in Azure Key Vault.
 
 1. Open, or create, `~/.porter/config.toml`
 1. Add the following lines to activate the Azure keyvault secrets plugin:
