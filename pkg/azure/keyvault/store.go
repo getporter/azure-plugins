@@ -9,6 +9,7 @@ import (
 	"get.porter.sh/porter/pkg/secrets"
 	"github.com/Azure/azure-sdk-for-go/services/keyvault/v7.0/keyvault"
 	cnabsecrets "github.com/cnabio/cnab-go/secrets"
+	"github.com/cnabio/cnab-go/secrets/host"
 	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
 )
@@ -21,17 +22,19 @@ const (
 
 // Store implements the backing store for secrets in azure key vault.
 type Store struct {
-	logger   hclog.Logger
-	config   azureconfig.Config
-	vaultUrl string
-	client   *keyvault.BaseClient
+	logger    hclog.Logger
+	config    azureconfig.Config
+	vaultUrl  string
+	client    *keyvault.BaseClient
+	hostStore cnabsecrets.Store
 }
 
 func NewStore(cfg azureconfig.Config, l hclog.Logger) cnabsecrets.Store {
 	s := &Store{
-		config:   cfg,
-		logger:   l,
-		vaultUrl: fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault),
+		config:    cfg,
+		logger:    l,
+		vaultUrl:  fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault),
+		hostStore: &host.SecretStore{},
 	}
 
 	return secrets.NewSecretStore(s)
@@ -55,7 +58,7 @@ func (s *Store) Connect() error {
 
 func (s *Store) Resolve(keyName string, keyValue string) (string, error) {
 	if strings.ToLower(keyName) != SecretKeyName {
-		return "", errors.Errorf("cannot resolve unsupported keyName: %s. The azure key vault plugin only supports '%s' right now", keyName, SecretKeyName)
+		return s.hostStore.Resolve(keyName, keyValue)
 	}
 
 	secretVersion := ""
