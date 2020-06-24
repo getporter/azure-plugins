@@ -22,9 +22,10 @@ type Plugin struct {
 
 func NewPlugin(cfg azureconfig.Config) plugin.Plugin {
 	logger := hclog.New(&hclog.LoggerOptions{
-		Name:   PluginInterface,
-		Output: os.Stderr,
-		Level:  hclog.Error,
+		Name:       PluginInterface,
+		Output:     os.Stderr,
+		Level:      hclog.Debug,
+		JSONFormat: true,
 	})
 
 	return &secrets.Plugin{

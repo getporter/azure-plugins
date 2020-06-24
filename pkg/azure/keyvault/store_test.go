@@ -59,6 +59,6 @@ func TestResolve_NonSecret(t *testing.T) {
 
 	t.Run("resolve non-secret source: bogus", func(t *testing.T) {
 		_, err := store.Resolve("bogus", "bogus")
-		require.EqualError(t, err, "invalid credential source: bogus")
+		require.EqualError(t, err, "invalid value source: bogus")
 	})
 }
