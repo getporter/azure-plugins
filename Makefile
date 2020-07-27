@@ -66,7 +66,7 @@ bin/porter$(FILE_EXT):
 	chmod +x bin/porter$(FILE_EXT)
 
 install:
-	mkdir -p $(PORTER_HOME)/plugins
+	mkdir -p $(PORTER_HOME)/plugins/$(PLUGIN)
 	install $(BINDIR)/$(PLUGIN)$(FILE_EXT) $(PORTER_HOME)/plugins/$(PLUGIN)/$(PLUGIN)$(FILE_EXT)
 
 clean:

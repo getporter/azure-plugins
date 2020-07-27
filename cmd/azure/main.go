@@ -18,16 +18,18 @@ func main() {
 }
 
 func buildRootCommand(in io.Reader) *cobra.Command {
-	p := azure.New()
-	p.In = in
+	m := azure.New()
+	m.In = in
 
 	cmd := &cobra.Command{
 		Use:   "azure",
-		Short: "Azure plugins for Porter",
+		Short: "Azure plugin for Porter",
 	}
 
-	cmd.AddCommand(buildVersionCommand(p))
-	cmd.AddCommand(buildRunCommand(p))
+	cmd.PersistentFlags().BoolVar(&m.Debug, "debug", false, "Enable debug logging")
+
+	cmd.AddCommand(buildVersionCommand(m))
+	cmd.AddCommand(buildRunCommand(m))
 
 	return cmd
 }

@@ -42,10 +42,12 @@ func (o *RunOptions) Validate(args []string, cfg azureconfig.Config) error {
 }
 
 func (p *Plugin) Run(args []string) {
+	// This logger only helps log errors with loading the plugin
 	logger := hclog.New(&hclog.LoggerOptions{
-		Name:   "azure",
-		Output: p.Err,
-		Level:  hclog.Error,
+		Name:       "azure",
+		Output:     p.Err,
+		Level:      hclog.Debug,
+		JSONFormat: true,
 	})
 
 	err := p.LoadConfig()
