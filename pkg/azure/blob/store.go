@@ -284,7 +284,7 @@ func (s *Store) setTag(ctx context.Context, blobName string, tags map[string]str
 	return g.Wait()
 }
 
-// waitForMigratedTagCacheWarm waits until a query for the specified tags returns at least the
+// waitForTagInCache waits until a query for the specified tags returns at least the
 // specified number of blobs, indicating that the tag cache has caught up with the tags applied
 // during the migration. Not sure why this is necessary, but it seems to avoid a race condition
 // and nothing ends up being migrated.
