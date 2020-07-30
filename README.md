@@ -62,6 +62,13 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
     vault = "myvault"
     ```
 1. [Create a key vault][keyvault] and set the vault name in the config with name of the vault.
+
+#### Authentication
+
+Authentication to Azure can use any of the following methods, whichever mechanism is used the prinicpal that used to access key vault needs to be granted at [Get and List secret permission][keyvaultacl] on the vault 
+
+1. Azure CLI 
+
 1. [Create a service principal][sp] and create an Access Policy on the vault giving Get and List secret permissions.
 1. Using credentials for the service principal set the environment variables: `AZURE_TENANT_ID`,`AZURE_CLIENT_ID`,  and `AZURE_CLIENT_SECRET`.
 
@@ -70,3 +77,4 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
 [connstring]: https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string?toc=%2fazure%2fstorage%2fblobs%2ftoc.json#view-and-copy-a-connection-string
 [keyvault]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [sp]: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
+[keyvaultacl]: https://docs.microsoft.com/en-us/azure/key-vault/secrets/about-secrets#secret-access-control

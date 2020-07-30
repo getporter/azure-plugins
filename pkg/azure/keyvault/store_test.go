@@ -12,6 +12,7 @@ import (
 )
 
 func TestResolve_NonSecret(t *testing.T) {
+
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   PluginInterface,
 		Output: os.Stderr,
@@ -20,7 +21,8 @@ func TestResolve_NonSecret(t *testing.T) {
 
 	azConfig := azureconfig.Config{}
 	store := NewStore(azConfig, logger)
-
+	os.Setenv("AZURE_CLIENT_ID", "test_client_id")
+	defer os.Unsetenv("AZURE_CLIENT_ID")
 	t.Run("resolve non-secret source: value", func(t *testing.T) {
 		resolved, err := store.Resolve(host.SourceValue, "myvalue")
 		require.NoError(t, err)
