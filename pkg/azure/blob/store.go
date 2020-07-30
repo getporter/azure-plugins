@@ -9,6 +9,7 @@ import (
 	"path"
 	"strings"
 	"text/template"
+	"time"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-storage-blob-go/azblob"
@@ -16,6 +17,7 @@ import (
 	"github.com/cnabio/cnab-go/utils/crud"
 	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
+	"golang.org/x/sync/errgroup"
 )
 
 var _ crud.Store = &Store{}
@@ -80,7 +82,6 @@ func (s *Store) List(itemType string, group string) ([]string, error) {
 		return nil, err
 	}
 
-	s.logger.Info("matching blobs:")
 	names := make([]string, 0, len(items))
 	for _, blobInfo := range items {
 		// Return just the name portion of the blob, e.g. installations/INSTALLATION -> INSTALLATION
@@ -88,7 +89,7 @@ func (s *Store) List(itemType string, group string) ([]string, error) {
 		names = append(names, fileName)
 	}
 
-	s.logger.Info(strings.Join(names, ", "))
+	s.logger.Info(fmt.Sprintf("blob names: %s", strings.Join(names, ", ")))
 	return names, nil
 }
 
@@ -127,6 +128,8 @@ func (s *Store) filterBlobsByTags(tags map[string]string) ([]azblob.BlobItem, er
 		s.logger.Error(errors.Wrapf(err, "error filtering blobs where %s", opts.Where).Error())
 		return nil, err
 	}
+
+	s.logger.Info(fmt.Sprintf("matched %d blobs", len(result.Segment.BlobItems)))
 	return result.Segment.BlobItems, nil
 }
 
@@ -174,8 +177,8 @@ func (s *Store) saveBlob(path string, tags map[string]string, data []byte) error
 		return err
 	}
 
-	if tags != nil {
-		_, err = blob.SetTags(context.Background(), tags)
+	if tags != nil && len(tags) > 0 {
+		err = s.setTag(context.Background(), path, tags)
 	}
 
 	return err
@@ -253,6 +256,57 @@ func (s *Store) getBlob(itemType string, blobName string) ([]byte, error) {
 	_, err = buff.ReadFrom(bodyStream)
 
 	return buff.Bytes(), err
+}
+
+// setTag on a blob and wait for the tag index to sync.
+func (s *Store) setTag(ctx context.Context, blobName string, tags map[string]string) error {
+	g := new(errgroup.Group)
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	container, err := s.buildContainerURL()
+	if err != nil {
+		return err
+	}
+
+	blobURL := container.NewBlobURL(blobName)
+
+	s.logger.Info(fmt.Sprintf("Setting tags on %s: %v", blobName, tags))
+	g.Go(func() error {
+		_, err = blobURL.SetTags(ctx, tags)
+		return err
+	})
+
+	g.Go(func() error {
+		return s.waitForTagInCache(ctx, blobName, tags)
+	})
+
+	return g.Wait()
+}
+
+// waitForTagInCache waits until a query for the specified tags returns at least the
+// specified number of blobs, indicating that the tag cache has caught up with the tags applied
+// during the migration. Not sure why this is necessary, but it seems to avoid a race condition
+// and nothing ends up being migrated.
+func (s *Store) waitForTagInCache(parentCtx context.Context, blobName string, tags map[string]string) error {
+	ctx, cancel := context.WithTimeout(parentCtx, 30*time.Second)
+	defer cancel()
+	s.logger.Info("Waiting for tags to sync...")
+	for {
+		select {
+		case <-ctx.Done():
+			return errors.New("Timed out waiting for the azure blob storage tags cache to warm up")
+		default:
+			cachedBlobs, _ := s.filterBlobsByTags(tags)
+			for _, b := range cachedBlobs {
+				if b.Name == blobName {
+					s.logger.Info(fmt.Sprintf("Found %s, tag cache warm", blobName))
+					return nil
+				}
+				time.Sleep(time.Second)
+			}
+		}
+	}
 }
 
 func (s *Store) buildServiceURL() (azblob.ServiceURL, error) {
