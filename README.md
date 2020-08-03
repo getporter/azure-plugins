@@ -65,12 +65,15 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
 
 #### Authentication
 
-Authentication to Azure can use any of the following methods, whichever mechanism is used the prinicpal that used to access key vault needs to be granted at [Get and List secret permission][keyvaultacl] on the vault 
+Authentication to Azure can use any of the following methods, whichever mechanism is used the prinicpal that used to access key vault needs to be granted at least [Get and List secret permission][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
 
-1. Azure CLI 
+1. **[Azure CLI][azurecli]**. - By default if the machine you are using is already logged in with the Azure CLI then the same security context will be used for the `azure.keyvault` plugin without any additional configuration.
 
-1. [Create a service principal][sp] and create an Access Policy on the vault giving Get and List secret permissions.
-1. Using credentials for the service principal set the environment variables: `AZURE_TENANT_ID`,`AZURE_CLIENT_ID`,  and `AZURE_CLIENT_SECRET`.
+1. **Use a service principal ([azure portal][sp] ) and an application secret ([azure portal][secret] or [azure cli]**.[passwordcli] ) - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then set the environment variable `AZURE_CLIENT_SECRET`using the application secret .
+
+1. **Use a service principal ([azure portal][sp]) and a certificate ([azure portal][certificate]  or [azure cli][certcli])**. - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then using the certiciate file path and password set the environment variables `AZURE_CERTICATE_PATH` and `AZURE_CERTICATE_PASSWORD`.
+
+1. **Username and Password** - Log in with user name and password.  Set the environment variables `AZURE_USERNAME` and `AZURE_PASSWORD`. This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
 [account]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
 [container]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container
@@ -78,3 +81,8 @@ Authentication to Azure can use any of the following methods, whichever mechanis
 [keyvault]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [sp]: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
 [keyvaultacl]: https://docs.microsoft.com/en-us/azure/key-vault/secrets/about-secrets#secret-access-control
+[azurecli]: https://docs.microsoft.com/en-us/cli/azure/reference-index?view=azure-cli-latest#az-login
+[secret]: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#create-a-new-application-secret
+[certificate]: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal#upload-a-certificate
+[passwordcli]:https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#password-based-authentication
+[certcli]:https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?view=azure-cli-latest#certificate-based-authentication

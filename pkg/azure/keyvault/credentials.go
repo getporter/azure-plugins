@@ -1,9 +1,7 @@
 package keyvault
 
 import (
-	"fmt"
 	"os"
-	"strconv"
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
@@ -37,67 +35,17 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (autorest.Authorizer
 		}
 	}
 
-	usedeviceCode, _ := strconv.ParseBool(cfg.LoginWithDeviceCode)
-	useMSI, _ := strconv.ParseBool(cfg.LoginWithMSI)
-	noVarsAreSet := noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames)
-
-	if err := validateOptions(usedeviceCode, useMSI, noVarsAreSet, prefix); err != nil {
-		return nil, err
-	}
-
 	var authorizer autorest.Authorizer
 	var err error
 
-	// 1. Attempt to login with az cli or MSI if no vars are set.
+	// Attempt to login with az cli if no vars are set.
 
-	if noVarsAreSet {
-		if useMSI {
-			// NewAuthorizierFromEnvironment attempts to authenticate using credentials, then certicates, then user name and password and then MSI
-			// If no AZURE_* envvars are set then it fall through to use MSI
-			authorizer, err = auth.NewAuthorizerFromEnvironment()
-			if err != nil {
-				return nil, errors.Wrap(err, "Failed to create an azure authorizer from environment")
-			}
-		} else {
-			authorizer, err = auth.NewAuthorizerFromCLI()
-			if err != nil {
-				return nil, errors.Wrap(err, "Failed to create an azure authorizer from azure cli")
-			}
-		}
-
-		return authorizer, nil
-	}
-
-	resourceID, err := getAzureKeyVaultResourceID()
-	if err != nil {
-		return nil, errors.Wrap(err, "Failed to get Azure Key Vault Resource ID")
-	}
-
-	var tenantID = os.Getenv(azureauth.TenantID)
-
-	// 2. Attempt to login with Device Code - device code requires an appid, we should create a fixed appId for the plugin but for now we can get this from an env variable
-
-	if usedeviceCode {
-		if prefix == "" {
-			prefix = "AZURE_"
-		}
-
-		// TODO replace with constant appId
-		applicationID := os.Getenv(fmt.Sprintf("%sPORTER_PLUGIN_APP_ID", prefix))
-		env, err := getAzureEnvironment()
+	if noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames) {
+		authorizer, err = auth.NewAuthorizerFromCLI()
 		if err != nil {
-			return nil, errors.Wrap(err, "Failed to get Azure Environment")
+			return nil, errors.Wrap(err, "Failed to create an azure authorizer from azure cli")
 		}
-		deviceFlowConfig := azureauth.DeviceFlowConfig{
-			TenantID:    tenantID,
-			ClientID:    applicationID,
-			Resource:    resourceID,
-			AADEndpoint: env.ActiveDirectoryEndpoint,
-		}
-		authorizer, err = deviceFlowConfig.Authorizer()
-		if err != nil {
-			return nil, errors.Wrap(err, "Failed to create an azure authorizer from device flow")
-		}
+
 		return authorizer, nil
 	}
 
@@ -149,34 +97,4 @@ func noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames []string) bool {
 		}
 	}
 	return true
-}
-
-func validateOptions(usedeviceCode bool, useMSI bool, noVarsAreSet bool, prefix string) error {
-	if prefix == "" {
-		prefix = "AZURE_"
-	}
-
-	if usedeviceCode && useMSI {
-		return errors.New("login-using-device-code amd login-using-msi should not be set at the same time")
-	}
-
-	if useMSI && !noVarsAreSet {
-		return fmt.Errorf("%s* environment variables should not be set when trying to log in using MSI", prefix)
-	}
-
-	if usedeviceCode {
-		tenantIDEnvVarName := prefix + strings.TrimPrefix(azureauth.TenantID, "AZURE_")
-		var tenantID = os.Getenv(azureauth.TenantID)
-		if len(tenantID) == 0 {
-			return errors.New(fmt.Sprintf("login-using-device-code is set but %s is not set", tenantIDEnvVarName))
-		}
-
-		appIdVarName := fmt.Sprintf("%sPORTER_PLUGIN_APP_ID", prefix)
-		applicationID := os.Getenv(appIdVarName)
-		if len(applicationID) == 0 {
-			return errors.New(fmt.Sprintf("login-using-device-code is set but %s is not set", appIdVarName))
-		}
-	}
-
-	return nil
 }

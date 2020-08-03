@@ -52,56 +52,10 @@ func TestGet_GetCredentials(t *testing.T) {
 			validateUserNameAndPasswordLogin,
 		},
 		{
-			"GetCredentials using MSI",
-			&azureconfig.Config{
-				LoginWithMSI: "true",
-			},
-			map[string]string{},
-			validateMSILogin,
-		},
-		{
 			"GetCredentials using az cli",
 			nil,
 			map[string]string{},
 			validateazCLILogin,
-		},
-		{
-			"GetCredentials using device code ",
-			&azureconfig.Config{
-				LoginWithDeviceCode: "true",
-			},
-			map[string]string{
-				"TENANT_ID":            "TENANT_ID_T10",
-				"PORTER_PLUGIN_APP_ID": "PORTER_APP_ID",
-			},
-			validateDeviceCodeLogin,
-		},
-		{
-			"MSI Auth should have no AZURE vars",
-			&azureconfig.Config{
-				LoginWithMSI: "true",
-			},
-			map[string]string{
-				"TENANT_ID": "TENANT_ID_T13"},
-			validateMSILoginHasNoEnvVars,
-		},
-		{
-			"Device Code needs TENANT_ID EnvVar",
-			&azureconfig.Config{
-				LoginWithDeviceCode: "true",
-			},
-			map[string]string{
-				"PORTER_PLUGIN_APP_ID": "PORTER_APP_ID"},
-			validateDeviceCodeLoginHasTenantId,
-		},
-		{
-			"Device Code needs PORTER_APP_ID EnvVar",
-			&azureconfig.Config{
-				LoginWithDeviceCode: "true",
-			},
-			map[string]string{
-				"TENANT_ID": "TENANT_ID_T12"},
-			validateDeviceCodeLoginHasPorterAppId,
 		},
 	}
 	env := os.Environ()
@@ -211,16 +165,6 @@ func validateUserNameAndPasswordLogin(t *testing.T, envVarsToSet map[string]stri
 	assert.Contains(t, oAuthConfig.AuthorizeEndpoint.Path, envVarsToSet["TENANT_ID"])
 }
 
-func validateMSILogin(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
-	authorizer, err := GetCredentials(config, logger)
-	assert.NoError(t, err)
-	servicePrincipalToken := getServicePrincipalToken(t, authorizer)
-	innerToken := getValue(t, reflect.ValueOf(servicePrincipalToken).Elem(), "inner")
-	secretValue := getPrivateValue(t, innerToken, "Secret")
-	_, ok := secretValue.Interface().(*adal.ServicePrincipalMSISecret)
-	assert.True(t, ok)
-}
-
 func validateazCLILogin(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
 	authorizer, err := GetCredentials(config, logger)
 	if err != nil {
@@ -229,38 +173,6 @@ func validateazCLILogin(t *testing.T, envVarsToSet map[string]string, config azu
 		return
 	}
 	getToken(t, authorizer)
-}
-
-func validateDeviceCodeLogin(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(config, logger)
-	assert.NotNil(t, err)
-	t.Log(t, err.Error())
-	assert.True(t, strings.HasPrefix(err.Error(), "Failed to create an azure authorizer from device flow: failed to get oauth token from device flow: failed to start device auth flow: autorest/adal/devicetoken: Error occurred while handling response from the Device Endpoint: Error HTTP status"))
-}
-
-func validateMSILoginHasNoEnvVars(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(config, logger)
-	CheckExpectedError(t, config.EnvAzurePrefix, "%s* environment variables should not be set when trying to log in using MSI", err)
-}
-
-func validateDeviceCodeLoginHasTenantId(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(config, logger)
-	CheckExpectedError(t, config.EnvAzurePrefix, "login-using-device-code is set but %sTENANT_ID is not set", err)
-}
-
-func validateDeviceCodeLoginHasPorterAppId(t *testing.T, envVarsToSet map[string]string, config azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(config, logger)
-	CheckExpectedError(t, config.EnvAzurePrefix, "login-using-device-code is set but %sPORTER_PLUGIN_APP_ID is not set", err)
-}
-
-func CheckExpectedError(t *testing.T, prefix string, fmtString string, err error) {
-	if len(prefix) == 0 {
-		prefix = "AZURE_"
-	}
-
-	assert.NotNil(t, err)
-	t.Log(t, err.Error())
-	assert.EqualError(t, err, fmt.Sprintf(fmtString, prefix))
 }
 
 func getServicePrincipalToken(t *testing.T, authorizer autorest.Authorizer) *adal.ServicePrincipalToken {
