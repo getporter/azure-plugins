@@ -1,0 +1,55 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "BuildAndCopyPlugin",
+      "type": "process",
+      "command": "make",
+      "args": [
+        "debug"
+      ],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "RunPorter",
+      "type": "shell",
+      "command": "./.vscode/scripts/runporterinbackground.sh",
+      "options": {
+        "env": {
+          "PORTER_RUN_PLUGIN_IN_DEBUGGER": "secrets.azure.keyvault",
+          "PORTER_PLUGIN_WORKING_DIRECTORY": "${workspaceRoot}/cmd/azure",
+          "PORTER_DEBUGGER_PORT": "2345",
+          "PORTER_HOME": "/home/${env:USER}/.porter"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "args": ["--tag","getporter/plugins-tutorial:v0.1.0","--debug","-c","plugins-tutorial"]
+    },
+    {
+      "label": "KillDebugProcesses",
+      "type": "shell",
+      "command": "./.vscode/scripts/killdebugprocess.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "SetupPluginAndRunPorter",
+      "dependsOn": [
+        "BuildAndCopyPlugin",
+        "RunPorter"
+      ],
+      "dependsOrder": "sequence"
+    }
+  ],
+}

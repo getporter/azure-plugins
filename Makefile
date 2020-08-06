@@ -24,6 +24,12 @@ else
 FILE_EXT=
 endif
 
+debug: build-for-debug install
+
+build-for-debug:
+	mkdir -p $(BINDIR)
+	$(GO) build -o $(BINDIR)/$(PLUGIN)$(FILE_EXT) ./cmd/$(PLUGIN)
+
 .PHONY: build
 build:
 	mkdir -p $(BINDIR)
