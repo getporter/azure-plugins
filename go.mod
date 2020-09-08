@@ -13,7 +13,7 @@ replace (
 )
 
 require (
-	get.porter.sh/porter v0.27.3-0.20200727164955-cad03081f589
+	get.porter.sh/porter v0.28.1
 	github.com/Azure/azure-pipeline-go v0.2.2
 	github.com/Azure/azure-sdk-for-go v19.1.1+incompatible
 	github.com/Azure/azure-storage-blob-go v0.8.0
@@ -21,9 +21,8 @@ require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2
 	github.com/Azure/go-autorest/autorest/to v0.3.0 // indirect
 	github.com/Azure/go-autorest/autorest/validation v0.2.0 // indirect
-	github.com/cnabio/cnab-go v0.13.0-beta1
+	github.com/cnabio/cnab-go v0.13.4-0.20200817181428-9005c1da4354
 	github.com/hashicorp/go-hclog v0.9.2
-	github.com/hashicorp/go-multierror v1.1.0
 	github.com/hashicorp/go-plugin v1.0.1
 	github.com/hashicorp/yamux v0.0.0-20190923154419-df201c70410d // indirect
 	github.com/mattn/go-ieproxy v0.0.0-20190805055040-f9202b1cfdeb // indirect
