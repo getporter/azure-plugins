@@ -71,6 +71,16 @@ func (s *Store) getTags(itemType string, group string) map[string]string {
 	return tags
 }
 
+func (s *Store) Count(itemType string, group string) (int, error) {
+	err := s.init()
+	if err != nil {
+		return 0, err
+	}
+
+	items, err := s.filterBlobsByTags(s.getTags(itemType, group))
+	return len(items), err
+}
+
 func (s *Store) List(itemType string, group string) ([]string, error) {
 	err := s.init()
 	if err != nil {

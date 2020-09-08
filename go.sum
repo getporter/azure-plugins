@@ -6,8 +6,8 @@ cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 cloud.google.com/go v0.37.4/go.mod h1:NHPJ89PdicEuT9hdPXMROBD91xc5uRDxsMtSB16k7hw=
 cloud.google.com/go v0.38.0/go.mod h1:990N+gfupTy94rShfmMCWGDn0LpTmnzTp2qbd1dvSRU=
 cloud.google.com/go v0.39.0/go.mod h1:rVLT6fkc8chs9sfPtFc1SBH6em7n+ZoXaG+87tDISts=
-get.porter.sh/porter v0.27.3-0.20200727164955-cad03081f589 h1:hDrHE+KQ3n9/9IVuNlwRVn4SvG3YtWq5AXl37QFp2jg=
-get.porter.sh/porter v0.27.3-0.20200727164955-cad03081f589/go.mod h1:/qgRmnIidx7KYCL9PCO8t46mtMfTBmQdBCugZOGoTvs=
+get.porter.sh/porter v0.28.1 h1:OZ8x14VBU+L8qLXgiwULPElwJ2bMgV7gHS5BAGSI5Dg=
+get.porter.sh/porter v0.28.1/go.mod h1:MAS5VNZ/HY4gmcWTr7AUdCMvDbvvbvk/hE/h0dXXC+0=
 github.com/Azure/azure-sdk-for-go v19.1.1+incompatible h1:0nNLU6QNN8FGd3FCQa2e8LAtB3THCJ24aOZ4KbA4Jtk=
 github.com/Azure/azure-sdk-for-go v19.1.1+incompatible/go.mod h1:9XXNKU+eRnpl9moKnB4QOLf1HestfXbmab5FXxiDBjc=
 github.com/Azure/go-ansiterm v0.0.0-20170929234023-d6e3b3328b78/go.mod h1:LmzpDX56iTiv29bbRTIsUNlaFfuhWRQBWjQdVyAevI8=
@@ -90,8 +90,6 @@ github.com/carolynvs/azure-pipeline-go v0.2.3-0.20200624142537-02d87bc5483d h1:I
 github.com/carolynvs/azure-pipeline-go v0.2.3-0.20200624142537-02d87bc5483d/go.mod h1:4rQ/NZncSvGqNkkOsNpOU1tgoNuIlp9AfUH5G1tvCHc=
 github.com/carolynvs/azure-storage-blob-go v0.9.1-0.20200622143949-348533d1f045 h1:RD2gPH3n1qKKY3eRoQCbo4J6QKArNM6MN81tjZNCQ2Q=
 github.com/carolynvs/azure-storage-blob-go v0.9.1-0.20200622143949-348533d1f045/go.mod h1:4CP1eShntsJS0DsKCvok+6K6PlWUD7glrS8+kN6XdmA=
-github.com/carolynvs/cnab-go v0.12.1-beta1.0.20200701150658-4a8090a1f50b h1:Stt+2HDZ++vnqWbMzGiw8nB/KSy90evLQrYal/kBnRI=
-github.com/carolynvs/cnab-go v0.12.1-beta1.0.20200701150658-4a8090a1f50b/go.mod h1:MlIz5HFApIBvFxa5swvb/IxO/DJ4+viUMGb0Dt5tdEg=
 github.com/carolynvs/datetime-printer v0.2.0/go.mod h1:p9W8ZUhmQUOVD5kiDuGXwRG65/nTkZWlLylY7s+Qw2k=
 github.com/carolynvs/go-plugin v1.0.1-acceptstdin h1:8JccOWqcZoqCILz191C0D6RTnz/DKfNcY8+T6F3/G9g=
 github.com/carolynvs/go-plugin v1.0.1-acceptstdin/go.mod h1:++UyYGoz3o5w9ZzAdZxtQKrWWP+iqPBn3cQptSMzBuY=
@@ -108,8 +106,8 @@ github.com/cloudflare/cfssl v1.4.1/go.mod h1:KManx/OJPb5QY+y0+o/898AMcM128sF0bUR
 github.com/cloudflare/go-metrics v0.0.0-20151117154305-6a9aea36fb41/go.mod h1:eaZPlJWD+G9wseg1BuRXlHnjntPMrywMsyxf+LTOdP4=
 github.com/cloudflare/redoctober v0.0.0-20171127175943-746a508df14c/go.mod h1:6Se34jNoqrd8bTxrmJB2Bg2aoZ2CdSXonils9NsiNgo=
 github.com/cnabio/cnab-go v0.10.0-beta1/go.mod h1:5c4uOP6ZppR4nUGtCMAElscRiYEUi44vNQwtSAvISXk=
-github.com/cnabio/cnab-go v0.13.0-beta1 h1:0bt0azTPlIgSoJnclUnloUhUt6IycqDt8GwuGbuboPs=
-github.com/cnabio/cnab-go v0.13.0-beta1/go.mod h1:MlIz5HFApIBvFxa5swvb/IxO/DJ4+viUMGb0Dt5tdEg=
+github.com/cnabio/cnab-go v0.13.4-0.20200817181428-9005c1da4354 h1:XxDdpBuj4DSFTcetumCLlR+nhq1BsRLHLKL60URLYBI=
+github.com/cnabio/cnab-go v0.13.4-0.20200817181428-9005c1da4354/go.mod h1:MlIz5HFApIBvFxa5swvb/IxO/DJ4+viUMGb0Dt5tdEg=
 github.com/cnabio/cnab-to-oci v0.3.1-beta1/go.mod h1:8BomA5Vye+3V/Kd2NSFblCBmp1rJV5NfXBYKbIGT5Rw=
 github.com/containerd/cgroups v0.0.0-20200710171044-318312a37340/go.mod h1:s5q4SojHctfxANBDvMeIaIovkq29IP48TKAxnhYRxvo=
 github.com/containerd/containerd v1.2.7/go.mod h1:bC6axHOhabU15QhwfG7w5PipXdVtMXFTttgp+kVtyUA=
