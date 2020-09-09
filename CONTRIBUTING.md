@@ -29,6 +29,3 @@ Here are the most common Makefile tasks:
 * `build` builds the plugin.
 * `install` installs the plugin into **~/.porter/plugins**.
 * `test-unit` runs the unit tests.
-* `verify-vendor` cleans up packr generated files and verifies that dep's Gopkg.lock 
-   and vendor/ are up-to-date. Use this makefile target instead of running 
-   dep check manually.
