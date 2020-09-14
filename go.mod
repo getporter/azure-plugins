@@ -15,12 +15,13 @@ replace (
 require (
 	get.porter.sh/porter v0.28.1
 	github.com/Azure/azure-pipeline-go v0.2.2
-	github.com/Azure/azure-sdk-for-go v19.1.1+incompatible
+	github.com/Azure/azure-sdk-for-go v44.2.0+incompatible
 	github.com/Azure/azure-storage-blob-go v0.8.0
-	github.com/Azure/go-autorest/autorest v0.9.3
-	github.com/Azure/go-autorest/autorest/azure/auth v0.4.2
-	github.com/Azure/go-autorest/autorest/to v0.3.0 // indirect
-	github.com/Azure/go-autorest/autorest/validation v0.2.0 // indirect
+	github.com/Azure/go-autorest/autorest v0.11.2
+	github.com/Azure/go-autorest/autorest/adal v0.9.0
+	github.com/Azure/go-autorest/autorest/azure/auth v0.5.0
+	github.com/Azure/go-autorest/autorest/to v0.4.0 // indirect
+	github.com/Azure/go-autorest/autorest/validation v0.3.0 // indirect
 	github.com/cnabio/cnab-go v0.13.4-0.20200817181428-9005c1da4354
 	github.com/hashicorp/go-hclog v0.9.2
 	github.com/hashicorp/go-plugin v1.0.1
