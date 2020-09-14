@@ -69,7 +69,7 @@ Authentication to Azure can use any of the following methods. Whichever mechanis
 
 1. **[Azure CLI][azurecli]**. - By default if the machine you are using is already logged in with the Azure CLI then the same security context will be used for the `azure.keyvault` plugin without any additional configuration.
 
-1. **Use a service principal ([azure portal][sp] ) and an application secret ([azure portal][secret] or [azure cli]**.[passwordcli] ) - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then set the environment variable `AZURE_CLIENT_SECRET`using the application secret .
+1. **Use a service principal ([azure portal][sp] ) and an application secret ([azure portal][secret] or [azure cli][passwordcli])**. - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then set the environment variable `AZURE_CLIENT_SECRET`using the application secret .
 
 1. **Use a service principal ([azure portal][sp]) and a certificate ([azure portal][certificate]  or [azure cli][certcli])**. - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then using the certificate file path and password set the environment variables `AZURE_CERTIFICATE_PATH` and `AZURE_CERTIFICATE_PASSWORD`.
 
