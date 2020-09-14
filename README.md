@@ -71,7 +71,7 @@ Authentication to Azure can use any of the following methods. Whichever mechanis
 
 1. **Use a service principal ([azure portal][sp] ) and an application secret ([azure portal][secret] or [azure cli]**.[passwordcli] ) - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then set the environment variable `AZURE_CLIENT_SECRET`using the application secret .
 
-1. **Use a service principal ([azure portal][sp]) and a certificate ([azure portal][certificate]  or [azure cli][certcli])**. - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then using the certiciate file path and password set the environment variables `AZURE_CERTICATE_PATH` and `AZURE_CERTICATE_PASSWORD`.
+1. **Use a service principal ([azure portal][sp]) and a certificate ([azure portal][certificate]  or [azure cli][certcli])**. - Use the service principal details to set the environment variables `AZURE_TENANT_ID` and `AZURE_CLIENT_ID`. Then using the certificate file path and password set the environment variables `AZURE_CERTIFICATE_PATH` and `AZURE_CERTIFICATE_PASSWORD`.
 
 1. **Username and Password** - Log in with user name and password.  Set the environment variables `AZURE_USERNAME` and `AZURE_PASSWORD`. This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
