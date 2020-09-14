@@ -7,7 +7,6 @@ import (
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/Azure/azure-sdk-for-go/services/keyvault/auth"
 	"github.com/Azure/go-autorest/autorest"
-	"github.com/Azure/go-autorest/autorest/azure"
 	azureauth "github.com/Azure/go-autorest/autorest/azure/auth"
 	"github.com/hashicorp/go-hclog"
 	"github.com/pkg/errors"
@@ -57,36 +56,6 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (autorest.Authorizer
 	}
 
 	return authorizer, nil
-}
-
-// getAzureKeyVaultResourceID gets the Key Vault endpoint resource
-func getAzureKeyVaultResourceID() (string, error) {
-
-	resource := os.Getenv("AZURE_KEYVAULT_RESOURCE")
-	if resource == "" {
-		env, err := getAzureEnvironment()
-		if err != nil {
-			return "", err
-		}
-		resource = strings.TrimSuffix(env.KeyVaultEndpoint, "/")
-	}
-
-	return resource, nil
-}
-
-// getAzureEnvironment gets the Azure environment settings
-func getAzureEnvironment() (*azure.Environment, error) {
-	env := azure.PublicCloud
-	var err error
-	envName := os.Getenv("AZURE_ENVIRONMENT")
-	if len(envName) > 0 {
-		env, err = azure.EnvironmentFromName(envName)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return &env, nil
 }
 
 func noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames []string) bool {
