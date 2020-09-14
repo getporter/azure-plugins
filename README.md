@@ -65,7 +65,7 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
 
 #### Authentication
 
-Authentication to Azure can use any of the following methods, whichever mechanism is used the prinicpal that used to access key vault needs to be granted at least [Get and List secret permission][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
+Authentication to Azure can use any of the following methods. Whichever mechanism is used, the principal that is used to access key vault needs to be granted at least [Get and List secret permissions][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
 
 1. **[Azure CLI][azurecli]**. - By default if the machine you are using is already logged in with the Azure CLI then the same security context will be used for the `azure.keyvault` plugin without any additional configuration.
 
