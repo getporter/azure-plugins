@@ -1,8 +1,8 @@
 # Azure Plugins for Porter
 
-This is a set of Azure plugins for [Porter](https://github.com/deislabs/porter).
+This is a set of Azure plugins for [Porter](https://github.com/getporter/porter).
  
-[![Build Status](https://dev.azure.com/deislabs/porter/_apis/build/status/porter-azure-plugins?branchName=main)](https://dev.azure.com/deislabs/porter/_build/latest?definitionId=26&branchName=main)
+[![Build Status](https://dev.azure.com/getporter/porter/_apis/build/status/porter-azure-plugins?branchName=main)](https://dev.azure.com/getporter/porter/_build/latest?definitionId=26&branchName=main)
 
 ## Install
 
