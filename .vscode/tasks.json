@@ -22,7 +22,7 @@
       "command": "./.vscode/scripts/runporterinbackground.sh",
       "options": {
         "env": {
-          "PORTER_RUN_PLUGIN_IN_DEBUGGER": "secrets.azure.keyvault",
+          "PORTER_RUN_PLUGIN_IN_DEBUGGER": "storage.azure.blob",
           "PORTER_PLUGIN_WORKING_DIRECTORY": "${workspaceRoot}/cmd/azure",
           "PORTER_DEBUGGER_PORT": "2345",
           "PORTER_HOME": "/home/${env:USER}/.porter"
