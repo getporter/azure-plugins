@@ -6,22 +6,24 @@ import (
 	"testing"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
+	"github.com/Azure/go-autorest/autorest/azure/cli"
 	"github.com/hashicorp/go-hclog"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestGet_GetCredentials(t *testing.T) {
+func Test_GetCredentials(t *testing.T) {
 	testcases := []struct {
 		name         string
 		envVarsToSet map[string]string
 		config       *azureconfig.Config
-		testfunc     func(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger)
+		wantError    string
 	}{
 		{
 			"Missing Environment Variables",
 			map[string]string{},
 			&azureconfig.Config{},
-			missingEnvironmentVariables,
+			"environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set:\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 		{
 			"Invalid Connection string",
@@ -29,7 +31,7 @@ func TestGet_GetCredentials(t *testing.T) {
 				"AZURE_STORAGE_CONNECTION_STRING": "Invalid",
 			},
 			&azureconfig.Config{},
-			invalidConnectionString,
+			"unexpected format for AZURE_STORAGE_CONNECTION_STRING, could not find AccountName=NAME and AccountKey=KEY in it",
 		},
 		{
 			"Valid Connection string",
@@ -37,7 +39,7 @@ func TestGet_GetCredentials(t *testing.T) {
 				"AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=bmFtZQo=;AccountKey=a2V5Cg==;EndpointSuffix=core.windows.net",
 			},
 			&azureconfig.Config{},
-			validConnectionString,
+			"",
 		},
 		{
 			"Missing Storage Acccount Resource Group",
@@ -45,7 +47,7 @@ func TestGet_GetCredentials(t *testing.T) {
 			&azureconfig.Config{
 				StorageAccount: "account",
 			},
-			missingStorageAccountResourceGroup,
+			"resource-group is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"account\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 		{
 			"Missing Storage Acccount Name",
@@ -53,19 +55,9 @@ func TestGet_GetCredentials(t *testing.T) {
 			&azureconfig.Config{
 				StorageAccountResourceGroup: "group",
 			},
-			missingStorageAccountName,
-		},
-		{
-			"loginwithCLI",
-			map[string]string{},
-			&azureconfig.Config{
-				StorageAccount:              "account",
-				StorageAccountResourceGroup: "group",
-			},
-			loginwithCLI,
+			"account is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"group\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 	}
-	env := os.Environ()
 	for _, tc := range testcases {
 
 		t.Run(tc.name, func(t *testing.T) {
@@ -80,53 +72,46 @@ func TestGet_GetCredentials(t *testing.T) {
 				os.Setenv(k, v)
 			}
 
-			tc.testfunc(t, tc.envVarsToSet, tc.config, logger)
-			resetEnvironmentVars(t, env)
+			defer func() {
+				for k := range tc.envVarsToSet {
+					os.Unsetenv(k)
+				}
+			}()
+
+			cred, err := GetCredentials(*tc.config, logger)
+			if tc.wantError == "" {
+				require.NoError(t, err, "GetCredentials should have not returned an error")
+				assert.NotNil(t, cred)
+			} else {
+				require.Error(t, err, "GetCredentials should have returned an error")
+				assert.EqualError(t, err, tc.wantError)
+			}
 		})
 	}
 }
 
-func resetEnvironmentVars(t *testing.T, env []string) {
-	os.Clearenv()
-	for _, e := range env {
-		pair := strings.Split(e, "=")
-		t.Logf("Resetting Env Variable: %s", pair[0])
-		os.Setenv(pair[0], pair[1])
+func Test_LoginwithCLI(t *testing.T) {
+
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   t.Name(),
+		Output: os.Stderr,
+		Level:  hclog.Error,
+	})
+
+	config := &azureconfig.Config{
+		StorageAccount:              "account",
+		StorageAccountResourceGroup: "group",
+	}
+
+	_, err := GetCredentials(*config, logger)
+	require.Error(t, err, "GetCredentials should have returned an error")
+	if isLoggedInWithAzureCLI() {
+		assert.Contains(t, err.Error(), "Failed to get storage account keys:")
+	} else {
+		assert.Contains(t, err.Error(), "Failed to login with Azure CLI:")
 	}
 }
-
-func missingEnvironmentVariables(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	assert.Error(t, err)
-	assert.True(t, strings.HasPrefix(err.Error(), "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set: StorageAccount and/or StorageAccountResourceGroup was not set, login with az cli not attempted"))
-}
-
-func invalidConnectionString(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	assert.EqualError(t, err, "unexpected format for AZURE_STORAGE_CONNECTION_STRING, could not find AccountName=NAME and AccountKey=KEY in it")
-}
-
-func validConnectionString(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	assert.NoError(t, err)
-}
-
-func missingStorageAccountResourceGroup(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	assert.Error(t, err)
-	assert.True(t, strings.HasPrefix(err.Error(), "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set: StorageAccount and/or StorageAccountResourceGroup was not set, login with az cli not attempted"))
-}
-
-func missingStorageAccountName(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	assert.Error(t, err)
-	assert.True(t, strings.HasPrefix(err.Error(), "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set: StorageAccount and/or StorageAccountResourceGroup was not set, login with az cli not attempted"))
-}
-
-func loginwithCLI(t *testing.T, envVarsToSet map[string]string, config *azureconfig.Config, logger hclog.Logger) {
-	_, err := GetCredentials(*config, logger)
-	if err != nil {
-		assert.True(t, strings.HasPrefix(err.Error(), "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set: Failed to get storage account keys:") || strings.HasPrefix(err.Error(), "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set: Failed to login with Azure cli:"))
-		return
-	}
+func isLoggedInWithAzureCLI() bool {
+	_, err := cli.GetTokenFromCLI("https://management.azure.com/")
+	return err == nil
 }

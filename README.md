@@ -52,14 +52,14 @@ The `azure.blob` plugin stores data in Azure Blob Storage. The plugin requires a
 
     [storage.config]
     account="storage account name"
-    resourcegroup="storage account resource group"
+    resource-group="storage account resource group"
 
     ```
 
-If the machine you are using is already logged in with the Azure CLI then the same security context will be used to lookup the keys for the storage account, by default it will use the current subscription (the one returned by the command `az account show`), to set the subscription explicitly add the following line to the `[storage.config]`.
+If the machine you are using is already logged in with the Azure CLI, then the same security context will be used to lookup the keys for the storage account. By default it will use the current subscription (the one returned by the command `az account show`). To set the subscription explicitly add the following line to the `[storage.config]`.
 
  ```toml
- subscriptionId="storage account subscription id"
+ subscription-id="storage account subscription id"
  ```
 
 ## Secrets

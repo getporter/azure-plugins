@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"regexp"
@@ -47,9 +48,12 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, erro
 
 	connString := os.Getenv(credsEnv)
 	if connString == "" {
-		cred, err := GetCredentialsFromCli(cfg, l)
+		cred, useCli, err := GetCredentialsFromCli(cfg, l)
+		if !useCli {
+			return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set:\n%#v", credsEnv, cfg)
+		}
 		if err != nil {
-			return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set: %v\n%#v", credsEnv, err, cfg)
+			return CredentialSet{}, errors.Errorf("%v\n%#v", err, cfg)
 		}
 		return cred, nil
 	}
@@ -68,38 +72,50 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, erro
 	return CredentialSet{Credential: *cred, Pipeline: pipe}, nil
 }
 
-func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
+func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, bool, error) {
 
-	if len(cfg.StorageAccount) == 0 || len(cfg.StorageAccountResourceGroup) == 0 {
-		return CredentialSet{}, errors.Errorf("StorageAccount and/or StorageAccountResourceGroup was not set, login with az cli not attempted")
+	if cfg.StorageAccount == "" && cfg.StorageAccountResourceGroup == "" {
+		return CredentialSet{}, false, nil
+	}
+
+	if cfg.StorageAccount == "" {
+		return CredentialSet{}, true, errors.New("account is not set - cannot login with Azure CLI")
+	}
+
+	if cfg.StorageAccountResourceGroup == "" {
+		return CredentialSet{}, true, errors.New("resource-group is not set - cannot login with Azure CLI")
 	}
 
 	authorizer, err := auth.NewAuthorizerFromCLI()
 	if err != nil {
-		return CredentialSet{}, errors.Errorf("Failed to login with Azure cli: %v", err)
+		return CredentialSet{}, true, errors.Errorf("Failed to login with Azure CLI: %v", err)
 	}
 	subscriptionId := cfg.StorageAccountSubscriptionId
-	if len(subscriptionId) == 0 {
+	if subscriptionId == "" {
 		subscriptionId, err = getCurrentAzureSubscriptionFromCli()
 		if err != nil {
-			return CredentialSet{}, err
+			return CredentialSet{}, true, err
 		}
 	}
 	accountsClient := storage.NewAccountsClient(subscriptionId)
 	accountsClient.Authorizer = authorizer
-	_ = accountsClient.AddToUserAgent(UserAgent)
+	err = accountsClient.AddToUserAgent(UserAgent)
+	if err != nil {
+		l.Debug(fmt.Sprintf("Error updating User Agent string for Azure: %v", err))
+	}
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	result, err := accountsClient.ListKeys(ctx, cfg.StorageAccountResourceGroup, cfg.StorageAccount, "")
 	if err != nil {
-		return CredentialSet{}, errors.Errorf("Failed to get storage account keys: %v", err)
+		return CredentialSet{}, true, errors.Errorf("Failed to get storage account keys: %v", err)
 	}
-	cred, err := azblob.NewSharedKeyCredential(cfg.StorageAccount, *(((*result.Keys)[0]).Value))
+	storageAccountKey := (*result.Keys)[0]
+	cred, err := azblob.NewSharedKeyCredential(cfg.StorageAccount, *storageAccountKey.Value)
 	if err != nil {
-		return CredentialSet{}, errors.Errorf("Failed to create storage account credential: %v", err)
+		return CredentialSet{}, true, errors.Errorf("Failed to create storage account credential: %v", err)
 	}
 	pipe := azblob.NewPipeline(cred, azblob.PipelineOptions{})
-	return CredentialSet{Credential: *cred, Pipeline: pipe}, nil
+	return CredentialSet{Credential: *cred, Pipeline: pipe}, true, nil
 
 }
 
@@ -165,7 +181,7 @@ func getCurrentAzureSubscriptionFromCli() (string, error) {
 
 func removeBOM(reader *bufio.Reader) error {
 	rune, _, err := reader.ReadRune()
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return fmt.Errorf("Error testing azure profile for BOM: %w", err)
 	}
 	if rune != BOM {

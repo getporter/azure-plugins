@@ -6,14 +6,14 @@ type Config struct {
 	// string should be loaded.
 	EnvConnectionString string `json:"env"`
 
-	// StorageAccount contains the name of the storage account to be used by the Azure storage plugin, if the azure connection environment variable is not set this and StorageAccountResourceGroup are populated and the user is logged in with the Azure CLI
+	// StorageAccount contains the name of the storage account to be used by the Azure storage plugin, if the azure connection environment variable is not set and this proeprty and StorageAccountResourceGroup are populated and the user is logged in with the Azure CLI
 	// the Storage Account Key will be looked up at runtime using the logged in users credentials
 	StorageAccount string `json:"account"`
-	// StorageAccountResourceGroup contains the name of the storage account to be used by the Azure storage plugin, if the azure connection environment variable is not set this and StorageAccount are populated and the user is logged in with the Azure CLI
+	// StorageAccountResourceGroup contains the name of the resource group containing the storage account to be used by the Azure storage plugin, if the azure connection environment variable is not set and this property and StorageAccount are populated and the user is logged in with the Azure CLI
 	// the Storage Account Key will be looked up at runtime using the logged in users credentials
-	StorageAccountResourceGroup string `json:"resourcegroup"`
-	// StorageAccountSubscriptionId contains the subscriptionId of the subscription to be used when looking up the Storage Account Key, if this is not set then the current CLI subscription will be used
-	StorageAccountSubscriptionId string `json:"subscriptionId"`
+	StorageAccountResourceGroup string `json:"resource-group"`
+	// StorageAccountSubscriptionId contains the subscription id of the subscription to be used when looking up the Storage Account Key, if this is not set then the current CLI subscription will be used
+	StorageAccountSubscriptionId string `json:"subscription-id"`
 
 	// EnvAzurePrefix is the prefix applied to every azure
 	// environment variable For example, for a prefix of "DEV_AZURE_", the
