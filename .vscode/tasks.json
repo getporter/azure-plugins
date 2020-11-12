@@ -22,17 +22,18 @@
       "command": "./.vscode/scripts/runporterinbackground.sh",
       "options": {
         "env": {
-          "PORTER_RUN_PLUGIN_IN_DEBUGGER": "storage.azure.blob",
+          "PORTER_RUN_PLUGIN_IN_DEBUGGER": "storage.azure.table",
           "PORTER_PLUGIN_WORKING_DIRECTORY": "${workspaceRoot}/cmd/azure",
           "PORTER_DEBUGGER_PORT": "2345",
-          "PORTER_HOME": "/home/${env:USER}/.porter"
+          "PORTER_HOME": "/home/${env:USER}/.porter",
+          "AZURE_STORAGE_CONNECTION_STRING":"DefaultEndpointsProtocol=https;AccountName=cnabstategrufuyk7dkalg;AccountKey=H85r3atfaHo08uQz9EcbengVwzK5O0Vc652CUliL6+IlzPMdhw+MIXct2Ec1sjmy3CHzlRBo4A9hMlpgxjAFHg==;EndpointSuffix=core.windows.net"
         }
       },
       "presentation": {
         "reveal": "always",
         "panel": "shared"
       },
-      "args": ["--tag","getporter/plugins-tutorial:v0.1.0","--debug","-c","plugins-tutorial"]
+      "args": ["list","--debug"]
     },
     {
       "label": "KillDebugProcesses",
