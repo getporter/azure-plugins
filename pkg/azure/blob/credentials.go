@@ -53,7 +53,7 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, erro
 			return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set:\n%#v", credsEnv, cfg)
 		}
 		if err != nil {
-			return CredentialSet{}, errors.Errorf("%v:%#v", err, cfg)
+			return CredentialSet{}, errors.Errorf("%v\n%#v", err, cfg)
 		}
 		return cred, nil
 	}
