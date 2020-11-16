@@ -53,7 +53,7 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, erro
 			return CredentialSet{}, errors.Errorf("environment variable %s containing the azure storage connection string was not set:\n%#v", credsEnv, cfg)
 		}
 		if err != nil {
-			return CredentialSet{}, errors.Errorf("%v\n%#v", err, cfg)
+			return CredentialSet{}, errors.Errorf("%v:%#v", err, cfg)
 		}
 		return cred, nil
 	}
@@ -88,7 +88,7 @@ func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSe
 
 	authorizer, err := auth.NewAuthorizerFromCLI()
 	if err != nil {
-		return CredentialSet{}, true, errors.Errorf("Failed to login with Azure CLI: %v", err)
+		return CredentialSet{}, true, errors.Wrap(err, "Failed to login with Azure CLI")
 	}
 	subscriptionId := cfg.StorageAccountSubscriptionId
 	if subscriptionId == "" {
@@ -107,12 +107,12 @@ func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSe
 	defer cancel()
 	result, err := accountsClient.ListKeys(ctx, cfg.StorageAccountResourceGroup, cfg.StorageAccount, "")
 	if err != nil {
-		return CredentialSet{}, true, errors.Errorf("Failed to get storage account keys: %v", err)
+		return CredentialSet{}, true, errors.Wrap(err, "Failed to get storage account keys")
 	}
 	storageAccountKey := (*result.Keys)[0]
 	cred, err := azblob.NewSharedKeyCredential(cfg.StorageAccount, *storageAccountKey.Value)
 	if err != nil {
-		return CredentialSet{}, true, errors.Errorf("Failed to create storage account credential: %v", err)
+		return CredentialSet{}, true, errors.Wrap(err, "Failed to create storage account credential")
 	}
 	pipe := azblob.NewPipeline(cred, azblob.PipelineOptions{})
 	return CredentialSet{Credential: *cred, Pipeline: pipe}, true, nil
@@ -123,11 +123,11 @@ func getCurrentAzureSubscriptionFromCli() (string, error) {
 	var subscription AvailableSubscription
 	home, err := os.UserHomeDir()
 	if err != nil {
-		return "", fmt.Errorf("Error getting home directory: %w", err)
+		return "", errors.Wrap(err, "Error getting home directory")
 	}
 	file, err := os.Open(path.Join(home, AzureDirectory, AzureProile))
 	if err != nil {
-		return "", fmt.Errorf("Error getting azure profile: %w", err)
+		return "", errors.Wrap(err, "Error getting azure profile")
 	}
 	defer file.Close()
 
@@ -140,23 +140,23 @@ func getCurrentAzureSubscriptionFromCli() (string, error) {
 
 	decoder := json.NewDecoder(reader)
 	if _, err := decoder.Token(); err != nil {
-		return "", fmt.Errorf("Error decoding opening json token: %w", err)
+		return "", errors.Wrap(err, "Error decoding opening json token")
 	}
 
 	property, err := decoder.Token()
 	if err != nil {
-		return "", fmt.Errorf("Error decoding subscriptions token: %w", err)
+		return "", errors.Wrap(err, "Error decoding subscriptions token")
 	}
 	if val, ok := property.(string); !ok || !strings.EqualFold(val, "subscriptions") {
-		return "", fmt.Errorf("Error gettting subscriptions property: %w", err)
+		return "", errors.Wrap(err, "Error gettting subscriptions property")
 	}
 
 	delim, err := decoder.Token()
 	if err != nil {
-		return "", fmt.Errorf("Error decoding json array delimiter: %w", err)
+		return "", errors.Wrap(err, "Error decoding json array delimiter")
 	}
 	if _, ok := delim.(json.Delim); !ok {
-		return "", fmt.Errorf("Error getting array delimiter: %w", err)
+		return "", errors.Wrap(err, "Error getting array delimiter")
 	}
 
 	for decoder.More() {
@@ -168,7 +168,7 @@ func getCurrentAzureSubscriptionFromCli() (string, error) {
 		}
 
 		if err := decoder.Decode(&subscription); err != nil {
-			return "", fmt.Errorf("Error decoding json: %w", err)
+			return "", errors.Wrap(err, "Error decoding json")
 		}
 
 		if subscription.EnvironmentName == PublicCloud && subscription.IsDefault {
@@ -182,11 +182,11 @@ func getCurrentAzureSubscriptionFromCli() (string, error) {
 func removeBOM(reader *bufio.Reader) error {
 	rune, _, err := reader.ReadRune()
 	if err != nil && err != io.EOF {
-		return fmt.Errorf("Error testing azure profile for BOM: %w", err)
+		return errors.Wrap(err, "Error testing azure profile for BOM")
 	}
-	if rune != BOM {
+	if rune != BOM && err != io.EOF {
 		if err := reader.UnreadRune(); err != nil {
-			return fmt.Errorf("Failed to unread rune: %w", err)
+			return errors.Wrap(err, "Failed to unread rune")
 		}
 	}
 	return nil
