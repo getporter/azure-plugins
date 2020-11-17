@@ -1,0 +1,32 @@
+﻿{
+  "subscriptions": [
+    {
+      "id": "9c92af48-0841-40f6-8975-7113dafa2e6f",
+      "name": "Test Subscription 1",
+      "state": "Enabled",
+      "user": {
+        "name": "testuser@test.com",
+        "type": "user"
+      },
+      "isDefault": false,
+      "tenantId": "10ddd42b-6c5e-48f1-9285-60404c1a1335",
+      "environmentName": "AzureCloud",
+      "homeTenantId": "10ddd42b-6c5e-48f1-9285-60404c1a1335",
+      "managedByTenants": []
+    },
+    {
+      "id": "8b5ab980-0253-40d6-b22a-61b3f9d94491",
+      "name": "Test Subscription 2",
+      "state": "Enabled",
+      "user": {
+        "name": "testuser@test.com",
+        "type": "user"
+      },
+      "isDefault": true,
+      "tenantId": "10ddd42b-6c5e-48f1-9285-60404c1a1335",
+      "environmentName": "AzureCloud",
+      "homeTenantId": "10ddd42b-6c5e-48f1-9285-60404c1a1335",
+      "managedByTenants": []
+    }
+  ]
+}

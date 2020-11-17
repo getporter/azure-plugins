@@ -6,10 +6,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path"
 	"regexp"
-	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 
@@ -38,6 +38,10 @@ type AvailableSubscription struct {
 	State           string `json:"state"`
 	IsDefault       bool   `json:"isDefault"`
 	EnvironmentName string `json:"environmentName"`
+}
+
+type AvailableSubscriptions struct {
+	Subscriptions []AvailableSubscription `json:"subscriptions"`
 }
 
 func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
@@ -120,59 +124,43 @@ func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSe
 }
 
 func getCurrentAzureSubscriptionFromCli() (string, error) {
-	var subscription AvailableSubscription
+
 	home, err := os.UserHomeDir()
 	if err != nil {
 		return "", errors.Wrap(err, "Error getting home directory")
 	}
-	file, err := os.Open(path.Join(home, AzureDirectory, AzureProile))
+
+	return getCurrentAzureSubscriptionFromProfile(path.Join(home, AzureDirectory, AzureProile))
+}
+
+func getCurrentAzureSubscriptionFromProfile(filename string) (string, error) {
+
+	file, err := os.Open(filename)
 	if err != nil {
 		return "", errors.Wrap(err, "Error getting azure profile")
 	}
 	defer file.Close()
 
-	// azureProfile can have BOM and embedded BOM so use decoder and check for BOM rather than unmarshall
+	// azureProfile can have BOM so check for BOM before decoding
 
 	reader := bufio.NewReader(file)
 	if err := removeBOM(reader); err != nil {
 		return "", err
 	}
 
-	decoder := json.NewDecoder(reader)
-	if _, err := decoder.Token(); err != nil {
-		return "", errors.Wrap(err, "Error decoding opening json token")
-	}
-
-	property, err := decoder.Token()
+	data, err := ioutil.ReadAll(reader)
 	if err != nil {
-		return "", errors.Wrap(err, "Error decoding subscriptions token")
-	}
-	if val, ok := property.(string); !ok || !strings.EqualFold(val, "subscriptions") {
-		return "", errors.Wrap(err, "Error gettting subscriptions property")
+		return "", errors.Wrap(err, "Error reading Azure profile")
 	}
 
-	delim, err := decoder.Token()
-	if err != nil {
-		return "", errors.Wrap(err, "Error decoding json array delimiter")
-	}
-	if _, ok := delim.(json.Delim); !ok {
-		return "", errors.Wrap(err, "Error getting array delimiter")
+	var subscriptions AvailableSubscriptions
+	if err := json.Unmarshal(data, &subscriptions); err != nil {
+		return "", errors.Wrap(err, "Failed to decode Azure Profile")
 	}
 
-	for decoder.More() {
-
-		// azureProfile can have embedded BOM
-
-		if err := removeBOM(reader); err != nil {
-			return "", err
-		}
-
-		if err := decoder.Decode(&subscription); err != nil {
-			return "", errors.Wrap(err, "Error decoding json")
-		}
-
-		if subscription.EnvironmentName == PublicCloud && subscription.IsDefault {
-			return subscription.SubscriptionId, nil
+	for _, availableSubscription := range subscriptions.Subscriptions {
+		if availableSubscription.EnvironmentName == PublicCloud && availableSubscription.IsDefault {
+			return availableSubscription.SubscriptionId, nil
 		}
 	}
 
