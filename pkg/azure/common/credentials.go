@@ -91,6 +91,7 @@ func RemoveBOM(reader *bufio.Reader) error {
 	}
 	return nil
 }
+
 func ParseConnectionString(connString string) (name string, key string, err error) {
 	keyRegex := regexp.MustCompile("AccountKey=([^;]+)")
 	keyMatch := keyRegex.FindAllStringSubmatch(connString, -1)

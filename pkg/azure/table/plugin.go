@@ -30,7 +30,7 @@ func NewPlugin(cfg azureconfig.Config) plugin.Plugin {
 
 	return &crudstore.Plugin{
 		Impl: &Plugin{
-			Store: NewStore(cfg, logger),
+			Store: NewStore(cfg, logger, nil),
 		},
 	}
 }

@@ -1,0 +1,464 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"PartitionKey":"installations","RowKey":"installation1","data":null,"data@odata.type":"Edm.Binary","group":""}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "111"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 28a4d3d9-1e56-4bd5-ac8e-97fb09f740f8
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation1%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5057167Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708a9-e002-0070-14c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"installations","RowKey":"installation2","data":null,"data@odata.type":"Edm.Binary","group":""}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "111"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - cf7b4161-4db4-4647-a64d-e1d0f612864b
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation2%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5367376Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708b0-e002-0070-1ac0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"installations","RowKey":"installation3","data":null,"data@odata.type":"Edm.Binary","group":""}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "111"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - a37f39d8-e989-4bb4-8706-e07b11e985be
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation3%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5647568Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708b5-e002-0070-1fc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 3fdc5823-793b-49c8-9cb3-1b051af52b8c
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation1%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5057167Z''\"","PartitionKey":"installations","RowKey":"installation1","Timestamp":"2020-11-18T15:36:51.5057167Z","group":""}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5057167Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708ba-e002-0070-24c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - da11a021-24ff-4196-aa47-741d29e1304e
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation2%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5367376Z''\"","PartitionKey":"installations","RowKey":"installation2","Timestamp":"2020-11-18T15:36:51.5367376Z","group":""}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5367376Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708c0-e002-0070-2ac0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - fba3237e-59b0-460a-bc7a-008654f48434
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation3%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5647568Z''\"","PartitionKey":"installations","RowKey":"installation3","Timestamp":"2020-11-18T15:36:51.5647568Z","group":""}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.5647568Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708c4-e002-0070-2ec0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 6932b89b-567a-47d5-a757-712a012b84cf
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27installations%27+and+group+eq+%27%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5057167Z''\"","PartitionKey":"installations","RowKey":"installation1","Timestamp":"2020-11-18T15:36:51.5057167Z","group":""},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5367376Z''\"","PartitionKey":"installations","RowKey":"installation2","Timestamp":"2020-11-18T15:36:51.5367376Z","group":""},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5647568Z''\"","PartitionKey":"installations","RowKey":"installation3","Timestamp":"2020-11-18T15:36:51.5647568Z","group":""}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708cf-e002-0070-37c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 7e449f06-9c83-4ef9-9ee4-d5fd9a414645
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27installations%27+and+group+eq+%27%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5057167Z''\"","PartitionKey":"installations","RowKey":"installation1","Timestamp":"2020-11-18T15:36:51.5057167Z","group":""},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5367376Z''\"","PartitionKey":"installations","RowKey":"installation2","Timestamp":"2020-11-18T15:36:51.5367376Z","group":""},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.5647568Z''\"","PartitionKey":"installations","RowKey":"installation3","Timestamp":"2020-11-18T15:36:51.5647568Z","group":""}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708d3-e002-0070-3bc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 0f18c401-6d47-4ee5-ab81-6b6c7e3e7c97
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation1%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708db-e002-0070-43c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 8114e811-a1c1-411f-ba99-5cdc9a7baec2
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation2%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708e5-e002-0070-4cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - f84f73ff-6e06-41fb-aa6f-132a54ff3b89
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27installations%27,RowKey=%27installation3%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf708ec-e002-0070-53c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""

@@ -24,6 +24,7 @@ require (
 	github.com/Azure/go-autorest/autorest/to v0.4.0 // indirect
 	github.com/Azure/go-autorest/autorest/validation v0.3.0 // indirect
 	github.com/cnabio/cnab-go v0.13.4-0.20200817181428-9005c1da4354
+	github.com/dnaeon/go-vcr v1.1.0
 	github.com/google/uuid v1.1.1
 	github.com/hashicorp/go-hclog v0.9.2
 	github.com/hashicorp/go-plugin v1.0.1
@@ -36,5 +37,5 @@ require (
 	github.com/stretchr/testify v1.5.1
 	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e
 	google.golang.org/genproto v0.0.0-20191007204434-a023cd5227bd // indirect
-	google.golang.org/grpc v1.24.0 // indirect
+	google.golang.org/grpc v1.24.0
 )

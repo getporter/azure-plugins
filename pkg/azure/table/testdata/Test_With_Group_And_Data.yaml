@@ -1,0 +1,1183 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim1","data":"Y2xhaW0x","data@odata.type":"Edm.Binary","group":"test1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 00e5d788-c9f3-4610-b441-10274f8e09ca
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim1%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.8699608Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70902-e002-0070-66c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim2","data":"Y2xhaW0y","data@odata.type":"Edm.Binary","group":"test1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - b720edca-5c9e-49df-95f6-69c5d23f8456
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim2%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.8979804Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70910-e002-0070-73c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim3","data":"Y2xhaW0z","data@odata.type":"Edm.Binary","group":"test1"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 2157582f-2714-4cdd-8666-e79450e13d81
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim3%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.9269987Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7091a-e002-0070-7cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim4","data":"Y2xhaW00","data@odata.type":"Edm.Binary","group":"test2"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 1c70db22-acfd-45bb-bab0-90e3c3faab5d
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim4%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.960021Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70922-e002-0070-02c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim5","data":"Y2xhaW01","data@odata.type":"Edm.Binary","group":"test2"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 3fdf1544-579b-4ceb-8c89-e3def1002274
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim5%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.9890415Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70930-e002-0070-0cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim6","data":"Y2xhaW02","data@odata.type":"Edm.Binary","group":"test2"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - fb9dd36f-c4bd-41bd-8377-db452130a8d5
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim6%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0190603Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70938-e002-0070-14c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim7","data":"Y2xhaW03","data@odata.type":"Edm.Binary","group":"test2"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 11795a44-b105-42b7-a61d-d1a8e7fc7fa3
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim7%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0480794Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70941-e002-0070-1cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: '{"PartitionKey":"claims","RowKey":"claim8","data":"Y2xhaW04","data@odata.type":"Edm.Binary","group":"test2"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "108"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 137c26a6-c1cd-4c85-b628-18c50131f8ee
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim8%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0771Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7094d-e002-0070-26c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 229d472a-8ee3-483b-83d9-18bac2573d89
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim1%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8699608Z''\"","PartitionKey":"claims","RowKey":"claim1","Timestamp":"2020-11-18T15:36:51.8699608Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0x","group":"test1"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.8699608Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70955-e002-0070-2ec0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - cf0e0482-eeb9-4479-833c-bf1885284c62
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim2%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8979804Z''\"","PartitionKey":"claims","RowKey":"claim2","Timestamp":"2020-11-18T15:36:51.8979804Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0y","group":"test1"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.8979804Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7095e-e002-0070-37c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 4654dd30-62cc-4ce2-8f35-f1699528298f
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim3%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9269987Z''\"","PartitionKey":"claims","RowKey":"claim3","Timestamp":"2020-11-18T15:36:51.9269987Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0z","group":"test1"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.9269987Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70965-e002-0070-3cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - f9d34d8d-b847-4e63-9558-f157ae1600b0
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim4%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.960021Z''\"","PartitionKey":"claims","RowKey":"claim4","Timestamp":"2020-11-18T15:36:51.960021Z","data@odata.type":"Edm.Binary","data":"Y2xhaW00","group":"test2"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.960021Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7096d-e002-0070-44c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 21f6b822-7a3c-42e5-8e95-20df21b645bc
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim5%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9890415Z''\"","PartitionKey":"claims","RowKey":"claim5","Timestamp":"2020-11-18T15:36:51.9890415Z","data@odata.type":"Edm.Binary","data":"Y2xhaW01","group":"test2"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.9890415Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70978-e002-0070-4fc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - d01c919d-4256-4fb2-aa84-7880e20ffada
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim6%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0190603Z''\"","PartitionKey":"claims","RowKey":"claim6","Timestamp":"2020-11-18T15:36:52.0190603Z","data@odata.type":"Edm.Binary","data":"Y2xhaW02","group":"test2"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0190603Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70981-e002-0070-58c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 6523b144-23fc-45da-abe7-85f4e3e6aa24
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim7%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0480794Z''\"","PartitionKey":"claims","RowKey":"claim7","Timestamp":"2020-11-18T15:36:52.0480794Z","data@odata.type":"Edm.Binary","data":"Y2xhaW03","group":"test2"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0480794Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70985-e002-0070-5cc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 2099fb05-de05-49b5-a8e4-fdd8f53ccc97
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim8%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0771Z''\"","PartitionKey":"claims","RowKey":"claim8","Timestamp":"2020-11-18T15:36:52.0771Z","data@odata.type":"Edm.Binary","data":"Y2xhaW04","group":"test2"}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A52.0771Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7098d-e002-0070-64c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 97356611-31d4-4e4d-b9fa-0166d6ece585
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27claims%27+and+group+eq+%27test1%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8699608Z''\"","PartitionKey":"claims","RowKey":"claim1","Timestamp":"2020-11-18T15:36:51.8699608Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0x","group":"test1"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8979804Z''\"","PartitionKey":"claims","RowKey":"claim2","Timestamp":"2020-11-18T15:36:51.8979804Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0y","group":"test1"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9269987Z''\"","PartitionKey":"claims","RowKey":"claim3","Timestamp":"2020-11-18T15:36:51.9269987Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0z","group":"test1"}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70992-e002-0070-69c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 24cb5712-9460-46c8-bad8-537f54312da2
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27claims%27+and+group+eq+%27test1%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8699608Z''\"","PartitionKey":"claims","RowKey":"claim1","Timestamp":"2020-11-18T15:36:51.8699608Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0x","group":"test1"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.8979804Z''\"","PartitionKey":"claims","RowKey":"claim2","Timestamp":"2020-11-18T15:36:51.8979804Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0y","group":"test1"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9269987Z''\"","PartitionKey":"claims","RowKey":"claim3","Timestamp":"2020-11-18T15:36:51.9269987Z","data@odata.type":"Edm.Binary","data":"Y2xhaW0z","group":"test1"}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70998-e002-0070-6fc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 14a2a353-f31e-40cf-bd7d-bab065d603a9
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27claims%27+and+group+eq+%27test2%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.960021Z''\"","PartitionKey":"claims","RowKey":"claim4","Timestamp":"2020-11-18T15:36:51.960021Z","data@odata.type":"Edm.Binary","data":"Y2xhaW00","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9890415Z''\"","PartitionKey":"claims","RowKey":"claim5","Timestamp":"2020-11-18T15:36:51.9890415Z","data@odata.type":"Edm.Binary","data":"Y2xhaW01","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0190603Z''\"","PartitionKey":"claims","RowKey":"claim6","Timestamp":"2020-11-18T15:36:52.0190603Z","data@odata.type":"Edm.Binary","data":"Y2xhaW02","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0480794Z''\"","PartitionKey":"claims","RowKey":"claim7","Timestamp":"2020-11-18T15:36:52.0480794Z","data@odata.type":"Edm.Binary","data":"Y2xhaW03","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0771Z''\"","PartitionKey":"claims","RowKey":"claim8","Timestamp":"2020-11-18T15:36:52.0771Z","data@odata.type":"Edm.Binary","data":"Y2xhaW04","group":"test2"}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7099e-e002-0070-75c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 3e15b2e8-b5dd-4878-af18-6efe7ed71c81
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter?%24filter=PartitionKey+eq+%27claims%27+and+group+eq+%27test2%27&timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter","value":[{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.960021Z''\"","PartitionKey":"claims","RowKey":"claim4","Timestamp":"2020-11-18T15:36:51.960021Z","data@odata.type":"Edm.Binary","data":"Y2xhaW00","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.9890415Z''\"","PartitionKey":"claims","RowKey":"claim5","Timestamp":"2020-11-18T15:36:51.9890415Z","data@odata.type":"Edm.Binary","data":"Y2xhaW01","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0190603Z''\"","PartitionKey":"claims","RowKey":"claim6","Timestamp":"2020-11-18T15:36:52.0190603Z","data@odata.type":"Edm.Binary","data":"Y2xhaW02","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0480794Z''\"","PartitionKey":"claims","RowKey":"claim7","Timestamp":"2020-11-18T15:36:52.0480794Z","data@odata.type":"Edm.Binary","data":"Y2xhaW03","group":"test2"},{"odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A52.0771Z''\"","PartitionKey":"claims","RowKey":"claim8","Timestamp":"2020-11-18T15:36:52.0771Z","data@odata.type":"Edm.Binary","data":"Y2xhaW04","group":"test2"}]}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709a3-e002-0070-7ac0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 0adbdada-4570-4f07-ac09-b799d9558bd6
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim1%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709af-e002-0070-06c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 1ea15ef2-0993-473d-932f-760992af512e
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim2%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709bb-e002-0070-12c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 4d4f9e31-428e-4b25-87b6-98ebd383ff6b
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim3%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709c6-e002-0070-1dc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - bc6e6fc0-1d5b-4892-85ab-ed328152fb91
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim4%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709d2-e002-0070-28c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 4e6591c4-768a-4de6-926f-6329218f0aaa
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim5%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709da-e002-0070-30c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - e5b2f208-86cb-4e1e-b531-50cb8c977669
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim6%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709e1-e002-0070-37c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 5deb257a-67b6-4bf2-88dd-66855b213d07
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim7%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:51 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf709ec-e002-0070-40c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - ccf87f18-879c-4b70-b61f-81b17b13f0cc
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:53 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27claims%27,RowKey=%27claim8%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70a02-e002-0070-4ec0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""

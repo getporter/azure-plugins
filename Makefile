@@ -9,6 +9,7 @@ VERSION ?= $(shell git describe --tags 2> /dev/null || echo v0)
 PERMALINK ?= $(shell git describe --tags --exact-match &> /dev/null && echo latest || echo canary)
 
 GO = GO111MODULE=on go
+RECORDTEST = RECORDER_MODE=record $(GO)
 LDFLAGS = -w -X $(PKG)/pkg.Version=$(VERSION) -X $(PKG)/pkg.Commit=$(COMMIT)
 XBUILD = CGO_ENABLED=0 $(GO) build -a -tags netgo -ldflags '$(LDFLAGS)'
 BINDIR = bin/plugins/$(PLUGIN)
@@ -51,6 +52,11 @@ test: test-unit
 
 test-unit: build
 	$(GO) test ./...
+
+test-recorder: build
+	# AZURE_STORAGE_CONNECTION_STRING is required to be set for this command
+	$(RECORDTEST) test ./pkg/azure/table/...
+
 
 publish: bin/porter$(FILE_EXT)
 	# AZURE_STORAGE_CONNECTION_STRING will be used for auth in the following commands

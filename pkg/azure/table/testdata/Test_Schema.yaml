@@ -1,0 +1,129 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - d63cbe32-8537-4b61-a5db-312a7df44fc1
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.error":{"code":"ResourceNotFound","message":{"lang":"en-US","value":"The
+      specified resource does not exist.\nRequestId:8cf70881-e002-0070-72c0-bdf58c000000\nTime:2020-11-18T15:36:51.3942037Z"}}}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70881-e002-0070-72c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: '{"PartitionKey":"schema","RowKey":"schema","data":"c2NoZW1hIGRhdGE=","data@odata.type":"Edm.Binary","group":""}'
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      Accept-Charset:
+      - UTF-8
+      Content-Length:
+      - "111"
+      Content-Type:
+      - application/json
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 5fc1cb17-9fe8-44a0-8774-f6ea68421057
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.4226618Z'"
+      Preference-Applied:
+      - return-no-content
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf7088b-e002-0070-7bc0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 3a2997c1-4d2a-4cfc-bc58-a0e550d2e72f
+      x-ms-date:
+      - Wed, 18 Nov 2020 15:36:52 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.4226618Z''\"","PartitionKey":"schema","RowKey":"schema","Timestamp":"2020-11-18T15:36:51.4226618Z","data@odata.type":"Edm.Binary","data":"c2NoZW1hIGRhdGE=","group":""}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 15:36:50 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.4226618Z'"
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 8cf70897-e002-0070-05c0-bdf58c000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
