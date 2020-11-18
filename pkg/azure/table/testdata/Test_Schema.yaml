@@ -11,29 +11,109 @@ interactions:
       - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
         table
       x-ms-client-request-id:
-      - d63cbe32-8537-4b61-a5db-312a7df44fc1
+      - 2693cf34-e616-4bb3-9606-0303dce5093f
       x-ms-date:
-      - Wed, 18 Nov 2020 15:36:52 GMT
+      - Wed, 18 Nov 2020 16:41:18 GMT
       x-ms-version:
       - "2018-03-28"
     url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
     method: GET
   response:
-    body: '{"odata.error":{"code":"ResourceNotFound","message":{"lang":"en-US","value":"The
-      specified resource does not exist.\nRequestId:8cf70881-e002-0070-72c0-bdf58c000000\nTime:2020-11-18T15:36:51.3942037Z"}}}'
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.4226618Z''\"","PartitionKey":"schema","RowKey":"schema","Timestamp":"2020-11-18T15:36:51.4226618Z","data@odata.type":"Edm.Binary","data":"c2NoZW1hIGRhdGE=","group":""}'
     headers:
       Cache-Control:
       - no-cache
       Content-Type:
       - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
       Date:
-      - Wed, 18 Nov 2020 15:36:50 GMT
+      - Wed, 18 Nov 2020 16:41:17 GMT
+      Etag:
+      - W/"datetime'2020-11-18T15%3A36%3A51.4226618Z'"
       Server:
       - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
       X-Content-Type-Options:
       - nosniff
       X-Ms-Request-Id:
-      - 8cf70881-e002-0070-72c0-bdf58c000000
+      - 57cd0dc4-8002-0092-63c9-bdc8ad000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=nometadata
+      If-Match:
+      - '*'
+      Prefer:
+      - return-no-content
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - fedf97a9-5436-478e-bb45-bfc40feaa705
+      x-ms-date:
+      - Wed, 18 Nov 2020 16:41:18 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
+    method: DELETE
+  response:
+    body: ""
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - "0"
+      Date:
+      - Wed, 18 Nov 2020 16:41:17 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 57cd0dd4-8002-0092-72c9-bdc8ad000000
+      X-Ms-Version:
+      - "2018-03-28"
+    status: 204 No Content
+    code: 204
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json;odata=minimalmetadata
+      User-Agent:
+      - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
+        table
+      x-ms-client-request-id:
+      - 6ae7836f-3a60-4402-ba46-4ea393d24e4e
+      x-ms-date:
+      - Wed, 18 Nov 2020 16:41:18 GMT
+      x-ms-version:
+      - "2018-03-28"
+    url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
+    method: GET
+  response:
+    body: '{"odata.error":{"code":"ResourceNotFound","message":{"lang":"en-US","value":"The
+      specified resource does not exist.\nRequestId:57cd0ddb-8002-0092-79c9-bdc8ad000000\nTime:2020-11-18T16:41:17.5832037Z"}}}'
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
+      Date:
+      - Wed, 18 Nov 2020 16:41:17 GMT
+      Server:
+      - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Request-Id:
+      - 57cd0ddb-8002-0092-79c9-bdc8ad000000
       X-Ms-Version:
       - "2018-03-28"
     status: 404 Not Found
@@ -57,9 +137,9 @@ interactions:
       - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
         table
       x-ms-client-request-id:
-      - 5fc1cb17-9fe8-44a0-8774-f6ea68421057
+      - 72f8a599-d3cb-4b0f-ad81-1f3d895dc416
       x-ms-date:
-      - Wed, 18 Nov 2020 15:36:52 GMT
+      - Wed, 18 Nov 2020 16:41:18 GMT
       x-ms-version:
       - "2018-03-28"
     url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
@@ -72,9 +152,9 @@ interactions:
       Content-Length:
       - "0"
       Date:
-      - Wed, 18 Nov 2020 15:36:50 GMT
+      - Wed, 18 Nov 2020 16:41:17 GMT
       Etag:
-      - W/"datetime'2020-11-18T15%3A36%3A51.4226618Z'"
+      - W/"datetime'2020-11-18T16%3A41%3A17.6118746Z'"
       Preference-Applied:
       - return-no-content
       Server:
@@ -82,7 +162,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Ms-Request-Id:
-      - 8cf7088b-e002-0070-7bc0-bdf58c000000
+      - 57cd0de8-8002-0092-05c9-bdc8ad000000
       X-Ms-Version:
       - "2018-03-28"
     status: 204 No Content
@@ -98,30 +178,30 @@ interactions:
       - Go/go1.14.6 (amd64-linux) azure-storage-go/v44.2.0 api-version/2018-03-28
         table
       x-ms-client-request-id:
-      - 3a2997c1-4d2a-4cfc-bc58-a0e550d2e72f
+      - 7932c362-ebe5-42bd-abcb-5976c8f23fda
       x-ms-date:
-      - Wed, 18 Nov 2020 15:36:52 GMT
+      - Wed, 18 Nov 2020 16:41:18 GMT
       x-ms-version:
       - "2018-03-28"
     url: https://porterstorageplugin.table.core.windows.net/porter%28PartitionKey=%27schema%27,RowKey=%27schema%27%29?timeout=60
     method: GET
   response:
-    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T15%3A36%3A51.4226618Z''\"","PartitionKey":"schema","RowKey":"schema","Timestamp":"2020-11-18T15:36:51.4226618Z","data@odata.type":"Edm.Binary","data":"c2NoZW1hIGRhdGE=","group":""}'
+    body: '{"odata.metadata":"https://porterstorageplugin.table.core.windows.net/$metadata#porter/@Element","odata.etag":"W/\"datetime''2020-11-18T16%3A41%3A17.6118746Z''\"","PartitionKey":"schema","RowKey":"schema","Timestamp":"2020-11-18T16:41:17.6118746Z","data@odata.type":"Edm.Binary","data":"c2NoZW1hIGRhdGE=","group":""}'
     headers:
       Cache-Control:
       - no-cache
       Content-Type:
       - application/json;odata=minimalmetadata;streaming=true;charset=utf-8
       Date:
-      - Wed, 18 Nov 2020 15:36:50 GMT
+      - Wed, 18 Nov 2020 16:41:17 GMT
       Etag:
-      - W/"datetime'2020-11-18T15%3A36%3A51.4226618Z'"
+      - W/"datetime'2020-11-18T16%3A41%3A17.6118746Z'"
       Server:
       - Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0
       X-Content-Type-Options:
       - nosniff
       X-Ms-Request-Id:
-      - 8cf70897-e002-0070-05c0-bdf58c000000
+      - 57cd0dee-8002-0092-0bc9-bdc8ad000000
       X-Ms-Version:
       - "2018-03-28"
     status: 200 OK
