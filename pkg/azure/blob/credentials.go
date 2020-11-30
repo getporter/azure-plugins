@@ -1,17 +1,12 @@
 package blob
 
 import (
-	"bufio"
 	"context"
-	"encoding/json"
 	"fmt"
-	"io"
-	"io/ioutil"
 	"os"
-	"path"
-	"regexp"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
+	"get.porter.sh/plugin/azure/pkg/azure/common"
 
 	"github.com/Azure/azure-pipeline-go/pipeline"
 	"github.com/Azure/azure-sdk-for-go/profiles/latest/storage/mgmt/storage"
@@ -27,22 +22,7 @@ type CredentialSet struct {
 }
 
 const ConnectionEnvironmentVariable = "AZURE_STORAGE_CONNECTION_STRING"
-const PublicCloud = "AzureCloud"
-const AzureDirectory = ".azure"
-const AzureProile = "azureProfile.json"
 const UserAgent = "porter.azure.storage.plugin"
-const BOM = '\uFEFF'
-
-type AvailableSubscription struct {
-	SubscriptionId  string `json:"id"`
-	State           string `json:"state"`
-	IsDefault       bool   `json:"isDefault"`
-	EnvironmentName string `json:"environmentName"`
-}
-
-type AvailableSubscriptions struct {
-	Subscriptions []AvailableSubscription `json:"subscriptions"`
-}
 
 func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, error) {
 	var credsEnv = cfg.EnvConnectionString
@@ -62,7 +42,7 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (CredentialSet, erro
 		return cred, nil
 	}
 
-	accountName, accountKey, err := parseConnectionString(connString)
+	accountName, accountKey, err := common.ParseConnectionString(connString)
 	if err != nil {
 		return CredentialSet{}, err
 	}
@@ -96,7 +76,7 @@ func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSe
 	}
 	subscriptionId := cfg.StorageAccountSubscriptionId
 	if subscriptionId == "" {
-		subscriptionId, err = getCurrentAzureSubscriptionFromCli()
+		subscriptionId, err = common.GetCurrentAzureSubscriptionFromCli()
 		if err != nil {
 			return CredentialSet{}, true, err
 		}
@@ -121,76 +101,4 @@ func GetCredentialsFromCli(cfg azureconfig.Config, l hclog.Logger) (CredentialSe
 	pipe := azblob.NewPipeline(cred, azblob.PipelineOptions{})
 	return CredentialSet{Credential: *cred, Pipeline: pipe}, true, nil
 
-}
-
-func getCurrentAzureSubscriptionFromCli() (string, error) {
-
-	home, err := os.UserHomeDir()
-	if err != nil {
-		return "", errors.Wrap(err, "Error getting home directory")
-	}
-
-	return getCurrentAzureSubscriptionFromProfile(path.Join(home, AzureDirectory, AzureProile))
-}
-
-func getCurrentAzureSubscriptionFromProfile(filename string) (string, error) {
-
-	file, err := os.Open(filename)
-	if err != nil {
-		return "", errors.Wrap(err, "Error getting azure profile")
-	}
-	defer file.Close()
-
-	// azureProfile can have BOM so check for BOM before decoding
-
-	reader := bufio.NewReader(file)
-	if err := removeBOM(reader); err != nil {
-		return "", err
-	}
-
-	data, err := ioutil.ReadAll(reader)
-	if err != nil {
-		return "", errors.Wrap(err, "Error reading Azure profile")
-	}
-
-	var subscriptions AvailableSubscriptions
-	if err := json.Unmarshal(data, &subscriptions); err != nil {
-		return "", errors.Wrap(err, "Failed to decode Azure Profile")
-	}
-
-	for _, availableSubscription := range subscriptions.Subscriptions {
-		if availableSubscription.EnvironmentName == PublicCloud && availableSubscription.IsDefault {
-			return availableSubscription.SubscriptionId, nil
-		}
-	}
-
-	return "", errors.New("Failed to get current subscription from cli config")
-}
-
-func removeBOM(reader *bufio.Reader) error {
-	rune, _, err := reader.ReadRune()
-	if err != nil && err != io.EOF {
-		return errors.Wrap(err, "Error testing azure profile for BOM")
-	}
-	if rune != BOM && err != io.EOF {
-		if err := reader.UnreadRune(); err != nil {
-			return errors.Wrap(err, "Failed to unread rune")
-		}
-	}
-	return nil
-}
-func parseConnectionString(connString string) (name string, key string, err error) {
-	keyRegex := regexp.MustCompile("AccountKey=([^;]+)")
-	keyMatch := keyRegex.FindAllStringSubmatch(connString, -1)
-
-	nameRegex := regexp.MustCompile("AccountName=([^;]+)")
-	nameMatch := nameRegex.FindAllStringSubmatch(connString, -1)
-
-	if len(nameMatch) == 0 || len(keyMatch) == 0 {
-		return "", "", errors.New("unexpected format for AZURE_STORAGE_CONNECTION_STRING, could not find AccountName=NAME and AccountKey=KEY in it")
-	}
-
-	accountKey := keyMatch[0][1]
-	accountName := nameMatch[0][1]
-	return accountName, accountKey, nil
 }

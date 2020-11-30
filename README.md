@@ -23,38 +23,58 @@ Storage plugins allow Porter to store data, such as claims, parameters and crede
 
 ### Blob
 
-The `azure.blob` plugin stores data in Azure Blob Storage. The plugin requires a storage account name and storage account key. This can be provided as a connection string in an environment variable or can be looked up at run time if the user is logged in with the Azure CLI.
+The `azure.blob` plugin stores data in Azure Blob Storage. 
+
+### Table
+
+The `azure.table` plugin stores data in Azure Table Storage. 
+
+The plugin requires a storage account name and storage account key. This can be provided as a connection string in an environment variable or can be looked up at run time if the user is logged in with the Azure CLI.
 
 1. [Create a storage account][account]
 1. [Create a container][container] named `porter`.
 1. Open, or create, `~/.porter/config.toml`.
 
-#### Use a connection string
+#### To use a connection string
 
-1. Add the following line to activate the Azure blob storage plugin:
+* Add the following line to activate the Azure blob storage plugin:
 
     ```toml
     default-storage-plugin = "azure.blob"
     ```
-1. [Copy the connection string][connstring] for the storage account. Then set it as an environment variable named 
+* Or add the following line to activate the Azure table storage plugin:
+
+     ```toml
+    default-storage-plugin = "azure.table"
+    ```
+[Copy the connection string][connstring] for the storage account. Then set it as an environment variable named 
     `AZURE_STORAGE_CONNECTION_STRING`.
 
 #### Use the Azure CLI
 
-1. Add the following lines to activate the Azure blob storage plugin and configure storage account details:
+* Add the following lines to activate the Azure blob storage plugin and configure storage account details:
 
-    ```toml
-    default-storage = "azureblob"
+  ```toml
+  default-storage = "azurestorage"
 
-    [[storage]]
-    name = "azureblob"
-    plugin = "azure.blob"
+  [[storage]]
+  name = "azurestorage"
+  plugin = "azure.blob"
 
-    [storage.config]
-    account="storage account name"
-    resource-group="storage account resource group"
+  [storage.config]
+  account="storage account name"
+  resource-group="storage account resource group"
 
-    ```
+  ```
+
+* For Azure Table storage set the plugin to `azure.table`:
+
+  ```toml
+  [[storage]]
+  name = "azurestorage"
+  plugin = "azure.table"
+
+  ```
 
 If the machine you are using is already logged in with the Azure CLI, then the same security context will be used to lookup the keys for the storage account. By default it will use the current subscription (the one returned by the command `az account show`). To set the subscription explicitly add the following line to the `[storage.config]`.
 

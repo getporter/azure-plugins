@@ -1,4 +1,4 @@
-package blob
+package table
 
 import (
 	"os"
@@ -64,7 +64,6 @@ func Test_GetCredentials(t *testing.T) {
 		defer os.Setenv("AZURE_STORAGE_CONNECTION_STRING", conn)
 	}
 	for _, tc := range testcases {
-
 		t.Run(tc.name, func(t *testing.T) {
 
 			logger := hclog.New(&hclog.LoggerOptions{
@@ -83,10 +82,11 @@ func Test_GetCredentials(t *testing.T) {
 				}
 			}()
 
-			cred, err := GetCredentials(*tc.config, logger)
+			name, key, err := GetCredentials(*tc.config, logger)
 			if tc.wantError == "" {
 				require.NoError(t, err, "GetCredentials should have not returned an error")
-				assert.NotNil(t, cred)
+				assert.NotEqual(t, "", name)
+				assert.NotEqual(t, "", key)
 			} else {
 				require.Error(t, err, "GetCredentials should have returned an error")
 				assert.EqualError(t, err, tc.wantError)
@@ -96,7 +96,11 @@ func Test_GetCredentials(t *testing.T) {
 }
 
 func Test_LoginwithCLI(t *testing.T) {
-
+	conn := os.Getenv("AZURE_STORAGE_CONNECTION_STRING")
+	if conn != "" {
+		os.Setenv("AZURE_STORAGE_CONNECTION_STRING", "")
+		defer os.Setenv("AZURE_STORAGE_CONNECTION_STRING", conn)
+	}
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:   t.Name(),
 		Output: os.Stderr,
@@ -108,13 +112,7 @@ func Test_LoginwithCLI(t *testing.T) {
 		StorageAccountResourceGroup: "group",
 	}
 
-	conn := os.Getenv("AZURE_STORAGE_CONNECTION_STRING")
-	if conn != "" {
-		os.Setenv("AZURE_STORAGE_CONNECTION_STRING", "")
-		defer os.Setenv("AZURE_STORAGE_CONNECTION_STRING", conn)
-	}
-
-	_, err := GetCredentials(*config, logger)
+	_, _, err := GetCredentials(*config, logger)
 	require.Error(t, err, "GetCredentials should have returned an error")
 	if isLoggedInWithAzureCLI() {
 		assert.Contains(t, err.Error(), "Failed to get storage account keys:")
@@ -122,7 +120,6 @@ func Test_LoginwithCLI(t *testing.T) {
 		assert.Contains(t, err.Error(), "Failed to login with Azure CLI:")
 	}
 }
-
 func isLoggedInWithAzureCLI() bool {
 	_, err := cli.GetTokenFromCLI("https://management.azure.com/")
 	return err == nil
