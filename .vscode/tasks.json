@@ -26,7 +26,7 @@
           "PORTER_PLUGIN_WORKING_DIRECTORY": "${workspaceRoot}/cmd/azure",
           "PORTER_DEBUGGER_PORT": "2345",
           "PORTER_HOME": "/home/${env:USER}/.porter",
-          "AZURE_STORAGE_CONNECTION_STRING":"DefaultEndpointsProtocol=https;AccountName=cnabstategrufuyk7dkalg;AccountKey=H85r3atfaHo08uQz9EcbengVwzK5O0Vc652CUliL6+IlzPMdhw+MIXct2Ec1sjmy3CHzlRBo4A9hMlpgxjAFHg==;EndpointSuffix=core.windows.net"
+          "AZURE_STORAGE_CONNECTION_STRING":""
         }
       },
       "presentation": {
