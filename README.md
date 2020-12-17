@@ -108,7 +108,35 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
     ```
 1. [Create a key vault][keyvault] and set the vault name in the config with name of the vault.
 
-#### Authentication
+
+## Storage and Secrets combined
+
+When both storage and secrets are configured, be sure to place the `default-*` stanzas
+at the top of the file, like so:
+
+  ```toml
+  default-storage = "azurestorage"
+  default-secrets = "mysecrets"
+
+  [[storage]]
+  name = "azurestorage"
+  plugin = "azure.blob"
+
+  [storage.config]
+  account="storage account name"
+  resource-group="storage account resource group"
+
+  [[secrets]]
+  name = "mysecrets"
+  plugin = "azure.keyvault"
+
+  [secrets.config]
+  vault = "myvault"
+  ```
+
+Otherwise, Porter won't be able to parse the configuration correctly.
+
+### Authentication
 
 Authentication to Azure can use any of the following methods. Whichever mechanism is used, the principal that is used to access key vault needs to be granted at least [Get and List secret permissions][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
 
