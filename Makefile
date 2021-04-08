@@ -57,21 +57,8 @@ test-recorder: build
 	# AZURE_STORAGE_CONNECTION_STRING is required to be set for this command
 	$(RECORDTEST) test ./pkg/azure/table/...
 
-
 publish: bin/porter$(FILE_EXT)
-	# AZURE_STORAGE_CONNECTION_STRING will be used for auth in the following commands
-	if [[ "$(PERMALINK)" == "latest" ]]; then \
-		az storage blob upload-batch -d porter/plugins/$(PLUGIN)/$(VERSION) -s $(BINDIR)/$(VERSION); \
-		az storage blob upload-batch -d porter/plugins/$(PLUGIN)/$(PERMALINK) -s $(BINDIR)/$(VERSION); \
-	else \
-		mv $(BINDIR)/$(VERSION) $(BINDIR)/$(PERMALINK); \
-		az storage blob upload-batch -d porter/plugins/$(PLUGIN)/$(PERMALINK) -s $(BINDIR)/$(PERMALINK); \
-	fi
-
-	# Generate the plugin feed
-	az storage blob download -c porter -n plugins/atom.xml -f bin/plugins/atom.xml
-	bin/porter mixins feed generate -d bin/plugins -f bin/plugins/atom.xml -t build/atom-template.xml
-	az storage blob upload -c porter -n plugins/atom.xml -f bin/plugins/atom.xml
+	go run mage.go -v Publish $(PLUGIN) $(VERSION) $(PERMALINK)
 
 bin/porter$(FILE_EXT):
 	curl -fsSLo bin/porter$(FILE_EXT) https://cdn.porter.sh/canary/porter-$(CLIENT_PLATFORM)-$(CLIENT_ARCH)$(FILE_EXT)
