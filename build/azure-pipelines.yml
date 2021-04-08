@@ -26,22 +26,19 @@ steps:
 
 - script: |
     make build
-  workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Build'
 
 - script: |
      make test-unit
-  workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Unit Test'
 
 - script: |
     make xbuild-all
-  workingDirectory: '$(System.DefaultWorkingDirectory)'
   displayName: 'Cross Compile'
 
 - script: |
-    export AZURE_STORAGE_CONNECTION_STRING=$(AZURE_STORAGE_CONNECTION_STRING)
     make publish
-  workingDirectory: '$(System.DefaultWorkingDirectory)'
+  env:
+    GITHUB_TOKEN: $(GITHUB_TOKEN)
   displayName: 'Publish'
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
