@@ -284,11 +284,10 @@ func encodeData(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
+	defer writer.Close()
 	if _, err = writer.Write(data); err != nil {
 		return nil, err
 	}
-
-	writer.Close()
 
 	return buf.Bytes(), nil
 }
