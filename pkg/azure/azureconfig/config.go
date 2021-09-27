@@ -15,6 +15,9 @@ type Config struct {
 	// StorageAccountSubscriptionId contains the subscription id of the subscription to be used when looking up the Storage Account Key, if this is not set then the current CLI subscription will be used
 	StorageAccountSubscriptionId string `json:"subscription-id"`
 
+	// If set to true data will be compressed before being written to Table storage.
+	StorageCompressData bool `json:"compress-data"`
+
 	// EnvAzurePrefix is the prefix applied to every azure
 	// environment variable For example, for a prefix of "DEV_AZURE_", the
 	// variables would be "DEV_AZURE_TENANT_ID", "DEV_AZURE_CLIENT_ID",

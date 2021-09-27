@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
 	"net/url"
 	"os"
@@ -42,7 +41,7 @@ func Test_NoClient(t *testing.T) {
 	}
 
 	store := NewStore(config, logger, nil)
-	requiredError := "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set:\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}"
+	requiredError := "environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set:\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", StorageCompressData:false, EnvAzurePrefix:\"\", Vault:\"\"}"
 
 	_, err := store.Count("test", "test")
 	require.Error(t, err, "store.Count should have returned an error")
@@ -84,10 +83,12 @@ func Test_Save(t *testing.T) {
 
 	store := NewStore(config, logger, nil)
 
-	requiredError := "Data exceeds maximum length for table storage for item: test/ group=\"test\" test length: 65537"
-	data := make([]byte, 65537)
-	rand.Read(data)
-	err := store.Save("test", "test", "test", data)
+	data, err := ioutil.ReadFile("testdata/test.dat")
+	require.NoError(t, err, "Reading test data should not cause an error")
+	require.True(t, len(data) > 65536, "Test data should be larger than 65536 bytes")
+
+	requiredError := fmt.Sprintf("Data exceeds maximum length for table storage for item: test/ group=\"test\" test length: %d", len(data))
+	err = store.Save("test", "test", "test", data)
 	require.Error(t, err, "store.Save should have returned an error")
 	assert.EqualError(t, err, requiredError)
 
@@ -271,6 +272,30 @@ func Test_With_Group_And_Data(t *testing.T) {
 			})
 		}
 	}
+
+}
+
+func Test_With_Compressed_Data(t *testing.T) {
+
+	logger := hclog.New(&hclog.LoggerOptions{
+		Name:   t.Name(),
+		Output: os.Stderr,
+		Level:  hclog.Error,
+	})
+
+	config := azureconfig.Config{
+		StorageCompressData: true,
+	}
+	table, rec := getTableReferenceAndRecorder(t, t.Name())
+	defer rec.Stop()
+	store := NewStore(config, logger, table)
+	store.table = table
+
+	data, err := ioutil.ReadFile("testdata/test.dat")
+	require.NoError(t, err, "Reading test data should not cause an error")
+	require.True(t, len(data) > 65536, "Test data should be larger than 65536 bytes")
+	err = store.Save("claims", "largedata", t.Name(), data)
+	require.NoError(t, err, "Saving compressed date > 65536 should succeed")
 
 }
 

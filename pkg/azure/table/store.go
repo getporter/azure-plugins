@@ -1,7 +1,10 @@
 package table
 
 import (
+	"bytes"
+	"compress/gzip"
 	"fmt"
+	"io/ioutil"
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
@@ -158,6 +161,14 @@ func (s *Store) List(itemType string, group string) ([]string, error) {
 
 func (s *Store) Save(itemType string, group string, name string, data []byte) error {
 
+	if s.config.StorageCompressData {
+		encodedData, err := encodeData(data)
+		if err != nil {
+			return err
+		}
+		data = []byte(encodedData)
+	}
+
 	if len(data) > maxSize {
 		return fmt.Errorf("Data exceeds maximum length for table storage for item: %s/ group=%q %s length: %d", itemType, group, name, len(data))
 	}
@@ -176,6 +187,9 @@ func (s *Store) Save(itemType string, group string, name string, data []byte) er
 	row := s.table.GetEntityReference(itemType, name)
 	p := make(map[string]interface{})
 	p["group"] = group
+	if s.config.StorageCompressData {
+		p["compressed"] = true
+	}
 	p["data"] = data
 	row.Properties = p
 	guid := uuid.New().String()
@@ -221,6 +235,21 @@ func (s *Store) Read(itemType string, name string) ([]byte, error) {
 	if !ok {
 		return nil, err
 	}
+
+	// property might not exist
+
+	var compressed bool
+	propertyValue, exists := row.Properties["compressed"]
+	if !exists {
+		compressed = false
+	} else {
+		compressed = propertyValue.(bool)
+	}
+
+	if compressed {
+		return decodeData(data)
+	}
+
 	return data, err
 }
 
@@ -242,4 +271,44 @@ func (s *Store) Delete(itemType string, name string) error {
 	s.logger.Info(fmt.Sprintf("Delete itemtype %s %s requestId %s", itemType, name, guid))
 	return row.Delete(true, &options)
 
+}
+
+func encodeData(data []byte) ([]byte, error) {
+	if len(data) == 0 {
+		return nil, nil
+	}
+
+	var buf bytes.Buffer
+	writer, err := gzip.NewWriterLevel(&buf, gzip.BestCompression)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err = writer.Write(data); err != nil {
+		return nil, err
+	}
+
+	writer.Close()
+
+	return buf.Bytes(), nil
+}
+
+func decodeData(encodedData []byte) ([]byte, error) {
+	if len(encodedData) == 0 {
+		return nil, nil
+	}
+
+	byteReader := bytes.NewReader(encodedData)
+	reader, err := gzip.NewReader(byteReader)
+	if err != nil {
+		return nil, err
+	}
+
+	defer reader.Close()
+	result, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }

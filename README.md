@@ -76,6 +76,12 @@ The plugin requires a storage account name and storage account key. This can be 
 
   ```
 
+Azure table storage binary properties are [limited to a maximum of 64KiB](https://docs.microsoft.com/en-us/rest/api/storageservices/understanding-the-table-service-data-model#property-types), by default the table storage plugin stores data without compression which can result in this limit being breached. To enable compression of this data,  add the following line to the `[storage.config]`:
+
+  ```toml
+  compress-data = true
+  ```
+
 If the machine you are using is already logged in with the Azure CLI, then the same security context will be used to lookup the keys for the storage account. By default it will use the current subscription (the one returned by the command `az account show`). To set the subscription explicitly add the following line to the `[storage.config]`.
 
  ```toml
