@@ -23,7 +23,7 @@ func Test_GetCredentials(t *testing.T) {
 			"Missing Environment Variables",
 			map[string]string{},
 			&azureconfig.Config{},
-			"environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set:\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
+			"environment variable AZURE_STORAGE_CONNECTION_STRING containing the azure storage connection string was not set:\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", StorageCompressData:false, EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 		{
 			"Invalid Connection string",
@@ -47,7 +47,7 @@ func Test_GetCredentials(t *testing.T) {
 			&azureconfig.Config{
 				StorageAccount: "account",
 			},
-			"resource-group is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"account\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
+			"resource-group is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"account\", StorageAccountResourceGroup:\"\", StorageAccountSubscriptionId:\"\", StorageCompressData:false, EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 		{
 			"Missing Storage Acccount Name",
@@ -55,7 +55,7 @@ func Test_GetCredentials(t *testing.T) {
 			&azureconfig.Config{
 				StorageAccountResourceGroup: "group",
 			},
-			"account is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"group\", StorageAccountSubscriptionId:\"\", EnvAzurePrefix:\"\", Vault:\"\"}",
+			"account is not set - cannot login with Azure CLI\nazureconfig.Config{EnvConnectionString:\"\", StorageAccount:\"\", StorageAccountResourceGroup:\"group\", StorageAccountSubscriptionId:\"\", StorageCompressData:false, EnvAzurePrefix:\"\", Vault:\"\"}",
 		},
 	}
 	conn := os.Getenv("AZURE_STORAGE_CONNECTION_STRING")
