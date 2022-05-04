@@ -67,9 +67,9 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 	}
 
 	secretVersion := ""
-	result, err := s.client.GetSecret(context.Background(), s.vaultUrl, keyValue, secretVersion)
+	result, err := s.client.GetSecret(ctx, s.vaultUrl, keyValue, secretVersion)
 	if err != nil {
-		return "", errors.Wrapf(err, "could not get secret %s from %s", keyValue, s.vaultUrl)
+		return "", log.Error(fmt.Errorf("could not get secret %s from %s: %w", keyValue, s.vaultUrl, err))
 	}
 
 	return *result.Value, nil
@@ -80,13 +80,13 @@ func (s *Store) Create(ctx context.Context, keyName string, keyValue string, val
 	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
 
-	if err := s.Connect(ctx); err != nil {
-		return err
-	}
-
 	// check if the keyName is secret
 	if keyName != SecretKeyName {
 		return log.Error(errors.New("invalid key name: " + keyName))
+	}
+
+	if err := s.Connect(ctx); err != nil {
+		return err
 	}
 
 	_, err := s.client.SetSecret(ctx, s.vaultUrl, keyValue, keyvault.SecretSetParameters{Value: &value})
@@ -95,5 +95,4 @@ func (s *Store) Create(ctx context.Context, keyName string, keyValue string, val
 	}
 
 	return nil
-
 }

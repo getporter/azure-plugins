@@ -4,10 +4,10 @@ import (
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
-	"get.porter.sh/plugin/azure/pkg/azure/blob"
 	"get.porter.sh/plugin/azure/pkg/azure/keyvault"
-	"get.porter.sh/plugin/azure/pkg/azure/table"
 	"get.porter.sh/porter/pkg/plugins"
+	"get.porter.sh/porter/pkg/portercontext"
+	secretsplugins "get.porter.sh/porter/pkg/secrets/plugins"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 	"github.com/pkg/errors"
@@ -15,11 +15,11 @@ import (
 
 type RunOptions struct {
 	Key               string
-	selectedPlugin    plugin.Plugin
+	selectedPlugin    pluginInitializer
 	selectedInterface string
 }
 
-func (o *RunOptions) Validate(args []string, cfg azureconfig.Config) error {
+func (o *RunOptions) Validate(args []string) error {
 	if len(args) == 0 {
 		return errors.New("The positional argument KEY was not specified")
 	}
@@ -29,12 +29,11 @@ func (o *RunOptions) Validate(args []string, cfg azureconfig.Config) error {
 
 	o.Key = args[0]
 
-	availableImplementations := getPlugins(cfg)
-	selectedPlugin, ok := availableImplementations[o.Key]
+	selectedPlugin, ok := availablePlugins[o.Key]
 	if !ok {
 		return errors.Errorf("invalid plugin key specified: %q", o.Key)
 	}
-	o.selectedPlugin = selectedPlugin()
+	o.selectedPlugin = selectedPlugin
 
 	parts := strings.Split(o.Key, ".")
 	o.selectedInterface = parts[0]
@@ -60,19 +59,22 @@ func (p *Plugin) Run(args []string) {
 	// We are not following the normal CLI pattern here because
 	// if we write to stdout without the hclog, it will cause the plugin framework to blow up
 	var opts RunOptions
-	err = opts.Validate(args, p.Config)
+	err = opts.Validate(args)
 	if err != nil {
 		logger.Error(err.Error())
 		return
 	}
 
-	plugins.Serve(opts.selectedInterface, opts.selectedPlugin)
+	plugins.Serve(p.Context, opts.selectedInterface, opts.selectedPlugin(p.Context, p.Config), secretsplugins.PluginProtocolVersion)
 }
 
-func getPlugins(cfg azureconfig.Config) map[string]func() plugin.Plugin {
-	return map[string]func() plugin.Plugin{
-		blob.PluginInterface:     func() plugin.Plugin { return blob.NewPlugin(cfg) },
-		table.PluginInterface:    func() plugin.Plugin { return table.NewPlugin(cfg) },
-		keyvault.PluginInterface: func() plugin.Plugin { return keyvault.NewPlugin(cfg) },
+// A list of available plugins
+var availablePlugins map[string]pluginInitializer = getPlugins()
+
+type pluginInitializer func(ctx *portercontext.Context, cfg azureconfig.Config) plugin.Plugin
+
+func getPlugins() map[string]pluginInitializer {
+	return map[string]pluginInitializer{
+		keyvault.PluginInterface: keyvault.NewPlugin,
 	}
 }

@@ -1,6 +1,7 @@
 package keyvault
 
 import (
+	"context"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -18,13 +19,14 @@ func TestResolve_NonSecret(t *testing.T) {
 		Output: os.Stderr,
 		Level:  hclog.Error,
 	})
+	ctx := context.Background()
 
 	azConfig := azureconfig.Config{}
 	store := NewStore(azConfig, logger)
 	os.Setenv("AZURE_CLIENT_ID", "test_client_id")
 	defer os.Unsetenv("AZURE_CLIENT_ID")
 	t.Run("resolve non-secret source: value", func(t *testing.T) {
-		resolved, err := store.Resolve(host.SourceValue, "myvalue")
+		resolved, err := store.Resolve(ctx, host.SourceValue, "myvalue")
 		require.NoError(t, err)
 		require.Equal(t, "myvalue", resolved)
 	})
@@ -33,7 +35,7 @@ func TestResolve_NonSecret(t *testing.T) {
 		os.Setenv("MY_ENV_VAR", "myvalue")
 		defer os.Unsetenv("MY_ENV_VAR")
 
-		resolved, err := store.Resolve(host.SourceEnv, "MY_ENV_VAR")
+		resolved, err := store.Resolve(ctx, host.SourceEnv, "MY_ENV_VAR")
 		require.NoError(t, err)
 		require.Equal(t, "myvalue", resolved)
 	})
@@ -48,19 +50,19 @@ func TestResolve_NonSecret(t *testing.T) {
 		_, err = file.WriteString("myfilecontents")
 		require.NoError(t, err)
 
-		resolved, err := store.Resolve(host.SourcePath, file.Name())
+		resolved, err := store.Resolve(ctx, host.SourcePath, file.Name())
 		require.NoError(t, err)
 		require.Equal(t, "myfilecontents", resolved)
 	})
 
 	t.Run("resolve non-secret source: command", func(t *testing.T) {
-		resolved, err := store.Resolve(host.SourceCommand, "echo -n Hello World!")
+		resolved, err := store.Resolve(ctx, host.SourceCommand, "echo -n Hello World!")
 		require.NoError(t, err)
 		require.Equal(t, "Hello World!", resolved)
 	})
 
 	t.Run("resolve non-secret source: bogus", func(t *testing.T) {
-		_, err := store.Resolve("bogus", "bogus")
+		_, err := store.Resolve(ctx, "bogus", "bogus")
 		require.EqualError(t, err, "invalid value source: bogus")
 	})
 }

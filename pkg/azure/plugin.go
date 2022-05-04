@@ -6,19 +6,19 @@ import (
 	"io/ioutil"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
-	"get.porter.sh/porter/pkg/context"
+	"get.porter.sh/porter/pkg/portercontext"
 	"github.com/pkg/errors"
 )
 
 type Plugin struct {
-	*context.Context
+	*portercontext.Context
 	azureconfig.Config
 }
 
 // New azure plugin client, initialized with useful defaults.
 func New() *Plugin {
 	return &Plugin{
-		Context: context.New(),
+		Context: portercontext.New(),
 	}
 }
 

@@ -1,7 +1,6 @@
 package keyvault
 
 import (
-	"fmt"
 	"os"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
@@ -11,7 +10,6 @@ import (
 	"get.porter.sh/porter/pkg/secrets/pluginstore"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	"github.com/mitchellh/mapstructure"
 )
 
 const PluginInterface = plugins.PluginInterface + ".azure.keyvault"
@@ -23,7 +21,7 @@ type Plugin struct {
 	secrets.Store
 }
 
-func NewPlugin(c *portercontext.Context, rawCfg interface{}) (plugin.Plugin, error) {
+func NewPlugin(c *portercontext.Context, cfg azureconfig.Config) plugin.Plugin {
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:       PluginInterface,
 		Output:     os.Stderr,
@@ -31,11 +29,5 @@ func NewPlugin(c *portercontext.Context, rawCfg interface{}) (plugin.Plugin, err
 		JSONFormat: true,
 	})
 
-	cfg := azureconfig.Config{}
-	if err := mapstructure.Decode(rawCfg, &cfg); err != nil {
-		return nil, fmt.Errorf("error reading plugin configuration: %w", err)
-	}
-	impl := NewStore(cfg, logger)
-
-	return pluginstore.NewPlugin(c, impl)
+	return pluginstore.NewPlugin(c, NewStore(cfg, logger))
 }
