@@ -17,77 +17,6 @@ make build install
 
 After installing the plugin, you must modify your porter configuration file and select which plugin you want to use.
 
-## Storage
-
-Storage plugins allow Porter to store data, such as claims, parameters and credentials, in Azure's cloud.
-
-### Blob
-
-The `azure.blob` plugin stores data in Azure Blob Storage. 
-
-### Table
-
-The `azure.table` plugin stores data in Azure Table Storage. 
-
-The plugin requires a storage account name and storage account key. This can be provided as a connection string in an environment variable or can be looked up at run time if the user is logged in with the Azure CLI.
-
-1. [Create a storage account][account]
-1. [Create a container][container] named `porter`.
-1. Open, or create, `~/.porter/config.toml`.
-
-#### To use a connection string
-
-* Add the following line to activate the Azure blob storage plugin:
-
-    ```toml
-    default-storage-plugin = "azure.blob"
-    ```
-* Or add the following line to activate the Azure table storage plugin:
-
-     ```toml
-    default-storage-plugin = "azure.table"
-    ```
-[Copy the connection string][connstring] for the storage account. Then set it as an environment variable named 
-    `AZURE_STORAGE_CONNECTION_STRING`.
-
-#### Use the Azure CLI
-
-* Add the following lines to activate the Azure blob storage plugin and configure storage account details:
-
-  ```toml
-  default-storage = "azurestorage"
-
-  [[storage]]
-  name = "azurestorage"
-  plugin = "azure.blob"
-
-  [storage.config]
-  account="storage account name"
-  resource-group="storage account resource group"
-
-  ```
-
-* For Azure Table storage set the plugin to `azure.table`:
-
-  ```toml
-  [[storage]]
-  name = "azurestorage"
-  plugin = "azure.table"
-
-  ```
-
-Azure table storage binary properties are [limited to a maximum of 64KiB](https://docs.microsoft.com/en-us/rest/api/storageservices/understanding-the-table-service-data-model#property-types), by default the table storage plugin stores data without compression which can result in this limit being breached. To enable compression of this data,  add the following line to the `[storage.config]`:
-
-  ```toml
-  compress-data = true
-  ```
-
-If the machine you are using is already logged in with the Azure CLI, then the same security context will be used to lookup the keys for the storage account. By default it will use the current subscription (the one returned by the command `az account show`). To set the subscription explicitly add the following line to the `[storage.config]`.
-
- ```toml
- subscription-id="storage account subscription id"
- ```
-
 ## Secrets
 
 Secrets plugins allow Porter to inject secrets into credential or parameter sets.
@@ -114,34 +43,6 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
     ```
 1. [Create a key vault][keyvault] and set the vault name in the config with name of the vault.
 
-
-## Storage and Secrets combined
-
-When both storage and secrets are configured, be sure to place the `default-*` stanzas
-at the top of the file, like so:
-
-  ```toml
-  default-storage = "azurestorage"
-  default-secrets = "mysecrets"
-
-  [[storage]]
-  name = "azurestorage"
-  plugin = "azure.blob"
-
-  [storage.config]
-  account="storage account name"
-  resource-group="storage account resource group"
-
-  [[secrets]]
-  name = "mysecrets"
-  plugin = "azure.keyvault"
-
-  [secrets.config]
-  vault = "myvault"
-  ```
-
-Otherwise, Porter won't be able to parse the configuration correctly.
-
 ### Authentication
 
 Authentication to Azure can use any of the following methods. Whichever mechanism is used, the principal that is used to access key vault needs to be granted at least [Get and List secret permissions][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
@@ -155,8 +56,6 @@ Authentication to Azure can use any of the following methods. Whichever mechanis
 1. **Username and Password** - Log in with user name and password.  Set the environment variables `AZURE_USERNAME` and `AZURE_PASSWORD`. This doesn't work with Microsoft accounts or accounts that have two-factor authentication enabled.
 
 [account]: https://docs.microsoft.com/en-us/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[container]: https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-portal#create-a-container
-[connstring]: https://docs.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string?toc=%2fazure%2fstorage%2fblobs%2ftoc.json#view-and-copy-a-connection-string
 [keyvault]: https://docs.microsoft.com/en-us/azure/key-vault/quick-create-portal#create-a-vault
 [sp]: https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal
 [keyvaultacl]: https://docs.microsoft.com/en-us/azure/key-vault/secrets/about-secrets#secret-access-control

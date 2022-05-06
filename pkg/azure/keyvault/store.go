@@ -11,7 +11,7 @@ import (
 	"get.porter.sh/porter/pkg/tracing"
 	"github.com/Azure/azure-sdk-for-go/services/keyvault/v7.0/keyvault"
 	"github.com/hashicorp/go-hclog"
-	"github.com/pkg/errors"
+	"go.opentelemetry.io/otel/attribute"
 )
 
 var _ plugins.SecretsProtocol = &Store{}
@@ -57,6 +57,7 @@ func (s *Store) Connect(ctx context.Context) error {
 func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (string, error) {
 	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
+	log.SetAttributes(attribute.String("secret name", keyName))
 
 	if strings.ToLower(keyName) != SecretKeyName {
 		return s.hostStore.Resolve(ctx, keyName, keyValue)
@@ -69,20 +70,22 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 	secretVersion := ""
 	result, err := s.client.GetSecret(ctx, s.vaultUrl, keyValue, secretVersion)
 	if err != nil {
-		return "", log.Error(fmt.Errorf("could not get secret %s from %s: %w", keyValue, s.vaultUrl, err))
+		return "", log.Error(fmt.Errorf("could not get secret %s: %w", keyValue, err))
 	}
 
 	return *result.Value, nil
 }
 
-// Create implements the Create method on the secret plugins' interface.
+// Create saves a the secret to azure's keyvault using the keyValue as the
+// secret key.
+// It implements the Create method on the secret plugins' interface.
 func (s *Store) Create(ctx context.Context, keyName string, keyValue string, value string) error {
 	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
 
 	// check if the keyName is secret
 	if keyName != SecretKeyName {
-		return log.Error(errors.New("invalid key name: " + keyName))
+		return log.Error(fmt.Errorf("unsupported secret type: %s. Only %s is supported.", keyName, SecretKeyName))
 	}
 
 	if err := s.Connect(ctx); err != nil {
@@ -91,7 +94,7 @@ func (s *Store) Create(ctx context.Context, keyName string, keyValue string, val
 
 	_, err := s.client.SetSecret(ctx, s.vaultUrl, keyValue, keyvault.SecretSetParameters{Value: &value})
 	if err != nil {
-		return log.Error(fmt.Errorf("failed to create key: %s: %w", keyName, err))
+		return log.Error(fmt.Errorf("failed to set secret for key %s in azure-keyvault: %w", keyValue, err))
 	}
 
 	return nil
