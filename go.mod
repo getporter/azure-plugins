@@ -3,7 +3,6 @@ module get.porter.sh/plugin/azure
 go 1.13
 
 replace (
-
 	// This is a temporary reference to the porter's release/v1 branch that
 	// conatins the new secret plugin protocol
 	get.porter.sh/porter => get.porter.sh/porter v1.0.0-alpha.19.0.20220506213150-2201f7f910bc
@@ -32,4 +31,5 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.1
+	go.opentelemetry.io/otel v1.6.3
 )

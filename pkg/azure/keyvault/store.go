@@ -57,7 +57,7 @@ func (s *Store) Connect(ctx context.Context) error {
 func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (string, error) {
 	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
-	log.SetAttributes(attribute.String("secret name", keyName))
+	log.SetAttributes(attribute.String("secret name", keyValue))
 
 	if strings.ToLower(keyName) != SecretKeyName {
 		return s.hostStore.Resolve(ctx, keyName, keyValue)
