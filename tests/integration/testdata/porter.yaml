@@ -1,0 +1,50 @@
+schemaVersion: 1.0.0-alpha.1
+name: azure-plugin-test
+version: 0.2.0
+description: "Test bundle for azure-plugin"
+reference: localhost:5000
+
+custom:
+  value: 1
+
+parameters:
+  - name: name
+    type: string
+    default: porter
+    path: /cnab/app/foo/name.txt
+    source:
+      output: name
+  - name: password
+    type: string
+    sensitive: true
+
+outputs:
+  - name: name
+    path: /cnab/app/foo/name.txt
+    sensitive: true
+
+mixins:
+  - exec
+
+install:
+  - exec:
+      description: "Install Hello World"
+      command: ./helpers.sh
+      arguments:
+        - install
+        - "{{ bundle.custom.value }}"
+
+upgrade:
+  - exec:
+      description: "World 2.0"
+      command: ./helpers.sh
+      arguments:
+        - upgrade
+
+uninstall:
+  - exec:
+      description: "Uninstall Hello World"
+      command: ./helpers.sh
+      arguments:
+        - uninstall
+

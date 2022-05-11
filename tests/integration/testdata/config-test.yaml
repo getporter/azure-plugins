@@ -1,0 +1,8 @@
+default-secrets: "mysecrets"
+
+secrets:
+  name: "mysecrets"
+  plugin: "azure.keyvault"
+  config:
+    vault: ${env.PORTER_TEST_VAULT}
+

@@ -55,9 +55,8 @@ func (s *Store) Connect(ctx context.Context) error {
 }
 
 func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (string, error) {
-	ctx, log := tracing.StartSpan(ctx)
+	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
 	defer log.EndSpan()
-	log.SetAttributes(attribute.String("secret name", keyValue))
 
 	if strings.ToLower(keyName) != SecretKeyName {
 		return s.hostStore.Resolve(ctx, keyName, keyValue)
@@ -80,12 +79,12 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 // secret key.
 // It implements the Create method on the secret plugins' interface.
 func (s *Store) Create(ctx context.Context, keyName string, keyValue string, value string) error {
-	ctx, log := tracing.StartSpan(ctx)
+	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
 	defer log.EndSpan()
 
 	// check if the keyName is secret
 	if keyName != SecretKeyName {
-		return log.Error(fmt.Errorf("unsupported secret type: %s. Only %s is supported.", keyName, SecretKeyName))
+		return log.Error(fmt.Errorf("unsupported secret type: %s. Only %s is supported", keyName, SecretKeyName))
 	}
 
 	if err := s.Connect(ctx); err != nil {

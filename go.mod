@@ -5,7 +5,7 @@ go 1.13
 replace (
 	// This is a temporary reference to the porter's release/v1 branch that
 	// conatins the new secret plugin protocol
-	get.porter.sh/porter => get.porter.sh/porter v1.0.0-alpha.19.0.20220506213150-2201f7f910bc
+	get.porter.sh/porter => get.porter.sh/porter v1.0.0-alpha.19.0.20220519145811-23393bfc2dec
 	github.com/hashicorp/go-plugin => github.com/getporter/go-plugin v1.4.3-improved-configuration.1
 
 	// Fixes https://github.com/spf13/viper/issues/761
@@ -15,7 +15,7 @@ replace (
 
 require (
 	get.porter.sh/magefiles v0.2.2
-	get.porter.sh/porter v0.0.0-00010101000000-000000000000
+	get.porter.sh/porter v1.0.0-alpha.19.0.20220519145811-23393bfc2dec
 	github.com/Azure/azure-pipeline-go v0.2.2
 	github.com/Azure/azure-sdk-for-go v44.2.0+incompatible
 	github.com/Azure/azure-storage-blob-go v0.8.0
@@ -31,5 +31,5 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.1
-	go.opentelemetry.io/otel v1.6.3
+	go.opentelemetry.io/otel v1.7.0
 )
