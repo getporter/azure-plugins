@@ -58,7 +58,7 @@ test-recorder: build
 	$(RECORDTEST) test ./pkg/azure/table/...
 
 publish: bin/porter$(FILE_EXT)
-	go run mage.go -v Publish $(PLUGIN) $(VERSION) $(PERMALINK)
+	go run mage.go -v Publish
 
 bin/porter$(FILE_EXT):
 	curl -fsSLo bin/porter$(FILE_EXT) https://cdn.porter.sh/canary/porter-$(CLIENT_PLATFORM)-$(CLIENT_ARCH)$(FILE_EXT)
