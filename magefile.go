@@ -4,7 +4,6 @@
 package main
 
 import (
-	
 	"fmt"
 	"os"
 
@@ -13,11 +12,13 @@ import (
 )
 
 const (
+	// Name of the plugin
 	pluginName = "azure"
 )
 
 // Publish the cross-compiled binaries.
 func Publish() {
+	releases.PreparePluginForPublish(pluginName)
 	releases.PublishPlugin(pluginName)
 	releases.PublishPluginFeed(pluginName)
 }
