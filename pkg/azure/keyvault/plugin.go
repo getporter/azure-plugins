@@ -4,23 +4,24 @@ import (
 	"os"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
+	"get.porter.sh/porter/pkg/portercontext"
 	"get.porter.sh/porter/pkg/secrets"
-	cnabsecrets "github.com/cnabio/cnab-go/secrets"
+	"get.porter.sh/porter/pkg/secrets/plugins"
+	"get.porter.sh/porter/pkg/secrets/pluginstore"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
 )
 
-const PluginInterface = secrets.PluginInterface + ".azure.keyvault"
+const PluginInterface = plugins.PluginInterface + ".azure.keyvault"
 
-var _ cnabsecrets.Store = &Plugin{}
+var _ plugins.SecretsProtocol = &Plugin{}
 
 // Plugin is the plugin wrapper for accessing secrets from Azure Key Vault.
 type Plugin struct {
-	logger hclog.Logger
-	cnabsecrets.Store
+	secrets.Store
 }
 
-func NewPlugin(cfg azureconfig.Config) plugin.Plugin {
+func NewPlugin(c *portercontext.Context, cfg azureconfig.Config) plugin.Plugin {
 	logger := hclog.New(&hclog.LoggerOptions{
 		Name:       PluginInterface,
 		Output:     os.Stderr,
@@ -28,9 +29,5 @@ func NewPlugin(cfg azureconfig.Config) plugin.Plugin {
 		JSONFormat: true,
 	})
 
-	return &secrets.Plugin{
-		Impl: &Plugin{
-			Store: NewStore(cfg, logger),
-		},
-	}
+	return pluginstore.NewPlugin(c, NewStore(cfg, logger))
 }

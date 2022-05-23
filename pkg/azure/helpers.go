@@ -3,17 +3,17 @@ package azure
 import (
 	"testing"
 
-	"get.porter.sh/porter/pkg/context"
+	"get.porter.sh/porter/pkg/portercontext"
 )
 
 type TestPlugin struct {
 	*Plugin
-	TestContext *context.TestContext
+	TestContext *portercontext.TestContext
 }
 
 // NewTestPlugin initializes a plugin test client, with the output buffered, and an in-memory file system.
 func NewTestPlugin(t *testing.T) *TestPlugin {
-	c := context.NewTestContext(t)
+	c := portercontext.NewTestContext(t)
 	m := &TestPlugin{
 		Plugin: &Plugin{
 			Context: c.Context,

@@ -6,15 +6,15 @@ import (
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
-	"get.porter.sh/porter/pkg/secrets"
+	"get.porter.sh/porter/pkg/secrets/plugins"
+	"get.porter.sh/porter/pkg/secrets/plugins/host"
+	"get.porter.sh/porter/pkg/tracing"
 	"github.com/Azure/azure-sdk-for-go/services/keyvault/v7.0/keyvault"
-	cnabsecrets "github.com/cnabio/cnab-go/secrets"
-	"github.com/cnabio/cnab-go/secrets/host"
 	"github.com/hashicorp/go-hclog"
-	"github.com/pkg/errors"
+	"go.opentelemetry.io/otel/attribute"
 )
 
-var _ cnabsecrets.Store = &Store{}
+var _ plugins.SecretsProtocol = &Store{}
 
 const (
 	SecretKeyName = "secret"
@@ -26,21 +26,19 @@ type Store struct {
 	config    azureconfig.Config
 	vaultUrl  string
 	client    *keyvault.BaseClient
-	hostStore cnabsecrets.Store
+	hostStore host.Store
 }
 
-func NewStore(cfg azureconfig.Config, l hclog.Logger) cnabsecrets.Store {
-	s := &Store{
+func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
+	return &Store{
 		config:    cfg,
 		logger:    l,
 		vaultUrl:  fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault),
-		hostStore: &host.SecretStore{},
+		hostStore: host.NewStore(),
 	}
-
-	return secrets.NewSecretStore(s)
 }
 
-func (s *Store) Connect() error {
+func (s *Store) Connect(ctx context.Context) error {
 	if s.client != nil {
 		return nil
 	}
@@ -56,16 +54,47 @@ func (s *Store) Connect() error {
 	return nil
 }
 
-func (s *Store) Resolve(keyName string, keyValue string) (string, error) {
+func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (string, error) {
+	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
+	defer log.EndSpan()
+
 	if strings.ToLower(keyName) != SecretKeyName {
-		return s.hostStore.Resolve(keyName, keyValue)
+		return s.hostStore.Resolve(ctx, keyName, keyValue)
+	}
+
+	if err := s.Connect(ctx); err != nil {
+		return "", err
 	}
 
 	secretVersion := ""
-	result, err := s.client.GetSecret(context.Background(), s.vaultUrl, keyValue, secretVersion)
+	result, err := s.client.GetSecret(ctx, s.vaultUrl, keyValue, secretVersion)
 	if err != nil {
-		return "", errors.Wrapf(err, "could not get secret %s from %s", keyValue, s.vaultUrl)
+		return "", log.Error(fmt.Errorf("could not get secret %s: %w", keyValue, err))
 	}
 
 	return *result.Value, nil
+}
+
+// Create saves a the secret to azure's keyvault using the keyValue as the
+// secret key.
+// It implements the Create method on the secret plugins' interface.
+func (s *Store) Create(ctx context.Context, keyName string, keyValue string, value string) error {
+	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
+	defer log.EndSpan()
+
+	// check if the keyName is secret
+	if keyName != SecretKeyName {
+		return log.Error(fmt.Errorf("unsupported secret type: %s. Only %s is supported", keyName, SecretKeyName))
+	}
+
+	if err := s.Connect(ctx); err != nil {
+		return err
+	}
+
+	_, err := s.client.SetSecret(ctx, s.vaultUrl, keyValue, keyvault.SecretSetParameters{Value: &value})
+	if err != nil {
+		return log.Error(fmt.Errorf("failed to set secret for key %s in azure-keyvault: %w", keyValue, err))
+	}
+
+	return nil
 }
