@@ -19,14 +19,14 @@ After installing the plugin, you must modify your porter configuration file and 
 
 ## Secrets
 
-Secrets plugins allow Porter to inject secrets into credential or parameter sets.
+Secrets plugins allow Porter to inject secrets into credential or parameter sets. It also stores sensitive data referenced/generated during Porter execution.
 
 For example, if your team has a shared key vault with a database password, you
 can use the keyvault plugin to inject it as a credential or parameter when you install a bundle.
 
 ### Key Vault
 
-The `azure.keyvault` plugin resolves credentials or parameters against secrets in Azure Key Vault.
+The `azure.keyvault` plugin resolves credentials or parameters against secrets in Azure Key Vault. It's also used to store any sensitive data referenced during Porter execution.
 
 1. Open, or create, `~/.porter/config.toml`
 1. Add the following lines to activate the Azure keyvault secrets plugin:

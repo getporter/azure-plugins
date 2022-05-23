@@ -11,6 +11,10 @@ set +x
 # ./tests/integration/script.sh
 # This script assumes users are running it from the root directory of the azure-plugin
 # repo
+
+TMP=$(mktemp -d -t tmp.XXXXXXXXXX)
+PORTER_HOME=${TMP}/bin/
+
 cleanup(){
     ret=$?
     echo "EXIT STATUS: $ret"
@@ -21,8 +25,6 @@ cleanup(){
     exit "$ret"
 }
 trap cleanup EXIT
-
-TMP=$(mktemp -d -t tmp.XXXXXXXXXX)
 
 authSetup=0
 if [ -z ${AZURE_TENANT_ID} ]; then
@@ -49,7 +51,6 @@ if [ -z $PORTER_TEST_VAULT ]; then
 	exit 1
 fi
 
-PORTER_HOME=${TMP}/bin/
 git worktree prune
 git fetch --no-tags --progress -- https://github.com/getporter/porter.git +refs/heads/release/v1:refs/remotes/origin/release/v1
 git worktree add -f "$PORTER_HOME" "origin/release/v1"
