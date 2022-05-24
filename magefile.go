@@ -109,7 +109,7 @@ func TestIntegration() {
 }
 
 func Build() {
-	rebuild, err := target.Path(filepath.Join(binDir, pluginName), srcDirs...)
+	rebuild, err := target.Dir(filepath.Join(binDir, pluginName), srcDirs...)
 	if err != nil {
 		mgx.Must(fmt.Errorf("error inspecting source dirs %s: %w", srcDirs, err))
 	}
@@ -122,7 +122,7 @@ func Build() {
 
 // XBuildAll cross-compiles the plugin
 func XBuildAll() {
-	rebuild, err := target.Path(filepath.Join(binDir, "dev/azure-linux-amd64"), srcDirs...)
+	rebuild, err := target.Dir(filepath.Join(binDir, "dev/azure-linux-amd64"), srcDirs...)
 	if err != nil {
 		mgx.Must(fmt.Errorf("error inspecting source dirs %s: %w", srcDirs, err))
 	}
