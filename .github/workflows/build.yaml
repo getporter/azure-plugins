@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: build
+on: [workflow_dispatch, push, pull_request]
+
+env:
+  # Make mage super verbose ALL THE TIME
+  MAGEFILE_VERBOSE: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+          check-latest: true
+      - name: Configure Agent
+        run: go run mage.go ConfigureAgent
+      - name: Build
+        run: mage Build
+      - name: Test
+        run: mage Test
+      - name: Cross Compile
+        run: mage XBuildAll
+      - name: Publish
+        if: ${{ github.event_name == 'push' }}
+        run: mage Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

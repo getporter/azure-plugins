@@ -3,6 +3,10 @@ module get.porter.sh/plugin/azure
 go 1.13
 
 replace (
+	// https://github.com/getporter/magefiles/pull/13
+	// fix-generate-package-feed
+	get.porter.sh/magefiles => github.com/carolynvs/magefiles v0.1.3-0.20220524012929-9f0bdc810936
+
 	// This is a temporary reference to the porter's release/v1 branch that
 	// conatins the new secret plugin protocol
 	get.porter.sh/porter => get.porter.sh/porter v1.0.0-alpha.19.0.20220519145811-23393bfc2dec
@@ -10,7 +14,6 @@ replace (
 
 	// Fixes https://github.com/spf13/viper/issues/761
 	github.com/spf13/viper => github.com/getporter/viper v1.7.1-porter.2.0.20210514172839-3ea827168363
-
 )
 
 require (
@@ -24,10 +27,12 @@ require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.5.0
 	github.com/Azure/go-autorest/autorest/to v0.4.0 // indirect
 	github.com/Azure/go-autorest/autorest/validation v0.3.0 // indirect
+	github.com/carolynvs/magex v0.8.0
 	github.com/cnabio/cnab-go v0.23.2
 	github.com/hashicorp/go-hclog v0.14.1
 	github.com/hashicorp/go-plugin v1.4.0
 	github.com/hashicorp/yamux v0.0.0-20190923154419-df201c70410d // indirect
+	github.com/magefile/mage v1.11.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.2.1
 	github.com/stretchr/testify v1.7.1
