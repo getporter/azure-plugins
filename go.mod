@@ -3,10 +3,6 @@ module get.porter.sh/plugin/azure
 go 1.13
 
 replace (
-	// https://github.com/getporter/magefiles/pull/13
-	// fix-generate-package-feed
-	get.porter.sh/magefiles => github.com/carolynvs/magefiles v0.1.3-0.20220524012929-9f0bdc810936
-
 	// This is a temporary reference to the porter's release/v1 branch that
 	// conatins the new secret plugin protocol
 	get.porter.sh/porter => get.porter.sh/porter v1.0.0-alpha.19.0.20220519145811-23393bfc2dec
@@ -17,7 +13,7 @@ replace (
 )
 
 require (
-	get.porter.sh/magefiles v0.2.2
+	get.porter.sh/magefiles v0.2.3
 	get.porter.sh/porter v1.0.0-alpha.19.0.20220519145811-23393bfc2dec
 	github.com/Azure/azure-pipeline-go v0.2.2
 	github.com/Azure/azure-sdk-for-go v44.2.0+incompatible
