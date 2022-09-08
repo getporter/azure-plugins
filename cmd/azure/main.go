@@ -26,8 +26,6 @@ func buildRootCommand(in io.Reader) *cobra.Command {
 		Short: "Azure plugin for Porter",
 	}
 
-	cmd.PersistentFlags().BoolVar(&m.Debug, "debug", false, "Enable debug logging")
-
 	cmd.AddCommand(buildVersionCommand(m))
 	cmd.AddCommand(buildRunCommand(m))
 
