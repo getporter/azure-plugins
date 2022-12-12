@@ -73,8 +73,8 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 		return "", err
 	}
 	// Check if the keyValue is set to a full ID or just the secret name. The keyValue is only considered
-	// an ID if all 3 pieces of info (keyvault URL, secret name, and version) parse, otherwise the configured vault URL is
-	// used and the keyValue is assumed to be the full secret name inside that vault
+	// an ID if it includes at least the keyvault name and secret name. If version is not part of the ID then the version
+	// is set to "" which will fetch the latest version
 	secret := parseID(ctx, keyValue)
 	if secret != nil {
 		result, err := s.client.GetSecret(ctx, secret.vaultURL, secret.name, secret.version)
@@ -121,10 +121,12 @@ func (s *Store) Create(ctx context.Context, keyName string, keyValue string, val
 }
 
 // parseID will attempt to create a secret from an id. If the id is not valid then
-// it will log a debug and return nil
+// it will log a debug and return nil. This code was mainly copied from the azure keyvault internal library:
+// https://github.com/Azure/azure-sdk-for-go/blob/main/sdk/keyvault/internal/parse.go
 func parseID(ctx context.Context, id string) *secret {
 	_, log := tracing.StartSpan(ctx, attribute.String("parsing secret as ID", id))
 	if id == "" {
+		log.Debug("unable to parse empty ID")
 		return nil
 	}
 	parsed, err := url.Parse(id)
