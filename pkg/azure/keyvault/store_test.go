@@ -66,3 +66,61 @@ func TestResolve_NonSecret(t *testing.T) {
 		require.EqualError(t, err, "invalid value source: bogus")
 	})
 }
+
+func TestParseKeyValueAsSecretID(t *testing.T) {
+	tests := []struct {
+		name     string
+		keyValue string
+		exp      *secret
+	}{
+		{
+			name:     "KeyValueValidSecretID",
+			keyValue: "https://myvaultname.vault.azure.net/secrets/my-secret/b86c2e6ad9054f4abf69cc185b99aa60",
+			exp: &secret{
+				vaultURL: "https://myvaultname.vault.azure.net",
+				name:     "my-secret",
+				version:  "b86c2e6ad9054f4abf69cc185b99aa60",
+			},
+		},
+		{
+			name:     "KeyValueDoesNotIncludeVersion",
+			keyValue: "https://myvaultname.vault.azure.net/secrets/my-secret",
+			exp: &secret{
+				vaultURL: "https://myvaultname.vault.azure.net",
+				name:     "my-secret",
+				version:  "",
+			},
+		},
+		{
+			name:     "KeyValueHasEmptyVersion",
+			keyValue: "https://myvaultname.vault.azure.net/secrets/my-secret/",
+			exp: &secret{
+				vaultURL: "https://myvaultname.vault.azure.net",
+				name:     "my-secret",
+				version:  "",
+			},
+		},
+		{
+			name:     "KeyValueMissingSecret",
+			keyValue: "https://myvaultname.vault.azure.net/secrets/",
+			exp:      nil,
+		},
+		{
+			name:     "KeyValueIsInvalidURL",
+			keyValue: "test:/?not-keyvault",
+			exp:      nil,
+		},
+		{
+			name:     "KeyValueIsSecretNameOnly",
+			keyValue: "my-secret",
+			exp:      nil,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			ctx := context.Background()
+			got := parseID(ctx, test.keyValue)
+			require.Equal(t, test.exp, got)
+		})
+	}
+}

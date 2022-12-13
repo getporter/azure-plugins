@@ -43,6 +43,27 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
     ```
 1. [Create a key vault][keyvault] and set the vault name in the config with name of the vault.
 
+### Secret ID
+The full secret FQDN can be used to resolve a secret that may not exist in the plugin configured vault. The plugin will attempt to parse a key value provided as a secret identifier and extract the keyvault name, secret name, and secret version from that value. If it is able to parse the key vault as a secret identifier then it will attempt to resolve the secret against that Azure Key Vault. If it is unable to find the parsed secret in the parsed Azure Key Vault then it will attempt to use the full key value as the secret name and attempt to resolve it in the configured Azure Key Vault.
+
+An example CredentialSet that would resolve to both the configured Azure Key Vault as well as a separate Azure Key Vault based on the secret ID would look like this:
+
+```yaml
+name: example-credset
+schemaVersion: 1.0.1
+credentials:
+  - name: example-configured-secret
+    source:
+      secret: my-secret
+  - name: example-secret-id
+    source:
+      secret: https://my-vault.vault.azure.net/secrets/my-secret/secret-version1234
+```
+
+The version can be included or omitted in the secret ID. If the version is omitted then the latest version is fetched out.
+
+This provides `porter` with the ability to fetch secrets out of multiple Azure Key Vaults without having the change the default vault configuration. 
+
 ### Authentication
 
 Authentication to Azure can use any of the following methods. Whichever mechanism is used, the principal that is used to access key vault needs to be granted at least [Get and List secret permissions][keyvaultacl] on the vault. However, if you authenticate using the Azure CLI and are logged in with the account that created the key vault in the portal then you will already have this permission.
