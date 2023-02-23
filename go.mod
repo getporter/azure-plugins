@@ -10,7 +10,7 @@ replace (
 )
 
 require (
-	get.porter.sh/magefiles v0.4.0
+	get.porter.sh/magefiles v0.5.0
 	get.porter.sh/porter v1.0.9
 	github.com/Azure/azure-pipeline-go v0.2.2
 	github.com/Azure/azure-sdk-for-go v44.2.0+incompatible
