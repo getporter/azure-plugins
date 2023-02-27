@@ -9,6 +9,7 @@ import (
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
 	"github.com/cnabio/cnab-go/secrets/host"
 	"github.com/hashicorp/go-hclog"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -121,6 +122,28 @@ func TestParseKeyValueAsSecretID(t *testing.T) {
 			ctx := context.Background()
 			got := parseID(ctx, test.keyValue)
 			require.Equal(t, test.exp, got)
+		})
+	}
+}
+
+func TestCleanSecretName(t *testing.T) {
+	testcases := map[string]string{
+		// valid characters
+		"MY_Secret0": "MY-Secret0",
+		// repeated invalid characters
+		"My-__Secret.1": "My---Secret-1",
+		// more invalid characters
+		"My$Secret9": "My-Secret9",
+		// spaces
+		"My Secret1": "My-Secret1",
+		// longer than 127 characters
+		"INSTALLATION-ID-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua": "INSTALLATION-ID-Lorem-ipsum-dolor-sit-amet--consectetur-adipiscing-elit--sed-do-eiusmod-tempor-355D661555999117D32FEC8D37E6F14E",
+	}
+
+	for input, wantOutput := range testcases {
+		t.Run(input, func(t *testing.T) {
+			gotOutput := cleanSecretName(input)
+			assert.Equal(t, wantOutput, gotOutput, "Invalid clean name %s for %s, expected %s", gotOutput, input, wantOutput)
 		})
 	}
 }
