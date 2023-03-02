@@ -42,11 +42,11 @@ The `azure.keyvault` plugin resolves credentials or parameters against secrets i
     vault = "myvault"
     ```
 1. [Create a key vault][keyvault] and set the vault name in the config with name of the vault.
-- If you want to specifiy the full url for your vault, use vault-url instead:
+   
+   If you want to specify the full url for your vault, use vault-url instead. Note that `vault-url` takes precedence over the `vault` setting.
 ```toml
    [secrets.config]
     vault-url = "https://myvault.vault.azure.net"
-```
 
 ### Secret ID
 The full secret FQDN can be used to resolve a secret that may not exist in the plugin configured vault. The plugin will attempt to parse a key value provided as a secret identifier and extract the keyvault name, secret name, and secret version from that value. If it is able to parse the key vault as a secret identifier then it will attempt to resolve the secret against that Azure Key Vault. If it is unable to find the parsed secret in the parsed Azure Key Vault then it will attempt to use the full key value as the secret name and attempt to resolve it in the configured Azure Key Vault.
