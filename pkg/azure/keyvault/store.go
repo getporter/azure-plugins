@@ -2,8 +2,10 @@ package keyvault
 
 import (
 	"context"
+	"crypto/md5"
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
@@ -62,12 +64,13 @@ func (s *Store) Connect(ctx context.Context) error {
 }
 
 func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (string, error) {
-	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
+	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
-
 	if strings.ToLower(keyName) != SecretKeyName {
 		return s.hostStore.Resolve(ctx, keyName, keyValue)
 	}
+
+	log.SetAttributes(attribute.String("requested-secret", keyValue))
 
 	if err := s.Connect(ctx); err != nil {
 		return "", err
@@ -88,34 +91,74 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 			return *result.Value, nil
 		}
 	}
+
+	secretName := cleanSecretName(keyValue)
+	attribute.String("cleaned-secret", secretName)
+
 	secretVersion := ""
-	result, err := s.client.GetSecret(ctx, s.vaultUrl, keyValue, secretVersion)
+	result, err := s.client.GetSecret(ctx, s.vaultUrl, secretName, secretVersion)
 	if err != nil {
-		return "", log.Error(fmt.Errorf("could not get secret %s: %w", keyValue, err))
+		if keyValue != secretName {
+			// Help everyone out by printing the original value that we used to generate the secret name
+			return "", log.Errorf("could not get secret %s (original name was %s): %w", secretName, keyValue, err)
+		}
+		return "", log.Errorf("could not get secret %s: %w", secretName, err)
 	}
 
 	return *result.Value, nil
 }
 
-// Create saves a the secret to azure's keyvault using the keyValue as the
+// Matches any invalid characters in an Azure Key Vault name so that we can replace it with something allowed
+var keyVaultNameInvalidCharacters = regexp.MustCompile(`[^a-zA-Z0-9-]`)
+
+// cleanSecretName replaces any invalid characters in the secret name with a
+// hyphen and ensures that the name is 127 characters or fewer. When it's too
+// long, we generate a md5 sum of the original name and append it to as much of
+// the cleaned up name as we can preserve.
+//
+// We need this because Porter supports a larger set of parameter name characters
+// than Azure Key Vault, which only allows alphanumeric characters and hyphens.
+// Example: MY_SECRET is converted to MY-SECRET when read/written to key vault
+// or INSTALLATION-ID-LONG-SECRET-NAME is converted to INSTALLATION-ID-CLEAN_SECRET_PREFIX-MD5SUM
+func cleanSecretName(name string) string {
+	cleanName := keyVaultNameInvalidCharacters.ReplaceAllString(name, "-")
+	if len(cleanName) > 127 {
+		// If the name is too long, hash the original and append the hash to as much of the name as we can preserve
+		nameHash := fmt.Sprintf("%X", md5.Sum([]byte(name)))
+		cleanName = cleanName[:94] + "-" + nameHash
+	}
+
+	return cleanName
+}
+
+// Create saves the secret to azure's keyvault using the keyValue as the
 // secret key.
 // It implements the Create method on the secret plugins' interface.
 func (s *Store) Create(ctx context.Context, keyName string, keyValue string, value string) error {
-	ctx, log := tracing.StartSpan(ctx, attribute.String("secret name", keyValue))
+	ctx, log := tracing.StartSpan(ctx)
 	defer log.EndSpan()
 
 	// check if the keyName is secret
 	if keyName != SecretKeyName {
-		return log.Error(fmt.Errorf("unsupported secret type: %s. Only %s is supported", keyName, SecretKeyName))
+		return log.Errorf("unsupported secret type: %s. Only %s is supported", keyName, SecretKeyName)
 	}
+
+	secretName := cleanSecretName(keyValue)
+	log.SetAttributes(
+		attribute.String("requested-secret", keyValue),
+		attribute.String("cleaned-secret", secretName))
 
 	if err := s.Connect(ctx); err != nil {
 		return err
 	}
 
-	_, err := s.client.SetSecret(ctx, s.vaultUrl, keyValue, keyvault.SecretSetParameters{Value: &value})
+	_, err := s.client.SetSecret(ctx, s.vaultUrl, secretName, keyvault.SecretSetParameters{Value: &value})
 	if err != nil {
-		return log.Error(fmt.Errorf("failed to set secret for key %s in azure-keyvault: %w", keyValue, err))
+		if keyValue != secretName {
+			// Help everyone out by printing the original value that we used to generate the secret name
+			return log.Errorf("failed to set secret %s (original name was %s): %w", secretName, keyValue, err)
+		}
+		return log.Errorf("failed to set secret %s in azure-keyvault: %w", secretName, err)
 	}
 	return nil
 }
