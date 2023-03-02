@@ -37,10 +37,15 @@ type Store struct {
 }
 
 func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
+	vaultFullLink := cfg.VaultUrl
+	if vaultFullLink == "" {
+		vaultFullLink = fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault)
+	}
+	
 	return &Store{
 		config:    cfg,
 		logger:    l,
-		vaultUrl:  fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault),
+		vaultUrl:  vaultFullLink,
 		hostStore: host.NewStore(),
 	}
 }
