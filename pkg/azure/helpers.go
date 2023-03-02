@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"get.porter.sh/porter/pkg/portercontext"
+	"get.porter.sh/porter/pkg/runtime"
 )
 
 type TestPlugin struct {
@@ -16,7 +17,7 @@ func NewTestPlugin(t *testing.T) *TestPlugin {
 	c := portercontext.NewTestContext(t)
 	m := &TestPlugin{
 		Plugin: &Plugin{
-			Context: c.Context,
+			RuntimeConfig: runtime.NewConfigFor(c.Context),
 		},
 		TestContext: c,
 	}
