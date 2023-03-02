@@ -13,13 +13,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var loggerOpts = hclog.LoggerOptions{
+	Name:   PluginInterface,
+	Output: os.Stderr,
+	Level:  hclog.Error,
+}
+
 func TestResolve_NonSecret(t *testing.T) {
 
-	logger := hclog.New(&hclog.LoggerOptions{
-		Name:   PluginInterface,
-		Output: os.Stderr,
-		Level:  hclog.Error,
-	})
+	logger := hclog.New(&loggerOpts)
+
 	ctx := context.Background()
 
 	azConfig := azureconfig.Config{}
@@ -66,6 +69,56 @@ func TestResolve_NonSecret(t *testing.T) {
 		_, err := store.Resolve(ctx, "bogus", "bogus")
 		require.EqualError(t, err, "invalid value source: bogus")
 	})
+}
+
+func getVaultParamsTestCases() []struct {
+	name     string
+	vault    string
+	vaultUrl string
+	exp      string
+} {
+	return []struct {
+		name     string
+		vault    string
+		vaultUrl string
+		exp      string
+	}{
+		{
+			name:     "SingleParameterVaultReturnsVault",
+			vault:    "myvaultname",
+			vaultUrl: "",
+			exp:      "https://myvaultname.vault.azure.net",
+		},
+		{
+			name:     "SingleParameterVaultURLReturnsVaultURL",
+			vault:    "",
+			vaultUrl: "https://myvaultname.vault.usgovcloudapi.net",
+			exp:      "https://myvaultname.vault.usgovcloudapi.net",
+		},
+		{
+			name:     "BothVaultParametersReturnsVaultURL",
+			vault:    "myvaultname",
+			vaultUrl: "https://myvaultname.vault.usgovcloudapi.net",
+			exp:      "https://myvaultname.vault.usgovcloudapi.net",
+		},
+	}
+}
+
+func TestNewStore_VaultParams(t *testing.T) {
+	tests := getVaultParamsTestCases()
+
+	logger := hclog.New(&loggerOpts)
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			azConfig := azureconfig.Config{
+				Vault:    test.vault,
+				VaultUrl: test.vaultUrl,
+			}
+			testStore := NewStore(azConfig, logger)
+			require.Equal(t, test.exp, testStore.vaultUrl)
+		})
+	}
 }
 
 func TestParseKeyValueAsSecretID(t *testing.T) {

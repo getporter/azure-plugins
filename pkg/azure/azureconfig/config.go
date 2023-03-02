@@ -26,4 +26,6 @@ type Config struct {
 
 	// Vault is the name of the vault containing bundle secrets.
 	Vault string `json:"vault"`
+	// VaultUrl is the full url of the vault containing bundle secrets.
+	VaultUrl string `json:"vault-url"`
 }
