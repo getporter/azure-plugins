@@ -11,7 +11,7 @@ replace (
 
 require (
 	get.porter.sh/magefiles v0.5.0
-	get.porter.sh/porter v1.0.9
+	get.porter.sh/porter v1.0.10
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.28
 	github.com/Azure/go-autorest/autorest/adal v0.9.23
@@ -70,7 +70,7 @@ require (
 	github.com/golang/snappy v0.0.4-0.20210608040537-544b4180ac70 // indirect
 	github.com/google/go-containerregistry v0.13.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
-	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
+	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.7.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
@@ -91,8 +91,8 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-testing-interface v1.0.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/mmcdole/gofeed v1.2.0 // indirect
-	github.com/mmcdole/goxpp v0.0.0-20200921145534-2f3784f67354 // indirect
+	github.com/mmcdole/gofeed v1.2.1 // indirect
+	github.com/mmcdole/goxpp v1.1.0 // indirect
 	github.com/moby/term v0.0.0-20221120202655-abb19827d345 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/nwaples/rardecode v1.1.0 // indirect
@@ -115,7 +115,7 @@ require (
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/smartystreets/assertions v1.0.0 // indirect
-	github.com/spf13/afero v1.9.3 // indirect
+	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
@@ -148,7 +148,7 @@ require (
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/grpc v1.53.0 // indirect
-	google.golang.org/protobuf v1.28.1 // indirect
+	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/ini.v1 v1.56.0 // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
