@@ -18,7 +18,7 @@ require (
 	github.com/Azure/go-autorest/autorest/azure/auth v0.5.12
 	github.com/carolynvs/magex v0.9.0
 	github.com/cnabio/cnab-go v0.25.1
-	github.com/hashicorp/go-hclog v1.4.0
+	github.com/hashicorp/go-hclog v1.5.0
 	github.com/hashicorp/go-plugin v1.4.0
 	github.com/magefile/mage v1.14.0
 	github.com/pkg/errors v0.9.1
