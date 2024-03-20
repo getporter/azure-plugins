@@ -2,7 +2,6 @@ package keyvault
 
 import (
 	"context"
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -45,7 +44,7 @@ func TestResolve_NonSecret(t *testing.T) {
 	})
 
 	t.Run("resolve non-secret source: path", func(t *testing.T) {
-		file, err := ioutil.TempFile("", "myfile")
+		file, err := os.CreateTemp("", "myfile")
 		if err != nil {
 			require.NoError(t, err)
 		}

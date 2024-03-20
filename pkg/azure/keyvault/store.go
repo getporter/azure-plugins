@@ -12,7 +12,8 @@ import (
 	"get.porter.sh/porter/pkg/secrets/plugins"
 	"get.porter.sh/porter/pkg/secrets/plugins/host"
 	"get.porter.sh/porter/pkg/tracing"
-	"github.com/Azure/azure-sdk-for-go/services/keyvault/v7.0/keyvault"
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
+	"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets"
 	"github.com/hashicorp/go-hclog"
 	"go.opentelemetry.io/otel/attribute"
 )
@@ -34,7 +35,7 @@ type Store struct {
 	logger    hclog.Logger
 	config    azureconfig.Config
 	vaultUrl  string
-	client    *keyvault.BaseClient
+	client    *azsecrets.Client
 	hostStore host.Store
 }
 
@@ -43,7 +44,7 @@ func NewStore(cfg azureconfig.Config, l hclog.Logger) *Store {
 	if vaultFullLink == "" {
 		vaultFullLink = fmt.Sprintf("https://%s.vault.azure.net", cfg.Vault)
 	}
-	
+
 	return &Store{
 		config:    cfg,
 		logger:    l,
@@ -57,14 +58,17 @@ func (s *Store) Connect(ctx context.Context) error {
 		return nil
 	}
 
-	authorizer, err := GetCredentials(s.config, s.logger)
+	cred, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
 		return err
 	}
 
-	client := keyvault.New()
-	s.client = &client
-	s.client.Authorizer = authorizer
+	client, err := azsecrets.NewClient(s.vaultUrl, cred, nil)
+	if err != nil {
+		return err
+	}
+
+	s.client = client
 	return nil
 }
 
@@ -85,7 +89,7 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 	// is set to "" which will fetch the latest version
 	secret := parseID(ctx, keyValue)
 	if secret != nil {
-		result, err := s.client.GetSecret(ctx, secret.vaultURL, secret.name, secret.version)
+		result, err := s.client.GetSecret(ctx, secret.name, secret.version, nil)
 		if err != nil {
 			// Instead of return error in this case instead log as a debug and attempt to fetch
 			// the secret from the configured secret store. Only return error if the secret is unable
@@ -98,10 +102,10 @@ func (s *Store) Resolve(ctx context.Context, keyName string, keyValue string) (s
 	}
 
 	secretName := cleanSecretName(keyValue)
-	attribute.String("cleaned-secret", secretName)
+	log.SetAttributes(attribute.String("cleaned-secret", secretName))
 
 	secretVersion := ""
-	result, err := s.client.GetSecret(ctx, s.vaultUrl, secretName, secretVersion)
+	result, err := s.client.GetSecret(ctx, secretName, secretVersion, nil)
 	if err != nil {
 		if keyValue != secretName {
 			// Help everyone out by printing the original value that we used to generate the secret name
@@ -157,7 +161,7 @@ func (s *Store) Create(ctx context.Context, keyName string, keyValue string, val
 		return err
 	}
 
-	_, err := s.client.SetSecret(ctx, s.vaultUrl, secretName, keyvault.SecretSetParameters{Value: &value})
+	_, err := s.client.SetSecret(ctx, secretName, azsecrets.SetSecretParameters{Value: &value}, nil)
 	if err != nil {
 		if keyValue != secretName {
 			// Help everyone out by printing the original value that we used to generate the secret name
