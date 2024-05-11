@@ -13,7 +13,7 @@ require (
 	get.porter.sh/magefiles v0.5.1
 	get.porter.sh/porter v1.0.10
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible
-	github.com/Azure/go-autorest/autorest v0.11.28
+	github.com/Azure/go-autorest/autorest v0.11.29
 	github.com/Azure/go-autorest/autorest/adal v0.9.23
 	github.com/Azure/go-autorest/autorest/azure/auth v0.5.12
 	github.com/carolynvs/magex v0.9.0
