@@ -1,6 +1,8 @@
 module get.porter.sh/plugin/azure
 
-go 1.19
+go 1.21
+
+toolchain go1.21.3
 
 replace (
 	github.com/hashicorp/go-plugin => github.com/getporter/go-plugin v1.4.4-porter.1
