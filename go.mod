@@ -12,7 +12,7 @@ replace (
 )
 
 require (
-	get.porter.sh/magefiles v0.6.7
+	get.porter.sh/magefiles v0.6.8
 	get.porter.sh/porter v1.1.0
 	github.com/Azure/azure-sdk-for-go v68.0.0+incompatible
 	github.com/Azure/go-autorest/autorest v0.11.28
