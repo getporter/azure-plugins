@@ -6,7 +6,6 @@ toolchain go1.23.1
 
 replace (
 	github.com/hashicorp/go-plugin => github.com/getporter/go-plugin v1.4.4-porter.1
-
 	// Fixes https://github.com/spf13/viper/issues/761
 	github.com/spf13/viper => github.com/getporter/viper v1.7.1-porter.2.0.20210514172839-3ea827168363
 )
