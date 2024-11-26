@@ -40,6 +40,7 @@ upgrade:
       command: ./helpers.sh
       arguments:
         - upgrade
+        - "{{ bundle.parameters.password }}"
 
 uninstall:
   - exec:

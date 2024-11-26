@@ -18,13 +18,16 @@ PORTER_HOME=${TMP}/bin/
 cleanup(){
     ret=$?
     echo "EXIT STATUS: $ret"
-	git worktree remove --force $PORTER_HOME
-    git worktree prune
     rm -rf "$TMP"
     echo "cleaned up test successfully"
     exit "$ret"
 }
 trap cleanup EXIT
+
+if ! command -v jq 2>&1 /dev/null; then
+	echo "jq is required."
+	exit 1
+fi
 
 authSetup=0
 if [ -z ${AZURE_TENANT_ID} ]; then
@@ -51,29 +54,33 @@ if [ -z $PORTER_TEST_VAULT ]; then
 	exit 1
 fi
 
-git worktree prune
-git fetch --no-tags --progress -- https://github.com/getporter/porter.git +refs/heads/release/v1:refs/remotes/origin/release/v1
-git worktree add -f "$PORTER_HOME" "origin/release/v1"
-pushd $PORTER_HOME
-	PORTER_HOME=$PORTER_HOME mage build install
-popd
-PORTER_CMD="${TMP}/bin/porter --debug --debug-plugins"
+export PORTER_HOME=$PORTER_HOME
+export AZURE_TENANT_ID=$AZURE_TENANT_ID
+export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
+export AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET
+
+mkdir -p $PORTER_HOME/plugins/azure
+cp ./bin/plugins/azure/azure $PORTER_HOME/plugins/azure/azure
+
+curl -L https://cdn.porter.sh/latest/install-linux.sh | PORTER_HOME=$PORTER_HOME bash
+PORTER_CMD="${TMP}/bin/porter --verbosity=debug"
 secret_value=super-secret
 
 cp ./tests/integration/testdata/config-test.yaml ${PORTER_HOME}/config.yaml
 
-PORTER_HOME=$PORTER_HOME make build install
 ${PORTER_CMD} plugins list
 cd ./tests/integration/testdata && ${PORTER_CMD} install --force --param password=$secret_value
 
-id=$(${PORTER_CMD} installation runs list azure-plugin-test -o json | grep -oP '(?<=claimID\": \").[\w.-]+' | head -1)
+id=$(${PORTER_CMD} installation runs list azure-plugin-test -o json | jq -r '.[].id' | head -1)
 
 if [ -z ${id} ]; then
 	echo "failed to get run id"
 	exit 1
 fi
 
-value=$(az keyvault secret show --vault-name $PORTER_TEST_VAULT --name $id-password | grep -oP '(?<=value\": \").[\w.-]+')
+value=$(az keyvault secret show --vault-name $PORTER_TEST_VAULT --name $id-password | jq -r '.value')
+
+${PORTER_CMD} upgrade
 
 if [[ $value == $secret_value ]]
 then
