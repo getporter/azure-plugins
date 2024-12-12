@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 
 	"get.porter.sh/magefiles/ci"
+	"get.porter.sh/magefiles/git"
 	"get.porter.sh/magefiles/porter"
 	"get.porter.sh/magefiles/releases"
 	"get.porter.sh/magefiles/tools"
@@ -137,4 +138,8 @@ func XBuildAll() {
 
 func Clean() error {
 	return os.RemoveAll("bin")
+}
+
+func SetupDCO() error {
+	return git.SetupDCO()
 }

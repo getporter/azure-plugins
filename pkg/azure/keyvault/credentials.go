@@ -5,24 +5,21 @@ import (
 	"strings"
 
 	"get.porter.sh/plugin/azure/pkg/azure/azureconfig"
-	"github.com/Azure/azure-sdk-for-go/services/keyvault/auth"
-	"github.com/Azure/go-autorest/autorest"
-	azureauth "github.com/Azure/go-autorest/autorest/azure/auth"
+	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/hashicorp/go-hclog"
-	"github.com/pkg/errors"
 )
 
 // GetCredentials gets an authorizer for Azure
-func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (autorest.Authorizer, error) {
+func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (*azidentity.DefaultAzureCredential, error) {
 
 	azureAuthEnvVarNames := []string{
-		azureauth.TenantID,
-		azureauth.ClientID,
-		azureauth.ClientSecret,
-		azureauth.CertificatePath,
-		azureauth.CertificatePassword,
-		azureauth.Username,
-		azureauth.Password,
+		"AZURE_TENANT_ID",
+		"AZURE_CLIENT_ID",
+		"AZURE_CLIENT_SECRET",
+		"AZURE_CERTIFICATE_PATH",
+		"AZURE_CERTIFICATE_PASSWORD",
+		"AZURE_USERNAME",
+		"AZURE_PASSWORD",
 	}
 
 	prefix := cfg.EnvAzurePrefix
@@ -34,36 +31,10 @@ func GetCredentials(cfg azureconfig.Config, l hclog.Logger) (autorest.Authorizer
 		}
 	}
 
-	var authorizer autorest.Authorizer
-	var err error
-
-	// Attempt to login with az cli if no vars are set.
-
-	if noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames) {
-		authorizer, err = auth.NewAuthorizerFromCLI()
-		if err != nil {
-			return nil, errors.Wrap(err, "Failed to create an azure authorizer from azure cli")
-		}
-
-		return authorizer, nil
-	}
-
-	// NewAuthorizierFromEnvironment attempts to authenticate using credentials, certicates, user name and password and MSI however if we get here MSI login wll be skipped as env vars are set so one of the other methods will be attempted
-
-	authorizer, err = auth.NewAuthorizerFromEnvironment()
+	creds, err := azidentity.NewDefaultAzureCredential(nil)
 	if err != nil {
-		return nil, errors.Wrap(err, "Failed to create an azure authorizer from environment")
+		return nil, err
 	}
 
-	return authorizer, nil
-}
-
-func noAzureAuthEnvVarsAreSet(azureAuthEnvVarNames []string) bool {
-	for _, v := range azureAuthEnvVarNames {
-		val := os.Getenv(v)
-		if len(val) > 0 {
-			return false
-		}
-	}
-	return true
+	return creds, nil
 }
