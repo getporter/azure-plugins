@@ -2,8 +2,6 @@ module get.porter.sh/plugin/azure
 
 go 1.23
 
-toolchain go1.23.1
-
 replace (
 	github.com/hashicorp/go-plugin => github.com/getporter/go-plugin v1.4.4-porter.1
 	// Fixes https://github.com/spf13/viper/issues/761
@@ -21,7 +19,7 @@ require (
 	github.com/hashicorp/go-plugin v1.6.2
 	github.com/magefile/mage v1.15.0
 	github.com/pkg/errors v0.9.1
-	github.com/spf13/cobra v1.8.1
+	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 	go.opentelemetry.io/otel v1.33.0
 )
@@ -106,7 +104,7 @@ require (
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
-	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/uwu-tools/magex v0.10.1 // indirect
