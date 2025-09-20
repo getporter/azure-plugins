@@ -13,10 +13,10 @@ import (
 	"get.porter.sh/magefiles/porter"
 	"get.porter.sh/magefiles/releases"
 	"get.porter.sh/magefiles/tools"
-	"github.com/carolynvs/magex/mgx"
-	"github.com/carolynvs/magex/shx"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/target"
+	"github.com/uwu-tools/magex/mgx"
+	"github.com/uwu-tools/magex/shx"
 )
 
 const (

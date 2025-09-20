@@ -13,7 +13,6 @@ require (
 	get.porter.sh/porter v1.3.0
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.11.0
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.4.0
-	github.com/carolynvs/magex v0.9.0
 	github.com/cnabio/cnab-go v0.25.4
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.6.3
@@ -21,6 +20,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.10.1
 	github.com/stretchr/testify v1.11.1
+	github.com/uwu-tools/magex v0.10.1
 	go.opentelemetry.io/otel v1.38.0
 )
 
@@ -108,7 +108,6 @@ require (
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/spf13/viper v1.20.1 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
-	github.com/uwu-tools/magex v0.10.1 // indirect
 	github.com/vbatts/tar-split v0.12.1 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
