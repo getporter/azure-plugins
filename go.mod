@@ -9,7 +9,7 @@ replace (
 )
 
 require (
-	get.porter.sh/magefiles v0.6.11
+	get.porter.sh/magefiles v0.6.12
 	get.porter.sh/porter v1.3.0
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.11.0
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.4.0
