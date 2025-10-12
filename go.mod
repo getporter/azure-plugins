@@ -11,7 +11,7 @@ replace (
 require (
 	get.porter.sh/magefiles v0.6.12
 	get.porter.sh/porter v1.3.0
-	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.12.0
+	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.0
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.4.0
 	github.com/cnabio/cnab-go v0.25.4
 	github.com/hashicorp/go-hclog v1.6.3
