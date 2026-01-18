@@ -54,8 +54,8 @@ github.com/clipperhouse/stringish v0.1.1 h1:+NSqMOr3GR6k1FdRhhnXrLfztGzuG+VuFDfa
 github.com/clipperhouse/stringish v0.1.1/go.mod h1:v/WhFtE1q0ovMta2+m+UbpZ+2/HEXNWYXQgCt4hdOzA=
 github.com/clipperhouse/uax29/v2 v2.2.0 h1:ChwIKnQN3kcZteTXMgb1wztSgaU+ZemkgWdohwgs8tY=
 github.com/clipperhouse/uax29/v2 v2.2.0/go.mod h1:EFJ2TJMRUaplDxHKj1qAEhCtQPW2tJSwu5BF98AuoVM=
-github.com/cnabio/cnab-go v0.25.5 h1:vk61+Xd4mPn3M/WDq3ptoBlH4JnDUj0HyiQcvAEVWRE=
-github.com/cnabio/cnab-go v0.25.5/go.mod h1:Ebr7Jdx8aVaDjkzXlx+LhG0sqD+jV1gnWAKfBuxn57k=
+github.com/cnabio/cnab-go v0.26.0 h1:bnLXZy95sYjJFIw0fD+87KOKpiOMQLGarHUoUlIAdkU=
+github.com/cnabio/cnab-go v0.26.0/go.mod h1:pvbE1E/6YIPtbGsdLLGp8tQ3BA0JTjbtX0ThUlJpkIQ=
 github.com/cnabio/cnab-to-oci v0.5.1 h1:rDukcEIGaBRwctwRoJh555MDzVSSnXXgd4JbP01DyjY=
 github.com/cnabio/cnab-to-oci v0.5.1/go.mod h1:C8k0q16tE3/OHCcF+UH3Phtt7aQpigip3cKL5ffeGD4=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=

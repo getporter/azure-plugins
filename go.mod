@@ -9,7 +9,7 @@ require (
 	get.porter.sh/porter v1.4.0
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.13.1
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.4.0
-	github.com/cnabio/cnab-go v0.25.5
+	github.com/cnabio/cnab-go v0.26.0
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.6.3
 	github.com/magefile/mage v1.15.0
