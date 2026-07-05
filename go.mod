@@ -1,6 +1,6 @@
 module get.porter.sh/plugin/azure
 
-go 1.25.8
+go 1.26.0
 
 replace github.com/hashicorp/go-plugin => github.com/getporter/go-plugin v1.4.4-porter.1
 
@@ -9,7 +9,7 @@ require (
 	get.porter.sh/porter v1.5.0
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.14.0
 	github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azsecrets v1.5.0
-	github.com/cnabio/cnab-go v0.26.2
+	github.com/cnabio/cnab-go v0.26.3
 	github.com/hashicorp/go-hclog v1.6.3
 	github.com/hashicorp/go-plugin v1.7.0
 	github.com/magefile/mage v1.17.2
@@ -115,7 +115,7 @@ require (
 	google.golang.org/genproto/googleapis/api v0.0.0-20260401024825-9d38bb4040a9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260401024825-9d38bb4040a9 // indirect
 	google.golang.org/grpc v1.80.0 // indirect
-	google.golang.org/protobuf v1.36.11 // indirect
+	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
